@@ -2,7 +2,7 @@
 
 ## 실행 구조
 
-React + TypeScript + Vite 정적 앱입니다. 별도 서버 없이 OpenAlex와 Crossref를 호출하고, Google Identity Services와 Drive 앱 전용 저장소를 사용합니다. 개발 진입점은 src/main.tsx이며 @ 별칭은 src/를 가리킵니다.
+React + TypeScript + Vite 정적 앱입니다. 브라우저에서 OpenAlex와 Crossref를 호출하고, Google Identity Services와 Drive 앱 전용 저장소를 사용합니다. Tech Science Press 날짜 보완은 별도 공개 API를 사용합니다. 개발 진입점은 src/main.tsx이며 @ 별칭은 src/를 가리킵니다.
 
 package-lock.json을 기준으로 npm ci를 실행합니다. npm run check는 타입을 확인하고 npm run build는 docs/에 JS·CSS가 포함된 index.html과 config.js, privacy.html, favicon.svg, .nojekyll을 생성합니다. docs/는 배포 결과이므로 직접 편집하지 않습니다. .build/와 node_modules/는 커밋하지 않습니다.
 
@@ -29,6 +29,8 @@ npm test는 새 페이지 모듈과 같은 세션 저장소를 사용해 새로�
 - 출판일 우선순위·정밀도: publication-dates.ts, publication-date-editor.tsx
 - Cite 날짜 추출: citation-date.ts (HTML을 실행하거나 외부 프록시로 전송하지 않음)
 - 출판사에서 직접 검증한 DOI별 날짜: verified-publication-dates.json (원문 URL·확인일·발행일 근거 필수)
+- 연월 범위·검증: publication-range.ts, publication-range-controls.tsx (후보는 연도 단위, 보완 후 로컬 월 필터)
+- 출판사 자동 연동: publisher-data.ts, services/publication-date/
 - 중복·유형 필터: publications.ts
 - 사용자 양식·다중 정렬·Excel: layouts.ts, ledger-export.ts
 - Google 저장: google-store.ts
@@ -38,4 +40,8 @@ npm test는 새 페이지 모듈과 같은 세션 저장소를 사용해 새로�
 
 출판일 검증은 tests/publication-date.test.mjs에서 실제 오류 논문의 공개 메타데이터 fixture, 연도만 있는 날짜, 인쇄/온라인 날짜 차이, 잘못된 날짜, 사용자 지정값 보존, 정렬·CSV, DOI가 일치하는 인용정보와 CORS 실패 안내를 확인합니다. fixture는 2026-09-16 조회한 공개 서지정보의 발췌이며 원문 전체를 포함하지 않습니다. 출판사 수동 확인 목록은 DOI 완전 일치로만 적용합니다. 목록에 없는 논문의 월을 임의로 채우지 마세요.
 
-GitHub Pages는 정적 호스팅이므로 CORS를 허용하지 않는 출판사를 브라우저에서 자동 수집할 수 없습니다. 출처 URL 직접 조회는 공개 요청(credentials omit)이며 실패 시 파일/붙여넣기 경로를 제공합니다. 무조건적인 외부 프록시나 CORS 우회 서비스는 사용하지 않습니다. 서지 보완은 DOI별 2개 동시 요청과 기존 upstream 캐시/요청 제한 처리를 사용합니다.
+GitHub Pages는 정적 호스팅이므로 CORS를 허용하지 않는 출판사 조회는 별도 읽기 전용 API에서 처리합니다. `services/publication-date/`에 배포한 Worker 원본·테스트가 있습니다. 그 폴더에서 `npm test`, `npm run build`로 검증·빌드합니다. GitHub Pages 빌드가 API를 자동 배포하지는 않습니다. 현재 API는 https://paper-ledger-publication-dates.slpkite108.chatgpt.site 에 공개되어 있으며 프런트 endpoint는 publisher-data.ts에서 관리합니다. API는 Tech Science Press DOI와 doi.org/techscience.com HTTPS 리디렉션만 허용하고 반환 DOI 일치, 날짜 유효성, 응답 크기·시간·동시 요청을 제한합니다. Google 계정·키·토큰을 받지 않습니다.
+
+다른 출판사의 직접 Cite 조회는 CORS가 필요합니다. 출처 URL 직접 조회는 공개 요청(credentials omit)이며 실패 시 파일/붙여넣기 경로를 제공합니다. 무조건적인 외부 프록시나 CORS 우회 서비스는 사용하지 않습니다. 서지 보완은 DOI별 2개 동시 요청과 기존 upstream 캐시/요청 제한 처리를 사용합니다.
+
+연월 회귀 검증은 같은 달/연도 경계, 기간 역전, 한쪽 범위, 월 미상 정책, 수정된 발행일, 필터 후 중복 처리·CSV, 기존 즐겨찾기 호환과 월 범위 보존을 포함합니다.
