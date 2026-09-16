@@ -1,0 +1,81 @@
+{
+  "works": [
+    {
+      "id": "https://hcisj.com/articles/issue_view.php?wr_id=593",
+      "title": "Fracture Simulation of Elastic Objects Using the Tresca Yield Criterion",
+      "authors": [
+        {
+          "name": "Su-Kyung Sung"
+        },
+        {
+          "name": "Jae-Hyeong Kim"
+        },
+        {
+          "name": "Byeong-Seok Shin"
+        }
+      ],
+      "authorText": "Su-Kyung Sung, Jae-Hyeong Kim, and Byeong-Seok Shin*",
+      "venue": "Human-centric Computing and Information Sciences",
+      "issn": [
+        "2192-1962"
+      ],
+      "volume": "15",
+      "doi": "10.22967/HCIS.2025.15.044",
+      "date": "2025-08-15",
+      "url": "https://hcisj.com/articles/issue_view.php?wr_id=593",
+      "provider": "hcis",
+      "checkedOn": "2026-09-16"
+    },
+    {
+      "id": "https://hcisj.com/articles/issue_view.php?wr_id=567",
+      "title": "Out-of-distribution Detection by Quantifying the Uncertainty with the Stochastic Weight Ensemble",
+      "authors": [
+        {
+          "name": "Zongjing Cao"
+        },
+        {
+          "name": "Yan Li"
+        },
+        {
+          "name": "Byeong-Seok Shin"
+        }
+      ],
+      "authorText": "Zongjing Cao, Yan Li, and Byeong-Seok Shin*",
+      "venue": "Human-centric Computing and Information Sciences",
+      "issn": [
+        "2192-1962"
+      ],
+      "volume": "15",
+      "doi": "10.22967/HCIS.2025.15.018",
+      "date": "2025-03-30",
+      "url": "https://hcisj.com/articles/issue_view.php?wr_id=567",
+      "provider": "hcis",
+      "checkedOn": "2026-09-16"
+    },
+    {
+      "id": "https://hcisj.com/articles/issue_view.php?wr_id=554",
+      "title": "Accelerating the Cloud-Based Visualization System for Digital Twin Applications: BVH-Based Rendering Optimization",
+      "authors": [
+        {
+          "name": "Eun-Seok Lee"
+        },
+        {
+          "name": "Byeong-Seok Shin"
+        }
+      ],
+      "authorText": "Eun-Seok Lee and Byeong-Seok Shin",
+      "venue": "Human-centric Computing and Information Sciences",
+      "issn": [
+        "2192-1962"
+      ],
+      "volume": "15",
+      "doi": "10.22967/HCIS.2025.15.005",
+      "date": "2025-01-30",
+      "url": "https://hcisj.com/articles/issue_view.php?wr_id=554",
+      "provider": "hcis",
+      "checkedOn": "2026-09-16"
+    }
+  ],
+  "sourceUrl": "https://hcisj.com/articles/all_issue.php?s_author=Byeong-Seok+Shin&page=1",
+  "next": null
+}
