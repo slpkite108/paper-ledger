@@ -70,6 +70,39 @@ test('missing coverage, manual negative evidence and disabled matching have dist
   const no=auto({...make('Scientific Reports'),evidence:e});assert.equal(no.evidence.scie.status,'no');assert.match(app.recognitionLabel(no,app.defaultCriteria),/비해당/);
   assert.match(app.recognitionLabel(make('Scientific Reports','unknown'),app.defaultCriteria),/학술유형/);
 });
+test('reported HCIS paper is supplemented only for a verified author identity, not a matching name',()=>{
+  const author={id:'https://openalex.org/A5061420652',display_name:'Byeong‐Seok Shin'};
+  const [p]=app.supplementalPapers(author,'신병석',{from:'2025',to:'2026'});
+  assert.equal(p.values.title,app.hcisSupplement.title);assert.equal(p.values.professor,'신병석');
+  assert.equal(p.values.firstAuthor,'Eun-Seok Lee');assert.equal(p.values.coauthors,'Byeong-Seok Shin');assert.equal(p.values.authorCount,'2');
+  assert.equal(p.publicationKind,'journal');assert.equal(p.role,'교신저자');assert.equal(p.values.issn,'2192-1962');assert.equal(p.values.volume,'15');
+  assert.equal(p.publicationDate,'2025-01-30');assert.equal(p.values.published,'2025-01');assert.equal(p.publicationDates.selected,'publisher-issue');
+  assert.ok(!p.publicationDates.candidates.some(c=>c.source==='openalex'));assert.equal(p.supplementalSource,app.hcisSupplement.url);assert.equal(p.verified,false);
+  assert.equal(auto(p).values.category,'SCIE');assert.match(auto(p).evidence.scie.url,/2192-1962/);
+  assert.deepEqual(app.supplementalPapers({...author,id:'A999'},'Same name',{from:'',to:''}),[]);
+  assert.deepEqual(app.supplementalPapers({...author,orcid:'https://orcid.org/0000-0001-1111-1111'},'Conflict',{from:'',to:''}),[]);
+  assert.equal(app.supplementalPapers({...author,id:'A999',orcid:'https://orcid.org/0000-0001-7742-4846'},'ORCID match',{from:'',to:''}).length,1);
+});
+test('supplement follows year/month range and preserves verified publisher date if OpenAlex later indexes DOI',()=>{
+  const author={id:'A5061420652',display_name:'Byeong-Seok Shin'};
+  assert.equal(app.supplementalPapers(author,author.display_name,{from:'2026',to:'2026'}).length,0);
+  const [p]=app.supplementalPapers(author,author.display_name,{from:'2025',to:'2026'});
+  const options={excludeArxiv:true,mergeLatest:true,publicationKind:'all',range:{from:'2025',fromMonth:'09',to:'2026',toMonth:'08'},includeUnknownMonths:true};
+  assert.equal(app.visiblePublications([p],options).length,0);
+  assert.equal(app.visiblePublications([p],{...options,range:{from:'2025',fromMonth:'01',to:'2025',toMonth:'01'}}).length,1);
+  const later=app.toPaper({id:'https://openalex.org/W123',doi:'https://doi.org/10.22967/HCIS.2025.15.005',title:p.values.title,type:'article',publication_date:'2025-01-01',primary_location:{source:{type:'journal'}}},author,author.display_name);
+  assert.equal(later.values.published,'2025-01');assert.equal(later.publicationDate,'2025-01-30');
+});
+test('supplement/upstream DOI duplicates retain existing edits while conference and other authors remain separate',()=>{
+  const [p]=app.supplementalPapers({id:'A5061420652',display_name:'Shin'},'신병석',{from:'',to:''});
+  const edited={...p,values:{...p.values,contribution:'50'}};
+  const upstream={...p,id:'A5061420652:W123',doi:p.doi.toUpperCase(),supplementalSource:undefined};
+  assert.deepEqual(app.mergePaperSources([edited],[upstream,p]),[edited]);
+  assert.deepEqual(app.mergePaperSources([],[upstream,p]),[upstream]);
+  const conf={...upstream,id:'C1',publicationKind:'conference'},other={...upstream,id:'A2:W123',authorId:'A2'};
+  assert.equal(app.mergePaperSources([edited],[conf,other]).length,3);
+  const csv=app.layoutCsv([auto(p)],app.defaultLayout());assert.match(csv,/HCIS\.2025\.15\.005/);assert.match(csv,/SCIE/);assert.match(csv,/2025-01/);
+});
 test('SCIE exact ISSN/full name matching rejects conflicts, ESCI and wrong types',()=>{
   const p=auto(make('Metadata title','journal','1545-5971'));
   assert.equal(p.values.category,'SCIE');assert.equal(p.evidence.scie.year,'2026');assert.match(p.evidence.scie.url,/IEEE-Title-List-August-2026/);
