@@ -28,7 +28,7 @@
 1. Google Cloud 프로젝트를 만들고 Google Auth Platform에서 앱 이름, 지원 이메일, 대상을 설정합니다.
 2. **Google Drive API**를 같은 프로젝트에서 활성화합니다.
 3. OAuth 클라이언트 유형을 **웹 애플리케이션**으로 만듭니다.
-4. 승인된 JavaScript 원본에 **https://slpkite108.github.io**를 등록합니다. /paper-ledger 경로는 넣지 않습니다.
+4. 승인된 JavaScript 원본에 [https://slpkite108.github.io](https://slpkite108.github.io) 주소를 등록합니다. /paper-ledger 경로는 넣지 않습니다.
 5. 권한은 openid, email, profile, https://www.googleapis.com/auth/drive.appdata 를 사용합니다. 테스트 중이면 사용할 Google 계정을 테스트 사용자로 등록합니다.
 6. 공개 클라이언트 ID(...apps.googleusercontent.com)를 config.js의 googleClientId에 넣어 커밋합니다. 비밀값은 넣지 않습니다. 임시로 검색 설정의 앱 설정에서 본인 브라우저에만 적용할 수도 있습니다.
 7. 개인정보처리방침 주소가 필요하면 https://slpkite108.github.io/paper-ledger/privacy.html 을 사용합니다. 운영자 지원 이메일 등 Google Cloud에 제출하는 정보는 운영자가 확인해야 합니다. 공개 사용 시 Google의 검증·도메인 관련 요구사항을 따라야 합니다.
