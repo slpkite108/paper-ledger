@@ -6,10 +6,11 @@
 
 ## 주요 기능
 
+- 시작·종료 연월 범위, 월 미상 포함 선택, 조회 조건 즐겨찾기
 - 여러 저자 검색·즐겨찾기, 저널/학술대회 구분, arXiv 제외, 동일 제목 최신 논문 선택
 - 최대 3개 기준 정렬, 사용자 열·데이터 매칭·서식 프리셋, Excel 머리글 붙여넣기
 - 서식을 유지하는 XLSX와 CSV 다운로드
-- 출판일 근거 비교·재확인, 월 미상 처리, Cite(RIS/BibTeX/HTML) 날짜 가져오기
+- Tech Science Press DOI 출판사 날짜 자동 보완, 출판일 근거 비교·재확인, 월 미상 처리, Cite(RIS/BibTeX/HTML) 날짜 가져오기
 - Google 계정의 앱 전용 저장소에 즐겨찾기·프리셋·개인 API 키 저장
 - 같은 탭에서 새로고침 후 Google 연결 복원, 상단의 계정·연결 상태 표시
 - CS 우선 인정 기준 선택, BK 목록 후보 대조, SCIE/h5 공식 자료 연결 및 근거 기록
@@ -42,6 +43,7 @@ GitHub Pages는 **main 브랜치의 /docs 폴더**를 배포합니다. 소스 �
 | src/components/ | 기능별 화면 및 UI 컴포넌트 |
 | src/lib/ | 검색·정렬·프리셋·Google 저장·인정 기준 로직 |
 | src/vendor/ | 사용 중인 UI 스타일 파일 |
+| services/publication-date/ | DOI 출판사 날짜 조회 API (별도 배포) |
 | public/ | 설정·개인정보 안내·아이콘 원본 |
 | docs/ | GitHub Pages에 배포하는 빌드 결과 |
 | documentation/ | 사용 및 개발 안내 |
