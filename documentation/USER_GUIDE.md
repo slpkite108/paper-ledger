@@ -26,7 +26,7 @@
 
 **인정 구분 자동 입력**은 기본 켜짐입니다. 선택 저자를 조회하거나 DOI 출판정보가 보완되면 사용 중인 기준표와 대조하고 구분·근거·기준연도를 함께 기록합니다. 화면, 현재 정렬된 CSV와 Excel에 같은 결과가 들어갑니다. 자동 일치는 직접 검토 완료를 뜻하지 않습니다. 기존 직접 입력한 구분과 근거는 유지합니다. 자동 설정과 자료 선택은 양식·프리셋에 저장됩니다.
 
-- SCIE 자동 범위: [IEEE 2026년 8월 공식 Title List](https://open.ieee.org/wp-content/uploads/IEEE-Title-List-August-2026.xlsx)의 Index가 SCIE인 167종, [CMC](https://www.techscience.com/cmc/info/Indexed), [CMES](https://www.techscience.com/CMES/info/Indexed), [Applied Intelligence](https://link.springer.com/journal/10489)의 공식 출판사 색인 안내 3종과 Clarivate MJL에서 2026-09-16에 개별 확인한 4종(Scientific Reports, Journal of Biomedical Informatics, Journal of Mathematical Analysis and Applications, Biomedical Signal Processing and Control)입니다. 총 174종의 일부 목록이며 전 분야 전체 SCIE 목록이 아닙니다. 현재 수록 상태의 확인 자료이며 과거 출판연도별 수록을 보증하지 않습니다. IF만 있는 ESCI 자료는 포함하지 않습니다.
+- SCIE 자동 범위: [IEEE 2026년 8월 공식 Title List](https://open.ieee.org/wp-content/uploads/IEEE-Title-List-August-2026.xlsx)의 Index가 SCIE인 167종, [CMC](https://www.techscience.com/cmc/info/Indexed), [CMES](https://www.techscience.com/CMES/info/Indexed), [Applied Intelligence](https://link.springer.com/journal/10489)의 공식 출판사 색인 안내 3종과 Clarivate MJL에서 2026-09-16에 개별 확인한 5종(Scientific Reports, Journal of Biomedical Informatics, Journal of Mathematical Analysis and Applications, Biomedical Signal Processing and Control, Human-centric Computing and Information Sciences)입니다. 총 175종의 일부 목록이며 전 분야 전체 SCIE 목록이 아닙니다. 현재 수록 상태의 확인 자료이며 과거 출판연도별 수록을 보증하지 않습니다. IF만 있는 ESCI 자료는 포함하지 않습니다.
 - CS 자동 범위: 위 BK 목록 188개입니다. 구분에는 **CS우수학술대회**, BK 근거에는 목록명·공식 첨부 출처·코드를 남깁니다. 한국정보과학회 권장 목록은 자동 판정·BK 근거로 사용하지 않습니다. BIBM의 현 명칭은 [공식 CFP](https://www.ieeebibm.org/BIBM2025/image/BIBM2025-call-for-papers.pdf)로 확인한 별칭을 추가했습니다. 학회 권장 목록에서 BK 인정 여부를 가져온 것이 아닙니다.
 - h5 자동 범위: 사용자가 확인하여 추가한 Metrics 기준표입니다. **학술대회**이고 h5가 50 이상일 때만 **h5-index 50 이상 학술대회**를 입력합니다. 저자 h-index나 저널 h5를 이 구분에 사용하지 않습니다. Google Metrics 실시간 전체 수집은 연결되어 있지 않고 내장 h5 수치를 추측해서 넣지 않습니다.
 
@@ -106,3 +106,14 @@ GitHub Pages는 저장소의 **main 브랜치 /docs 폴더**를 배포합니다.
 ## 데이터
 
 API 키, 로그인 토큰, 사용자 정보는 GitHub에 업로드하지 않습니다. 논문 편집 내용·검토 결과·사용자 입력값은 탭 안에서만 유지하므로 Excel/CSV로 저장하세요. 프리셋은 논문 행을 저장하지 않습니다. SCIE·BK·IF 등의 최종 인정 여부는 선택한 기준 자료와 기관 지침·원문을 대조하세요.
+
+
+## OpenAlex에서 누락된 논문의 확인 보완
+
+현재 저자와 논문 검색원은 OpenAlex입니다. ORCID 입력은 OpenAlex 저자를 식별하는 데 사용하며 ORCID의 업적 목록을 별도로 수집하지 않습니다. ‘조회 완료’와 조회 건수는 해당 검색원의 결과 수집 상태이며 저자의 모든 논문을 확보했다는 뜻은 아닙니다. DOI 조회는 이미 찾은 논문의 정보를 보완하므로 저자 검색 누락을 해결하지 못합니다. 다중 검색원에 의한 저자별 수집은 아직 구현되지 않았습니다.
+
+OpenAlex에 없는 논문은 일반 저자 조회로 가져오지 못하며 SCIE 판정과 논문 수집은 별개입니다. 원문과 저자 식별자를 확인한 일부 누락 자료를 내장해 저자 조회 결과에 함께 보완합니다. 출판사 전체에 대한 실시간 검색은 아닙니다. 보완 행은 ‘출판사 확인 보완’ 링크와 원문 발행일 근거를 표시하고, OpenAlex 조회 수와 별도로 집계합니다. 동일 참여교수·학술유형·DOI가 나중에 OpenAlex에도 나타나면 기존 행과 편집값을 유지하여 중복 추가를 막습니다.
+
+현재 보완 사례: **Accelerating the Cloud-Based Visualization System for Digital Twin Applications: BVH-Based Rendering Optimization**, DOI **10.22967/HCIS.2025.15.005**. [출판사 원문](https://hcisj.com/articles/?HCIS202515005)은 **2025-01-30**, HCIS volume 15, article 05, Eun-Seok Lee / Byeong-Seok Shin을 명시합니다. 페이지 24–41은 [KCI 서지정보](https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART003220804) 기준입니다. 2026-09-16 확인 당시 DOI 등록기관은 KISTI이며 OpenAlex DOI/제목 검색 결과가 없고 Crossref DOI 조회는 404였습니다.
+
+현재 보완은 인하대 Byeong-Seok Shin의 확인된 OpenAlex ID A5061420652 또는 ORCID 0000-0001-7742-4846 선택 시 적용합니다. 이름만 같은 후보에게는 추가하지 않습니다. 발행일이 2025년 1월이므로 **2025년 9월~2026년 8월** 범위에서는 제외되는 것이 맞습니다. 직접 확인 완료 표시는 사용자가 검토한 경우에만 설정합니다.
