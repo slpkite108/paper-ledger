@@ -2,9 +2,11 @@ import { z } from 'zod';
 import { fields, csvCell, type Paper } from './papers';
 import { kindLabels } from './publications';
 import { criteriaSchema, defaultCriteria } from './criteria';
+import { dateSummary } from './publication-dates';
 
 export const sources = [...fields.map(f => ({ key: f.key as string, label: f.label as string })),
   { key: 'publicationKind', label: '학술유형 (저널/Conference)' }, { key: 'doi', label: 'DOI' },
+  { key: 'publicationDateSource', label: '출판일 근거' },
   { key: 'verified', label: '확인 상태' }, { key: 'scie', label: 'SCIE 확인 결과' }, { key: 'bk', label: 'BK 확인 결과' },
   { key: 'h5', label: '학술지·학술대회 h5-index' }, { key: 'evidence', label: '인정 근거·기준연도' },
   { key: 'rowNumber', label: '행 번호' }, { key: 'constant', label: '고정값 (모든 행 공통)' }, { key: 'manual', label: '사용자 항목 (논문별 입력)' }];
@@ -49,6 +51,7 @@ export function sourceValue(p: Paper, source: string): string {
   if (source === 'publicationKind') return kindLabels[p.publicationKind];
   if (source === 'verified') return p.verified ? '확인 완료' : '검토 필요';
   if (source === 'doi') return p.doi;
+  if (source === 'publicationDateSource') return (dateSummary(p) + ' ' + (p.publicationDates?.candidates.find(c => c.source === p.publicationDates?.selected)?.url || '')).trim();
   if (source === 'scie' || source === 'bk') return ({ yes: '해당', no: '비해당', unknown: '미확인' })[p.evidence?.[source]?.status || 'unknown'];
   if (source === 'h5') return p.evidence?.h5.value || '';
   if (source === 'evidence') return p.evidence ? Object.entries(p.evidence).filter(([,e]) => e.year || e.url || e.note).map(([k,e]) => `${k.toUpperCase()}: ${e.year} ${e.url} ${e.note}`.trim()).join('\n') : '';

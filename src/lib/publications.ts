@@ -27,7 +27,7 @@ export function normalizedTitle(title: string) {
 }
 function paperDate(p: Paper) {
   const editedMonth = p.values.published;
-  return p.publicationDate?.startsWith(editedMonth) ? p.publicationDate : editedMonth;
+  return editedMonth && p.publicationDate?.startsWith(editedMonth) ? p.publicationDate : editedMonth;
 }
 export function latestByTitle(papers: Paper[]): Paper[] {
   const groups = new Map<string, Paper>();
