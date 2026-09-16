@@ -145,8 +145,8 @@ API 키, 로그인 토큰, 사용자 정보는 GitHub에 업로드하지 않습�
 ## 온라인판·인쇄판 ISSN 구분
 
 - 온라인판 eISSN, 인쇄판 pISSN, 판을 연결하는 ISSN-L을 분리 보관합니다. Crossref의 명시적 매체 유형을 활용하며 OpenAlex의 번호 순서, ISSN-L 또는 SCIE 등재 여부로 온라인판/인쇄판을 추정하지 않습니다. 유형이 없거나 충돌하면 매체 미확인입니다. 한 종류만 확인돼도 다른 판이 없다는 뜻은 아닙니다.
-- 논문 목록과 수정 창에 매체별 번호·출처가 표시됩니다. 기존 ISSN 항목은 전체 번호를 유지하고, 양식에서 **온라인 ISSN (eISSN)**, **인쇄 ISSN (pISSN)**, **연결 ISSN (ISSN-L)**, **ISSN (온라인 우선)**, **ISSN 매체 구분**을 선택할 수 있습니다. Excel의 eISSN / pISSN / ISSN-L 머리글도 자동 매칭합니다.
-- ‘ISSN (온라인 우선)’은 확인된 eISSN, pISSN, 매체 미확인 번호 순으로 사용합니다. eISSN 전용 열은 온라인판 확인이 없으면 빈칸을 유지합니다. 출력 열의 선택과 무관하게 SCIE 대조에는 전체 ISSN을 사용합니다. 직접 수정·삭제한 ISSN은 재조회로 덮어쓰지 않습니다.
+- 논문 목록과 수정 창에 매체별 번호·출처가 표시됩니다. 기본 ISSN 항목은 **ISSN-L을 우선**하고, 없으면 처음 받은 목록의 첫 번째 ISSN을 사용합니다. 표·CSV·Excel에도 같은 번호 한 개를 표시합니다. 매체 분류로 번호 순서를 바꾸지 않으며 직접 수정한 ISSN은 유지합니다. 나머지 번호는 매체 구분 및 SCIE 대조용으로 보관하고, 양식에서 **온라인 ISSN (eISSN)**, **인쇄 ISSN (pISSN)**, **연결 ISSN (ISSN-L)**, **ISSN (온라인 우선)**, **ISSN 매체 구분**을 선택할 수 있습니다. Excel의 eISSN / pISSN / ISSN-L 머리글도 자동 매칭합니다.
+- 기본 ISSN은 온라인 여부와 관계없이 ISSN-L 우선입니다. 사용자가 별도 열로 선택한 ‘ISSN (온라인 우선)’은 확인된 eISSN, pISSN, 매체 미확인 번호 순으로 사용합니다. eISSN 전용 열은 온라인판 확인이 없으면 빈칸을 유지합니다. 출력 열의 선택과 무관하게 SCIE 대조에는 전체 ISSN을 사용합니다. 직접 수정·삭제한 ISSN은 재조회로 덮어쓰지 않습니다.
 - ISSN의 매체와 출판일 종류는 별개입니다. 온라인판에도 권·호가 있을 수 있으므로 eISSN만으로 일반 Published 날짜를 온라인 날짜로 분류하지 않습니다. 출판일은 선택한 권·호/온라인 우선 기준을 따르며 하나만 있으면 그 날짜를 사용합니다.
 
 근거: [ISSN 국제센터 FAQ](https://publishers.issn.org/faq1), [Crossref 매체별 식별자 안내](https://www.crossref.org/documentation/reports/browsable-title-list/).
