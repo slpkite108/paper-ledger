@@ -26,10 +26,11 @@ export function paperIdentifiers(p: Paper): JournalIdentifiers {
   const retained = issnList(p.values.issn);
   return { ...ids, electronic: ids.electronic.filter(v => retained.includes(v)), print: ids.print.filter(v => retained.includes(v)), linking: ids.linking.filter(v => retained.includes(v)), untyped: ids.untyped.filter(v => retained.includes(v)) };
 }
-export function applyIdentifiers(p: Paper, incoming: JournalIdentifiers): Paper {
+export function applyIdentifiers(p: Paper, incoming: JournalIdentifiers, incomingFirst = ''): Paper {
   const journalIdentifiers = mergeIdentifiers(p.journalIdentifiers,{untyped:issnList(p.values.issn)},incoming);
-  return {...p,journalIdentifiers,values:{...p.values,issn:p.issnManual ? p.values.issn : allIdentifiers(journalIdentifiers).join('; ')}};
+  return {...p,journalIdentifiers,values:{...p.values,issn:p.issnManual ? p.values.issn : journalIdentifiers.linking[0] || primaryIssn(p) || issnList(incomingFirst)[0] || allIdentifiers(journalIdentifiers)[0] || ''}};
 }
+export function primaryIssn(p: Paper): string { return (!p.issnManual && p.journalIdentifiers?.linking[0]) || issnList(p.values.issn)[0] || ''; }
 export function setManualIssn(p: Paper, value: string): Paper { return {...p,issnManual:true,values:{...p.values,issn:value}}; }
 export function preferredIssn(p: Paper): string {
   const ids = paperIdentifiers(p);

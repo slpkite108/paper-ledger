@@ -1,7 +1,7 @@
 import { openAlexKind, isArxiv, type KindInfo } from './publications';
 import type { RecognitionEvidence } from './recognition';
 import type { ConferenceInfo } from './conference-data';
-import { issnList, mergeIdentifiers, type JournalIdentifiers } from './journal-identifiers';
+import { primaryIssn, issnList, mergeIdentifiers, type JournalIdentifiers } from './journal-identifiers';
 import { applyPublicationDates, initialPublicationDates, type PublicationDates } from './publication-dates';
 export const fields = [
   { key: 'professor', label: '참여교수', manual: false },
@@ -50,7 +50,7 @@ export function toPaper(work: Work, author: Author, professor: string): Paper {
     authorCount: authors.length && !work.is_authors_truncated ? String(authors.length) : '',
     venue: source?.display_name ?? '',
     link: safeUrl(work.doi) || safeUrl(work.primary_location?.landing_page_url) || safeUrl(work.id),
-    issn: source?.issn?.join('; ') || source?.issn_l || '',
+    issn: issnList(source?.issn_l)[0] || issnList(source?.issn)[0] || '',
   });
   return applyPublicationDates({ journalIdentifiers: mergeIdentifiers({untyped:issnList(source?.issn),linking:issnList(source?.issn_l),urls:source?.id?[source.id]:[]}), id: shortId(author.id) + ':' + shortId(work.id), authorId: author.id, doi: work.doi ?? '', type: work.type ?? '', source: work.id, values, verified: false, publicationDate: '', arxiv: isArxiv(work), ...openAlexKind(work),
     role: [self?.author_position === 'first' ? '제1저자' : '', self?.is_corresponding ? '교신저자' : ''].filter(Boolean).join(' · ') || '제1·교신저자 정보 미확인',
@@ -61,7 +61,7 @@ export function csvCell(value: string): string {
   return '"' + safe.replaceAll('"', '""') + '"';
 }
 export function makeCsv(papers: Paper[]): string {
-  return '\uFEFF' + [fields.map(f => csvCell(f.label)).join(','), ...papers.map(p => fields.map(f => csvCell(p.values[f.key])).join(','))].join('\r\n');
+  return '\uFEFF' + [fields.map(f => csvCell(f.label)).join(','), ...papers.map(p => fields.map(f => csvCell(f.key==='issn'?primaryIssn(p):p.values[f.key])).join(','))].join('\r\n');
 }
 export function validationError(v: Record<FieldKey, string>): string {
   for (const key of ['authorCount', 'assistants', 'funders'] as const) if (v[key] && !/^\d+$/.test(v[key])) return '인원과 기관 수는 0 이상의 정수로 입력하세요.';

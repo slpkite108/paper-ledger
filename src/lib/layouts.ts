@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { paperIdentifiers, preferredIssn, issnSummary } from './journal-identifiers';
+import { primaryIssn, paperIdentifiers, preferredIssn, issnSummary } from './journal-identifiers';
 import { fields, csvCell, type Paper } from './papers';
 import { kindLabels } from './publications';
 import { criteriaSchema, defaultCriteria } from './criteria';
@@ -51,6 +51,7 @@ export function headersFromTsv(text: string, orientation: 'row' | 'column') {
   return labels.map(label => newColumn(label));
 }
 export function sourceValue(p: Paper, source: string): string {
+  if (source === 'issn') return primaryIssn(p);
   if (source === 'preferredIssn') return preferredIssn(p);
   if (source === 'issnDetails') return issnSummary(p);
   if (source === 'electronicIssn' || source === 'printIssn' || source === 'linkingIssn') return paperIdentifiers(p)[source==='electronicIssn'?'electronic':source==='printIssn'?'print':'linking'].join('; ');
