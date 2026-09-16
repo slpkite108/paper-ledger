@@ -16,13 +16,13 @@ export function PublicationDateEditor({ paper, onChange }: { paper: Paper; onCha
   async function fetchDate() { const current = ++seq.current; setBusy(true); setCandidate(null); setError(''); try { const result = await fetchCitationDate(url, paper.doi); if (current === seq.current) setCandidate(result); } catch (e) { if (current === seq.current) setError((e as Error).message); } finally { if (current === seq.current) setBusy(false); } }
   return <section className="publication-date-editor" aria-label="출판일 근거">
     <h3>출판일 근거 · {dateSummary(paper)}</h3>
-    <p>출판사에서 확인한 권호 발행일을 우선합니다. 그 외에는 월이 등록된 Crossref 인쇄일 → 온라인일 → 출판일 → 발행일 순으로 적용하며, 모두 연도만 있으면 월을 추정하지 않습니다.</p>
+    <p>Tech Science Press(10.32604 DOI)는 논문을 불러올 때 출판사 페이지의 날짜를 자동 확인합니다. 출판사 자동 조회 → 원문 확인 기록 → 월이 등록된 Crossref 인쇄일·온라인일·출판일·발행일 순으로 적용하며, 월이 없으면 추정하지 않습니다.</p>
     <ul>{info?.candidates.map(c => <li key={c.source}>
       <span><strong>{c.date}</strong> · {dateLabels[c.source]}{c.date.length === 4 && ' (월 미상)'}{c.checkedOn && <small>확인일 {c.checkedOn} · {c.note}</small>}</span>
       {safeUrl(c.url) && <a href={safeUrl(c.url)} target="_blank" rel="noopener noreferrer">출처 ↗</a>}
       <Button variant="outline" size="sm" onClick={() => onChange(choosePublicationDate(paper, c))}>이 날짜 적용</Button>
     </li>)}</ul>
-    {!info?.crossrefChecked && paper.doi && !paper.arxiv && <p>Crossref 확인 전입니다. 아래 ‘Crossref 서지정보·날짜 확인’으로 재확인할 수 있습니다.</p>}
+    {!info?.crossrefChecked && paper.doi && !paper.arxiv && <p>Crossref 확인 전입니다. 아래 ‘출판정보·날짜 확인’으로 재확인할 수 있습니다.</p>}
     {info?.selected === 'openalex' && !info.manual && <p>OpenAlex 날짜는 출처에서 보완한 값일 수 있습니다. 특히 1월 1일 표시는 실제 발행일인지 원문에서 확인하세요.</p>}
     <p>접수일·게재 승인일·DOI 등록일은 출판일로 사용하지 않습니다. 아래 출판년월을 직접 입력하거나 날짜를 선택하면 자동 조회로 덮어쓰지 않습니다.</p>
     {info?.manual && <Button variant="outline" size="sm" onClick={() => onChange(applyPublicationDates(paper, { ...info, manual: false }))}>자동 기준으로 되돌리기</Button>}
