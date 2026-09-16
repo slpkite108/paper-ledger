@@ -60,11 +60,14 @@ test('journal search candidates retain Crossref medium metadata through conversi
   const p=a.candidateToPaper(c,author,'Researcher');assert.equal(a.sourceValue(p,'electronicIssn'),eISSN);assert.equal(a.sourceValue(p,'printIssn'),pISSN);
 });
 
-test('default ISSN prefers ISSN-L and falls back to the original first identifier, never inferred media order',()=>{
+test('ISSN-L priority is optional and switching repeatedly preserves the original first identifier',()=>{
   for(const linking of [pISSN,eISSN,undefined]){
     const p=a.toPaper({id:'https://openalex.org/W2',type:'journal-article',primary_location:{source:{type:'journal',issn:[eISSN,pISSN],issn_l:linking}}},author,'Researcher');
     const next=a.applyCrossref(p,a.crossrefData(metadata));
-    assert.equal(next.values.issn,linking||eISSN);assert.equal(a.sourceValue(next,'issn'),linking||eISSN);
+    assert.equal(next.values.issn,eISSN);assert.equal(a.sourceValue(next,'issn'),eISSN);
+    const preferred=a.withIssnPreference(next,true);assert.equal(preferred.values.issn,linking||eISSN);
+    const refreshed=a.applyCrossref(preferred,a.crossrefData(metadata));assert.equal(refreshed.values.issn,linking||eISSN);
+    const original=a.withIssnPreference(refreshed,false);assert.equal(original.values.issn,eISSN);assert.equal(next.values.issn,eISSN);
     assert.deepEqual(new Set(a.allIdentifiers(a.paperIdentifiers(next))),new Set([pISSN,eISSN]));
     assert.equal(a.sourceValue(next,'linkingIssn'),linking||'');
   }
@@ -72,12 +75,43 @@ test('default ISSN prefers ISSN-L and falls back to the original first identifie
   const next=a.applyCrossref(empty,a.crossrefData(metadata));assert.equal(next.values.issn,pISSN);assert.equal(a.sourceValue(next,'linkingIssn'),'');
 });
 
-test('default CSV and Excel export the same single ISSN-L and preserve manual overrides',async()=>{
-  const p=enriched(),layout=a.defaultLayout();
-  const expected=pISSN,header=layout.columns.findIndex(c=>c.source==='issn');
-  assert.equal(a.layoutCsv([p],layout).split('\r\n')[1].split(',')[header],'"'+expected+'"');
-  assert.equal(a.makeCsv([p]).split('\r\n')[1].split(',')[header],'"'+expected+'"');
-  const reopened=new ExcelJS.Workbook();await reopened.xlsx.load(await a.ledgerXlsx([p],layout));
-  assert.equal(reopened.worksheets[0].getRow(2).getCell(header+1).value,expected);
+test('CSV and Excel obey the layout ISSN option even when a paper has the opposite projected preference',async()=>{
+  const p=a.applyCrossref(a.toPaper({id:'https://openalex.org/W4',type:'journal-article',primary_location:{source:{type:'journal',issn:[eISSN,pISSN],issn_l:pISSN}}},author,'Researcher'),a.crossrefData(metadata));
+  for(const preferIssnL of [false,true]) {
+    const layout={...a.defaultLayout(),preferIssnL},expected=preferIssnL?pISSN:eISSN,header=layout.columns.findIndex(c=>c.source==='issn');
+    const opposite=a.withIssnPreference(p,!preferIssnL);
+    assert.equal(a.layoutCsv([opposite],layout).split('\r\n')[1].split(',')[header],'"'+expected+'"');
+    assert.equal(a.makeCsv([a.withIssnPreference(p,preferIssnL)]).split('\r\n')[1].split(',')[header],'"'+expected+'"');
+    const reopened=new ExcelJS.Workbook();await reopened.xlsx.load(await a.ledgerXlsx([opposite],layout));
+    assert.equal(reopened.worksheets[0].getRow(2).getCell(header+1).value,expected);
+  }
   const manual=a.setManualIssn(p,eISSN);assert.equal(a.sourceValue(a.applyCrossref(manual,a.crossrefData(metadata)),'issn'),eISSN);
+});
+
+test('presets and favorites default to first ISSN and retain an explicit ISSN-L option through JSON',()=>{
+  const legacy={...a.defaultLayout()};delete legacy.preferIssnL;
+  assert.equal(a.defaultLayout().preferIssnL,false);assert.equal(a.layoutSchema.parse(legacy).preferIssnL,false);
+  const payload={authors:[author],professorNames:{},from:'',to:''};
+  assert.equal(a.favoritePayloadSchema.parse(payload).preferIssnL,false);
+  for(const preferIssnL of [false,true]){
+    assert.equal(a.layoutSchema.parse(JSON.parse(JSON.stringify({...legacy,preferIssnL}))).preferIssnL,preferIssnL);
+    assert.equal(a.favoritePayloadSchema.parse(JSON.parse(JSON.stringify({...payload,preferIssnL}))).preferIssnL,preferIssnL);
+  }
+});
+test('ISSN sorting follows the selected number while SCIE matching retains every edition',()=>{
+  const make=(id,first,linking)=>a.toPaper({id:'https://openalex.org/W'+id,type:'journal-article',primary_location:{source:{type:'journal',issn:[first,first===eISSN?pISSN:eISSN],issn_l:linking}}},author,'Researcher');
+  const papers=[make('A',eISSN,pISSN),make('B',pISSN,eISSN)];
+  const reference={id:'ref',name:'reference',year:'2026',url:'https://mjl.clarivate.com/',rows:[{venue:'Journal',issn:pISSN,alias:'',category:'SCIE',value:'',impactFactor:''}]};
+  for(const preferIssnL of [false,true]){
+    const sorted=a.sortPapers(papers,{...a.defaultLayout(),preferIssnL,sort:[{key:'issn',direction:'asc'}]});
+    assert.deepEqual(sorted.map(p=>p.id),preferIssnL?papers.map(p=>p.id):[...papers].reverse().map(p=>p.id));
+    assert.ok(sorted.every(p=>a.matchReference(p,reference).length===1));
+    assert.equal(a.sourceValue(sorted[0],'linkingIssn'),preferIssnL?pISSN:eISSN);
+  }
+});
+test('switching the ISSN preference leaves manual edits and explicit clearing intact',()=>{
+  for(const value of ['',eISSN])for(const preferIssnL of [false,true]){
+    const manual=a.setManualIssn(enriched(),value),p=a.applyCrossref(a.withIssnPreference(manual,preferIssnL),a.crossrefData(metadata));
+    assert.equal(p.values.issn,value);assert.equal(a.primaryIssn(p),value);
+  }
 });
