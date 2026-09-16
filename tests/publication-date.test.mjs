@@ -51,7 +51,8 @@ test('manual date and manual kind survive repeated background and blank-enrichme
   for(let i=0;i<2;i++)p=app.applyCrossref(p,data,true);
   assert.equal(p.values.published,'2025-06');assert.equal(p.publicationDate,'2025-06');assert.equal(p.publicationKind,'conference');assert.equal(p.values.volume,'143');
   assert.equal(p.publicationDates.candidates.filter(c=>c.source==='crossref-print').length,1);
-  assert.equal(app.applyPublicationDates(p,{...p.publicationDates,manual:false}).values.published,'2025-05');
+  // A conference without an event date must not fall back to the journal/book publication date.
+  assert.equal(app.applyPublicationDates(p,{...p.publicationDates,manual:false}).values.published,'');
   const cleared=app.applyCrossref(app.setManualPublicationDate(p,''),data);assert.equal(cleared.values.published,'');assert.equal(cleared.publicationDate,'');
 });
 test('choosing an online date protects it and retains full day precision for latest-version selection',()=>{

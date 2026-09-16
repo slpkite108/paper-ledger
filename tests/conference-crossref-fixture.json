@@ -1,0 +1,147 @@
+{
+  "DOI": "10.1007/978-981-96-5693-6_46",
+  "type": "book-chapter",
+  "title": [
+    "Differential Privacy for Personalized Federated Learning Based Hypernetworks"
+  ],
+  "container-title": [
+    "Lecture Notes in Electrical Engineering",
+    "Advances in Computer Science and Ubiquitous Computing"
+  ],
+  "ISSN": [
+    "1876-1100",
+    "1876-1119"
+  ],
+  "published-print": {
+    "date-parts": [
+      [
+        2025
+      ]
+    ]
+  },
+  "published-online": {
+    "date-parts": [
+      [
+        2025,
+        5,
+        15
+      ]
+    ]
+  },
+  "published": {
+    "date-parts": [
+      [
+        2025
+      ]
+    ]
+  },
+  "issued": {
+    "date-parts": [
+      [
+        2025
+      ]
+    ]
+  },
+  "assertion": [
+    {
+      "value": "15 May 2025",
+      "order": 1,
+      "name": "first_online",
+      "label": "First Online",
+      "group": {
+        "name": "ChapterHistory",
+        "label": "Chapter History"
+      }
+    },
+    {
+      "value": "CSA",
+      "order": 1,
+      "name": "conference_acronym",
+      "label": "Conference Acronym",
+      "group": {
+        "name": "ConferenceInfo",
+        "label": "Conference Information"
+      }
+    },
+    {
+      "value": "International Conference on Computer Science and its Applications",
+      "order": 2,
+      "name": "conference_name",
+      "label": "Conference Name",
+      "group": {
+        "name": "ConferenceInfo",
+        "label": "Conference Information"
+      }
+    },
+    {
+      "value": "Pattaya",
+      "order": 3,
+      "name": "conference_city",
+      "label": "Conference City",
+      "group": {
+        "name": "ConferenceInfo",
+        "label": "Conference Information"
+      }
+    },
+    {
+      "value": "Thailand",
+      "order": 4,
+      "name": "conference_country",
+      "label": "Conference Country",
+      "group": {
+        "name": "ConferenceInfo",
+        "label": "Conference Information"
+      }
+    },
+    {
+      "value": "2024",
+      "order": 5,
+      "name": "conference_year",
+      "label": "Conference Year",
+      "group": {
+        "name": "ConferenceInfo",
+        "label": "Conference Information"
+      }
+    },
+    {
+      "value": "18 December 2024",
+      "order": 7,
+      "name": "conference_start_date",
+      "label": "Conference Start Date",
+      "group": {
+        "name": "ConferenceInfo",
+        "label": "Conference Information"
+      }
+    },
+    {
+      "value": "20 December 2024",
+      "order": 8,
+      "name": "conference_end_date",
+      "label": "Conference End Date",
+      "group": {
+        "name": "ConferenceInfo",
+        "label": "Conference Information"
+      }
+    },
+    {
+      "value": "csa12024",
+      "order": 10,
+      "name": "conference_id",
+      "label": "Conference ID",
+      "group": {
+        "name": "ConferenceInfo",
+        "label": "Conference Information"
+      }
+    },
+    {
+      "value": "http://csa-conference.org/2024/",
+      "order": 11,
+      "name": "conference_url",
+      "label": "Conference URL",
+      "group": {
+        "name": "ConferenceInfo",
+        "label": "Conference Information"
+      }
+    }
+  ]
+}
