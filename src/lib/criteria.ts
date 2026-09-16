@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { allIdentifiers, paperIdentifiers } from './journal-identifiers';
 import bkCs from './bk-cs-data.json';
 import ieeeScie from './ieee-scie-2026.json';
 import type { Paper } from './papers';
@@ -54,7 +55,7 @@ function referenceIndex(reference:Reference) {
 }
 export function matchReference(p:Paper,reference:Reference) {
   if(p.arxiv || p.publicationKind==='preprint')return [];
-  const key=venueKey(p.values.venue); const ids=issns(p.values.issn);
+  const key=venueKey(p.values.venue); const ids=issns(allIdentifiers(paperIdentifiers(p)).join('; '));
   const index=referenceIndex(reference),suffix=p.values.venue.match(/\s*\(([^()]*)\)\s*$/);
   const candidates=new Set([...(index.names.get(key)||[]),...(suffix?index.names.get(venueKey(p.values.venue.slice(0,suffix.index)))||[]:[]),...ids.flatMap(id=>index.ids.get(id)||[])]);
   return [...candidates].filter(row=>{

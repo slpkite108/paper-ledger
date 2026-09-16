@@ -1,10 +1,12 @@
 import { z } from 'zod';
+import { paperIdentifiers, preferredIssn, issnSummary } from './journal-identifiers';
 import { fields, csvCell, type Paper } from './papers';
 import { kindLabels } from './publications';
 import { criteriaSchema, defaultCriteria } from './criteria';
 import { dateFromParts, dateSummary, dateForBasis, dateBasisLabels } from './publication-dates';
 
 export const sources = [...fields.map(f => ({ key: f.key as string, label: f.label as string })),
+  { key: 'electronicIssn', label: '온라인 ISSN (eISSN)' }, { key: 'printIssn', label: '인쇄 ISSN (pISSN)' }, { key: 'linkingIssn', label: '연결 ISSN (ISSN-L)' }, { key: 'preferredIssn', label: 'ISSN (온라인 우선)' }, { key: 'issnDetails', label: 'ISSN 매체 구분' },
   { key: 'publicationKind', label: '학술유형 (저널/Conference)' }, { key: 'doi', label: 'DOI' },
   { key: 'publicationDateSource', label: '출판일·개최일 근거' },
   { key: 'issueDate', label: '권·호 발행일 (원본)' }, { key: 'onlineDate', label: '온라인 게재일 (원본)' }, { key: 'publicationDateBasis', label: '출판일 적용 기준' },
@@ -27,7 +29,7 @@ export const defaultSort: SortRule[] = [{ key: 'published', direction: 'desc' },
 export function defaultLayout(): Layout { return { version: 1, id: 'default-17', dateBasis: 'issue', name: '기본 연구실적 17항목', criteria: structuredClone(defaultCriteria), columns: fields.map(f => ({ id: f.key, label: f.label, source: f.key, constant: '', width: ['title', 'coauthors', 'venue', 'link'].includes(f.key) ? 45 : 20, align: 'left', format: ['authorCount', 'assistants', 'funders'].includes(f.key) ? 'number' : 'text' })), style: { headerColor: '#234264', fontSize: 11, striped: true, wrap: true }, sort: defaultSort }; }
 export function newColumn(label = '새 항목'): Column { return { id: crypto.randomUUID(), label, source: matchHeader(label), constant: '', width: 24, align: 'left', format: 'text' }; }
 function normalize(s: string) { return s.normalize('NFKC').toLowerCase().replace(/<br\s*\/?\s*>/gi, '').replace(/[\s_()·/\-]/g, ''); }
-const aliases: Record<string, string[]> = { title: ['제목', '논문제목', 'title', 'paper title'], professor: ['교수', '참여 교수', '연구자'], firstAuthor: ['제1저자', '주저자', 'first author'], coauthors: ['공저자', '공동저자', 'coauthors'], venue: ['학술지명', '학술대회명', '학회명', 'journal', 'conference', 'venue'], published: ['발행년월', '출판일', '출판연도', '발행연도', 'publication date', 'year'], authorCount: ['저자 수', 'authors count'], pages: ['페이지', 'pages'], volume: ['권', 'volume'], link: ['url', '링크', '인터넷 link 주소'], impactFactor: ['if', 'impact factor', '인정 if'], category: ['구분', '인정구분'], contribution: ['기여율(%)'], scie: ['scie', 'scie 여부'], bk: ['bk', 'bk인정'], h5: ['h5', 'h5-index'] };
+const aliases: Record<string, string[]> = { electronicIssn: ['eISSN','e-ISSN','electronic ISSN','online ISSN','온라인 ISSN'], printIssn: ['pISSN','p-ISSN','print ISSN','인쇄 ISSN'], linkingIssn: ['ISSN-L'], title: ['제목', '논문제목', 'title', 'paper title'], professor: ['교수', '참여 교수', '연구자'], firstAuthor: ['제1저자', '주저자', 'first author'], coauthors: ['공저자', '공동저자', 'coauthors'], venue: ['학술지명', '학술대회명', '학회명', 'journal', 'conference', 'venue'], published: ['발행년월', '출판일', '출판연도', '발행연도', 'publication date', 'year'], authorCount: ['저자 수', 'authors count'], pages: ['페이지', 'pages'], volume: ['권', 'volume'], link: ['url', '링크', '인터넷 link 주소'], impactFactor: ['if', 'impact factor', '인정 if'], category: ['구분', '인정구분'], contribution: ['기여율(%)'], scie: ['scie', 'scie 여부'], bk: ['bk', 'bk인정'], h5: ['h5', 'h5-index'] };
 export function matchHeader(label: string) { const n = normalize(label); return sources.find(f => normalize(f.label) === n || normalize(f.key) === n || aliases[f.key]?.some(a => normalize(a) === n))?.key || 'manual'; }
 
 // Excel TSV quoting permits tabs and line breaks inside quoted cells.
@@ -49,6 +51,9 @@ export function headersFromTsv(text: string, orientation: 'row' | 'column') {
   return labels.map(label => newColumn(label));
 }
 export function sourceValue(p: Paper, source: string): string {
+  if (source === 'preferredIssn') return preferredIssn(p);
+  if (source === 'issnDetails') return issnSummary(p);
+  if (source === 'electronicIssn' || source === 'printIssn' || source === 'linkingIssn') return paperIdentifiers(p)[source==='electronicIssn'?'electronic':source==='printIssn'?'print':'linking'].join('; ');
   if (source in p.values) return p.values[source as keyof Paper['values']];
   if (source === 'issueDate' || source === 'onlineDate') return dateForBasis(p.publicationDates,source==='issueDate'?'issue':'online')?.date||'';
   if (source === 'publicationDateBasis') return p.publicationKind==='conference'?'학술대회 개최일':p.publicationKind==='journal'?dateBasisLabels[p.publicationDates?.basis||'issue']+' · '+dateSummary(p):'저널 외 문헌';
