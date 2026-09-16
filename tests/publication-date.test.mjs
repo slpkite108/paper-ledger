@@ -87,3 +87,84 @@ test('direct Cite fetch uses public requests and returns a useful CORS fallback'
     await assert.rejects(app.fetchCitationDate('javascript:alert(1)','10.1234/example'),/http/);
   }finally{globalThis.fetch=saved;}
 });
+
+test('the two currently unknown months have verified publisher fallbacks',()=>{
+  for(const [doi,date] of [['10.32604/cmc.2026.080992','2026-06'],['10.32604/cmc.2025.063815','2025-05']]) {
+    const p=app.toPaper({...work,doi},author,'Researcher');assert.equal(p.values.published,date);
+  }
+});
+test('automatic publisher lookup sends only DOI and applies its date after Crossref year-only',async()=>{
+  const saved=globalThis.fetch;const doi='10.32604/cmc.2026.080992';
+  try {
+    let calls=0;
+    globalThis.fetch=async(url,options)=>{calls++;assert.equal(new URL(url).searchParams.get('doi'),doi);assert.equal(options.credentials,'omit');assert.equal(options.headers,undefined);return Response.json({doi,source:'publisher-metadata',date:'2026-06-15',url:'https://www.techscience.com/cmc/v88n2/67650',checkedOn:'2026-09-16'});};
+    assert.equal(await app.getPublisherDate('10.9999/unsupported'),null);assert.equal(calls,0);
+    const candidate=await app.getPublisherDate(doi);
+    const p=app.applyPublisherDate(app.applyCrossref(app.toPaper({...work,doi,publication_year:2026},author,'Researcher'),metadata({'published-print':parts(2026)})),candidate);
+    assert.equal(p.values.published,'2026-06');assert.equal(p.publicationDates.selected,'publisher-metadata');assert.equal(p.publicationDates.publisherChecked,true);
+    assert.equal(app.applyCrossref(p,metadata({'published-print':parts(2026)})).values.published,'2026-06');
+    assert.equal(app.applyPublisherDate(app.setManualPublicationDate(p,'2026-07'),candidate).values.published,'2026-07');
+  }finally{globalThis.fetch=saved;}
+});
+test('automatic publisher lookup rejects mismatched DOI, invalid dates, hostile URLs and failures',async()=>{
+  const saved=globalThis.fetch,doi='10.32604/cmc.2026.080992';
+  const good={doi,source:'publisher-metadata',date:'2026-06-15',url:'https://www.techscience.com/cmc/v88n2/67650'};
+  try {
+    for(const extra of [{doi:'10.32604/cmc.wrong'},{date:'2026-02-30'},{url:'https://techscience.com.evil.example/'},{source:'openalex'}]) { globalThis.fetch=async()=>Response.json({...good,...extra});await assert.rejects(app.getPublisherDate(doi),/응답/); }
+    globalThis.fetch=async()=>new Response('{}',{status:502});await assert.rejects(app.getPublisherDate(doi),/확인 실패/);
+  }finally{globalThis.fetch=saved;}
+});
+
+const range = (from='',fromMonth='',to='',toMonth='') => ({from,fromMonth,to,toMonth});
+test('month ranges are inclusive and support same-month, cross-year and one-sided bounds',()=>{
+  const may=range('2025','05','2025','05');
+  for(const value of ['2025-05','2025-05-01','2025-05-31'])assert.equal(app.publicationInRange(value,may,false),true);
+  for(const value of ['2025-04','2025-06','2024-05'])assert.equal(app.publicationInRange(value,may,false),false);
+  const winter=range('2025','11','2026','02');
+  for(const value of ['2025-11','2025-12','2026-01','2026-02'])assert.equal(app.publicationInRange(value,winter,false),true);
+  for(const value of ['2025-10','2026-03'])assert.equal(app.publicationInRange(value,winter,false),false);
+  assert.equal(app.publicationInRange('2024-12',range('2025','05'),true),false);
+  assert.equal(app.publicationInRange('2026-12',range('2025','05'),false),true);
+  assert.equal(app.publicationInRange('2025-06',range('','','2025','05'),true),false);
+  assert.equal(app.publicationInRange('',range(),false),true);
+});
+test('invalid years, invalid months, orphan month and reversed periods are rejected',()=>{
+  for(const invalid of [range('20'),range('2101'),range('2025','13'),range('2025','00'),range('','05'),range('2025','06','2025','05'),range('2026','','2025','')])assert.notEqual(app.publicationRangeError(invalid),'');
+  for(const valid of [range(),range('2025','','2025',''),range('2025','05','2025','05'),range('2025','11','2026','02')])assert.equal(app.publicationRangeError(valid),'');
+});
+test('unknown months stay uncertain; only overlapping years can be included',()=>{
+  const may=range('2025','05','2025','05');
+  assert.equal(app.publicationInRange('2025',may,true),true);
+  assert.equal(app.publicationInRange('2025',may,false),false);
+  assert.equal(app.publicationInRange('2024',may,true),false);
+  assert.equal(app.publicationInRange('2026',may,true),false);
+  assert.equal(app.publicationInRange('',may,true),true);
+  assert.equal(app.publicationInRange('',may,false),false);
+  assert.equal(app.publicationInRange('2025',range('2025','','2025',''),false),true);
+  assert.equal(app.publicationInRange('2025',range('2024','11','2026','02'),false),true);
+});
+test('month filtering uses corrected publisher dates instead of OpenAlex January placeholders',()=>{
+  const corrected=app.toPaper({...work,doi:'10.32604/cmc.2025.063815'},author,'Researcher');
+  const options={excludeArxiv:false,mergeLatest:true,publicationKind:'all',range:range('2025','05','2025','05'),includeUnknownMonths:false};
+  assert.equal(app.visiblePublications([corrected],options).length,1);
+  assert.equal(app.visiblePublications([corrected],{...options,range:range('2025','01','2025','01')}).length,0);
+  assert.equal(app.visiblePublications([app.setManualPublicationDate(corrected,'2025-06')],options).length,0);
+});
+test('range filtering precedes latest-title merge, and CSV uses the same filtered rows',()=>{
+  const may=app.setManualPublicationDate(paper(),'2025-05');
+  const june=app.setManualPublicationDate({...paper(),id:'A1:W2'},'2025-06');
+  const result=app.visiblePublications([may,june],{excludeArxiv:false,mergeLatest:true,publicationKind:'all',range:range('2025','05','2025','05')});
+  assert.deepEqual(result.map(p=>p.id),[may.id]);
+  const layout=app.defaultLayout();layout.columns=layout.columns.filter(c=>['title','published'].includes(c.source));
+  const csv=app.layoutCsv(app.sortPapers(result,layout),layout);
+  assert.match(csv,/"2025-05"/);assert.doesNotMatch(csv,/2025-06/);
+});
+test('old favorites retain full-year ranges; new favorites preserve months and unknown-month policy',()=>{
+  const old={authors:[author],professorNames:{},from:'2025',to:'2026'};
+  const restored=app.favoritePayloadSchema.parse(old);
+  assert.equal(restored.fromMonth,'');assert.equal(restored.toMonth,'');assert.equal(restored.includeUnknownMonths,true);
+  const monthly={...restored,fromMonth:'11',toMonth:'02',includeUnknownMonths:false};
+  assert.deepEqual(app.favoritePayloadSchema.parse(JSON.parse(JSON.stringify(monthly))),monthly);
+  assert.equal(app.publicationRangeLabel(monthly),'2025-11 – 2026-02');
+  assert.equal(app.favoritePayloadSchema.safeParse({...monthly,from:'2026',fromMonth:'03'}).success,false);
+});
