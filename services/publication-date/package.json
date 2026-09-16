@@ -2,5 +2,5 @@
   "name": "paper-ledger-publication-date-api",
   "private": true,
   "type": "module",
-  "scripts": { "build": "node build.mjs", "test": "node --test worker.test.mjs" }
+  "scripts": { "build": "node build.mjs", "test": "node --test *.test.mjs" }
 }

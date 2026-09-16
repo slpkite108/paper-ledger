@@ -1,3 +1,4 @@
+import { createJournalService } from './journals.mjs';
 const SUPPORTED_DOI = /^10\.32604\/[a-z][a-z0-9.\-]{2,160}$/i;
 const PUBLISHER_HOSTS = new Set(['www.techscience.com', 'techscience.com']);
 const DOI_HOSTS = new Set(['doi.org', 'www.doi.org', 'dx.doi.org']);
@@ -54,12 +55,14 @@ export async function lookupPublisherDate(doi, fetcher = fetch) {
 }
 
 export function createDateService({ fetcher = fetch, now = Date.now, edgeCache } = {}) {
+  const journals = createJournalService({fetcher,now});
   const memory = new Map(), pending = new Map(), limits = new Map();
   return { async fetch(request) {
     const url = new URL(request.url);
+    if (url.pathname === '/api/journal-search') return journals.fetch(request);
     if (request.method === 'OPTIONS') return new Response(null, { status: 204, headers: headers() });
     if (request.method !== 'GET') return json({ error: 'METHOD_NOT_ALLOWED' }, 405);
-    if (url.pathname === '/') return json({ service: 'Paper Ledger publication dates', endpoint: '/api/publication-date?doi=10.32604/...', publishers: ['Tech Science Press'], storesUserAccounts: false });
+    if (url.pathname === '/') return json({ service: 'Paper Ledger publication dates', endpoint: '/api/publication-date?doi=10.32604/...', publishers: ['Tech Science Press'], journalSearch: '/api/journal-search?source=hcis&author=Name&from=2025&to=2026', storesUserAccounts: false });
     if (url.pathname !== '/api/publication-date') return json({ error: 'NOT_FOUND' }, 404);
     const doi = normalizeDoi(url.searchParams.get('doi') || '');
     if (!SUPPORTED_DOI.test(doi)) return json({ error: 'UNSUPPORTED_DOI', supported: false }, 422);
