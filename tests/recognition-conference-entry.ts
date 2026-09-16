@@ -7,3 +7,4 @@ export * from '../src/lib/publications';
 export * from '../src/lib/publication-dates';
 export * from '../src/lib/papers';
 export * from '../src/lib/layouts';
+export * from '../src/lib/reference-import';

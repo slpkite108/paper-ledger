@@ -17,6 +17,59 @@ test('official datasets validate; no society recommendations are enabled',()=>{
   assert.ok(!app.defaultCriteria.automaticSources.includes('kiise-2024'));
   const old=app.criteriaSchema.parse({selected:'kiise-2024',custom:[]});assert.equal(old.automatic,true);assert.ok(!old.automaticSources.includes('kiise-2024'));
 });
+test('MJL-confirmed journals recognize print/electronic ISSNs and full titles',()=>{
+  for(const row of app.builtinMjl.rows) {
+    for(const issn of ['',...row.issn.split(';')]) {
+      const p=auto(make(issn?'Different upstream title':row.venue,'journal',issn));
+      assert.equal(p.values.category,'SCIE',row.venue);assert.equal(p.evidence.scie.year,'2026');
+      assert.match(p.evidence.scie.url,/mjl.clarivate.com\/search-results\?issn=/);
+      assert.match(p.evidence.scie.note,/2026-09-16/);
+    }
+    assert.equal(auto(make(row.venue,'journal','9999-9999')).values.category,'');
+    assert.equal(auto(make(row.venue,'conference',row.issn)).values.category,'');
+  }
+  assert.equal(app.journalLookupUrl('2045-2322'),'https://mjl.clarivate.com/search-results?issn=2045-2322&hide_exact_match_fl=true');
+});
+test('old complete source presets upgrade once while restricted and disabled choices survive',()=>{
+  const old={selected:app.builtinBk.id,custom:[],automatic:true,automaticSources:app.builtinReferences.filter(r=>r!==app.builtinMjl).map(r=>r.id)};
+  const upgraded=app.criteriaSchema.parse(old);assert.ok(upgraded.automaticSources.includes(app.builtinMjl.id));
+  assert.equal(auto(make('Scientific Reports'),upgraded).values.category,'SCIE');
+  assert.deepEqual(app.criteriaSchema.parse(upgraded),upgraded);
+  const disabled={...upgraded,automaticSources:old.automaticSources};assert.deepEqual(app.criteriaSchema.parse(disabled).automaticSources,old.automaticSources);
+  assert.equal(app.criteriaSchema.parse({...old,automatic:false}).automatic,false);
+  assert.deepEqual(app.criteriaSchema.parse({...old,automaticSources:[]}).automaticSources,[]);
+  assert.deepEqual(app.criteriaSchema.parse({...old,automaticSources:[app.builtinIeee.id]}).automaticSources,[app.builtinIeee.id]);
+});
+test('CSV/Excel reference imports use SCIE index, preserve leading zero ISSNs, and exclude ESCI/SSCI/JIF-only rows',()=>{
+  const csv='\uFEFFJournal Title,ISSN,eISSN,Web of Science Index,JIF\r\n"Journal, A",0022-247X,1096-0813,Science Citation Index Expanded,2\r\nOther,1111-1111,,ESCI,20\r\nSocial,2222-2222,,SSCI,10\r\nUnknown,3333-3333,,,99';
+  for(const mode of ['mixed','scie']) {const result=app.importReferenceRows(csv,mode);assert.equal(result.rows.length,1);assert.equal(result.skipped,3);assert.equal(result.rows[0].issn,'0022-247X;1096-0813');assert.equal(result.rows[0].venue,'Journal, A');}
+  assert.throws(()=>app.importReferenceRows('Journal Title,JIF\nUnknown,99'),/Index/);
+  const paste='Journal Title\tISSN\teISSN\nScientific Reports\t2045-2322\t\nScientific Reports\t2045-2322\t';
+  const result=app.importReferenceRows(paste,'scie');assert.equal(result.rows.length,1);assert.equal(result.duplicates,1);
+  const r=app.referenceSchema.parse({id:'imported',name:'Official import',year:'2026',url:'https://mjl.clarivate.com/',rows:result.rows});
+  assert.equal(auto(make('Unknown title','journal','20452322'),customCriteria([r])).values.category,'SCIE');
+  assert.equal(app.importReferenceRows('학술지명\t구분\t값\nTest Conference\th5-index\t80').rows[0].category,'h5-index');
+  assert.throws(()=>app.importReferenceRows('Journal Title,Index\n"Broken,SCIE'),/따옴표/);
+  assert.throws(()=>app.importReferenceRows('Journal Title,Index\nOther,ESCI','scie'),/대조할 행/);
+});
+test('large complete index lists can be matched and saved in presets without the old 5000-row limit',()=>{
+  const text='Journal Title,ISSN,Index\n'+Array.from({length:12000},(_,i)=>`Test Journal ${i},${String(i).padStart(4,'0').slice(-4)}-000X,SCIE`).join('\n');
+  const imported=app.importReferenceRows(text);assert.equal(imported.rows.length,12000);
+  const r=app.referenceSchema.parse({id:'large',name:'Large index',year:'2026',url:'https://mjl.clarivate.com/',rows:imported.rows});
+  const layout=app.defaultLayout();layout.criteria=customCriteria([r]);
+  assert.equal(app.layoutSchema.parse(JSON.parse(JSON.stringify(layout))).criteria.custom[0].rows.length,12000);
+  const p=auto(make('Test Journal 9999','journal','9999-000X'),layout.criteria);assert.equal(p.values.category,'SCIE');
+  assert.equal(app.matchReference(make('Test Journal 9999','journal','9999-000X'),r).length,1);
+  assert.throws(()=>app.importReferenceRows('Journal Title,Index\n'+'Example,SCIE\n'.repeat(30001)),/30,000/);
+});
+test('missing coverage, manual negative evidence and disabled matching have distinct labels',()=>{
+  const p=auto(make('Not in any reference'));
+  assert.equal(p.evidence.scie.status,'unknown');assert.match(app.recognitionLabel(p,app.defaultCriteria),/근거 미확인/);assert.doesNotMatch(app.recognitionLabel(p,app.defaultCriteria),/비해당/);
+  assert.match(app.recognitionLabel(p,{...app.defaultCriteria,automatic:false}),/꺼짐/);
+  const e=app.completeEvidence();e.scie={status:'no',year:'2026',url:'https://example.org/proof',note:'Checked'};
+  const no=auto({...make('Scientific Reports'),evidence:e});assert.equal(no.evidence.scie.status,'no');assert.match(app.recognitionLabel(no,app.defaultCriteria),/비해당/);
+  assert.match(app.recognitionLabel(make('Scientific Reports','unknown'),app.defaultCriteria),/학술유형/);
+});
 test('SCIE exact ISSN/full name matching rejects conflicts, ESCI and wrong types',()=>{
   const p=auto(make('Metadata title','journal','1545-5971'));
   assert.equal(p.values.category,'SCIE');assert.equal(p.evidence.scie.year,'2026');assert.match(p.evidence.scie.url,/IEEE-Title-List-August-2026/);
