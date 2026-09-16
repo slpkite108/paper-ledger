@@ -1,4 +1,4 @@
-import { builtinReferences, matchReference, type Criteria, type Reference } from './criteria';
+import { builtinReferences, matchReference, referenceEvidenceUrl, type Criteria, type Reference } from './criteria';
 import { completeEvidence, recognizedCategory, type RecognitionEvidence } from './recognition';
 import type { Paper } from './papers';
 
@@ -6,6 +6,16 @@ const same=(a:unknown,b:unknown)=>JSON.stringify(a)===JSON.stringify(b);
 type EvidenceKey=keyof RecognitionEvidence;
 const keys:EvidenceKey[]=['scie','bk','cs','h5'];
 const keyFor=(category:string):EvidenceKey|undefined=>({'SCIE':'scie','BK인정':'bk','CS우수학술대회':'cs','h5-index':'h5'} as Record<string,EvidenceKey>)[category];
+
+export function recognitionLabel(p:Paper,criteria:Criteria):string {
+  if(p.values.category)return p.values.category+(p.automaticRecognition?.category?' · 자동':'');
+  if(p.publicationKind==='journal'&&p.evidence?.scie.status==='no')return 'SCIE 비해당 · 직접 확인';
+  if(p.publicationKind==='journal'&&p.evidence?.scie.status==='yes')return 'SCIE 확인됨 · 구분 직접 설정';
+  if(!criteria.automatic)return '인정 자동 대조 꺼짐';
+  if(p.publicationKind==='unknown')return '인정 미확인 · 학술유형 확인 필요';
+  if(p.publicationKind==='preprint'||p.arxiv)return '인정 자동 대조 대상 아님';
+  return p.publicationKind==='journal'?'SCIE 근거 미확인 · 기준표 확인 필요':'인정 근거 미확인 · 기준표 확인 필요';
+}
 
 // Remove only values still owned by automation. Manual edits survive source changes.
 export function clearAutomaticRecognition(p:Paper):Paper {
@@ -39,7 +49,7 @@ export function automaticallyRecognize(paper:Paper,criteria:Criteria):Paper {
     const latest=items.filter(i=>Number(i.reference.year)===year);
     if(new Set(latest.map(i=>key==='h5'?i.row.value:'yes')).size!==1)continue;
     const {reference,row}=latest[0];
-    const common={year:reference.year,url:reference.url,note:reference.name+' · '+row.venue+(row.value?' · '+row.value:'')+' · 기준표 자동 일치 (논문별 제출 요건 별도 확인)'};
+    const common={year:reference.year,url:referenceEvidenceUrl(reference,row),note:reference.name+' · '+row.venue+(row.value?' · '+row.value:'')+' · 기준표 자동 일치 (논문별 제출 요건 별도 확인)'};
     const value=key==='h5'?{...common,value:row.value}:{...common,status:'yes' as const};
     Object.assign(evidence,{[key]:value});Object.assign(generated,{[key]:value});
   }
