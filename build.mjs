@@ -1,0 +1,13 @@
+import {build} from 'vite';
+import react from '@vitejs/plugin-react';
+import {cpSync,mkdirSync,readFileSync,writeFileSync} from 'node:fs';
+import {resolve} from 'node:path';
+const root=process.cwd();const cache=resolve('.build');const out=resolve('docs');
+const google=JSON.parse(readFileSync('src/lib/google-config.json','utf8'));
+writeFileSync('public/config.js','// Public OAuth client ID only. Never add API keys, tokens or client secrets.\nwindow.PAPER_LEDGER_CONFIG = '+JSON.stringify(google,null,2)+';\n');
+await build({configFile:false,plugins:[react()],publicDir:false,resolve:{alias:{'@':resolve('src')}},define:{'process.env.NODE_ENV':JSON.stringify('production')},build:{outDir:cache,emptyOutDir:false,target:'es2022',minify:true,lib:{entry:resolve('src/main.tsx'),name:'PaperLedger',formats:['iife'],fileName:()=> 'paper-ledger.js',cssFileName:'paper-ledger'},cssCodeSplit:false}});
+const js=readFileSync(resolve(cache,'paper-ledger.js'),'utf8');const css=readFileSync(resolve(cache,'paper-ledger.css'),'utf8');
+const html='<!doctype html>\n<html lang="ko"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="저자별 논문 검색과 사용자 연구실적 양식"><title>논문대장 · 저자별 연구실적</title><link rel="icon" href="./favicon.svg"><style>'+css.replaceAll('</style','<\\/style')+'</style></head><body><noscript>JavaScript를 허용해 주세요.</noscript><div id="root"></div><script>window.__PAPER_LEDGER_LOCAL__=true;</script><script src="./config.js"></script><script>'+js.replaceAll('</script','<\\/script')+'</script></body></html>';
+mkdirSync(out,{recursive:true});writeFileSync(resolve(out,'index.html'),html);writeFileSync(resolve(out,'.nojekyll'),'');
+for(const name of ['config.js','privacy.html','favicon.svg'])cpSync(resolve('public',name),resolve(out,name));
+console.log('Built GitHub Pages files in docs/.');
