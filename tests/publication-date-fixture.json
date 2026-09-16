@@ -1,0 +1,86 @@
+{
+  "openalex": {
+    "id": "https://openalex.org/W4409706015",
+    "doi": "https://doi.org/10.32604/cmes.2025.063811",
+    "title": "Defending against Backdoor Attacks in Federated Learning by Using Differential Privacy and OOD Data Attributes",
+    "publication_date": "2025-01-01",
+    "publication_year": 2025,
+    "type": "article",
+    "primary_location": {
+      "id": "doi:10.32604/cmes.2025.063811",
+      "is_oa": true,
+      "landing_page_url": "https://doi.org/10.32604/cmes.2025.063811",
+      "pdf_url": "https://cdn.techscience.press/files/CMES/2025/TSP_CMES-143-2/TSP_CMES_63811/TSP_CMES_63811.pdf",
+      "source": {
+        "id": "https://openalex.org/S92199883",
+        "display_name": "Computer Modeling in Engineering & Sciences",
+        "issn_l": "1526-1492",
+        "issn": [
+          "1526-1492",
+          "1526-1506"
+        ],
+        "is_oa": true,
+        "is_in_doaj": false,
+        "is_core": true,
+        "host_organization": "https://openalex.org/P4324000061",
+        "host_organization_name": "Tech Science Press",
+        "host_organization_lineage": [
+          "https://openalex.org/P4324000061"
+        ],
+        "host_organization_lineage_names": [
+          "Tech Science Press"
+        ],
+        "type": "journal"
+      },
+      "license": "cc-by",
+      "license_id": "https://openalex.org/licenses/cc-by",
+      "version": "publishedVersion",
+      "is_accepted": true,
+      "is_published": true,
+      "raw_source_name": "Computer Modeling in Engineering &amp; Sciences",
+      "raw_type": "journal-article"
+    },
+    "biblio": {
+      "volume": "143",
+      "issue": "2",
+      "first_page": "2417",
+      "last_page": "2428"
+    }
+  },
+  "checkedOn": "2026-09-16",
+  "ris": "TY  - EJOU\nPY  - 2025\nDO  - 10.32604/cmes.2025.063811",
+  "publisherMeta": "<meta name=\"citation_publication_date\" content=\"2025/05/30\"/><meta name=\"citation_doi\" content=\"10.32604/cmes.2025.063811\"/>",
+  "publisherUrl": "https://www.techscience.com/CMES/v143n2/61439",
+  "crossref": {
+    "DOI": "10.32604/cmes.2025.063811",
+    "type": "journal-article",
+    "published": {
+      "date-parts": [
+        [
+          2025
+        ]
+      ]
+    },
+    "published-print": {
+      "date-parts": [
+        [
+          2025
+        ]
+      ]
+    },
+    "published-online": {
+      "date-parts": [
+        [
+          2025
+        ]
+      ]
+    },
+    "issued": {
+      "date-parts": [
+        [
+          2025
+        ]
+      ]
+    }
+  }
+}
