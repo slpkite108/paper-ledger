@@ -36,7 +36,7 @@ import { automaticallyRecognize, recognitionLabel } from '@/lib/automatic-recogn
 import { journalLookupUrl } from '@/lib/criteria';
 import { supplementalPapers, mergePaperSources } from '@/lib/supplemental-papers';
 import { JournalSearch } from '@/components/journal-search';
-import { defaultJournalSources, journalSourcesSchema, mergeJournalPapers, type JournalSource } from '@/lib/journal-search';
+import { defaultJournalSources, journalSourcesSchema, mergeJournalPapers, discoverJournalCandidates, type JournalSource, type JournalResult } from '@/lib/journal-search';
 import type { PublicationRange } from '@/lib/publication-range';
 
 function saveFile(content: string, filename: string) { const url = URL.createObjectURL(new Blob([content], { type: 'text/csv;charset=utf-8;' })); const a = document.createElement('a'); a.href = url; a.download = filename; a.click(); setTimeout(() => URL.revokeObjectURL(url), 1000); }
@@ -51,6 +51,7 @@ export default function Home() {
   const [searching, setSearching] = useState(false); const [searchError, setSearchError] = useState('');
   const [chosenAuthors, setChosenAuthors] = useState<Author[]>([]);
   const [journalSources,setJournalSources]=useState<JournalSource[]>(()=>{try {return journalSourcesSchema.parse(JSON.parse(localStorage.getItem('paper-ledger-journal-sources')||'null'));}catch{return defaultJournalSources;}});
+  const [journalResults,setJournalResults]=useState<JournalResult[]>([]),[journalRun,setJournalRun]=useState(0);
   function changeJournalSources(sources:JournalSource[]){setJournalSources(sources);try{localStorage.setItem('paper-ledger-journal-sources',JSON.stringify(sources));}catch{setNotice('이 브라우저에 저널 목록을 저장하지 못했습니다. 즐겨찾기에 저장하세요.');}}
   const [professorNames, setProfessorNames] = useState<Record<string, string>>({});
   const [from, setFrom] = useState(''); const [to, setTo] = useState('');
@@ -79,6 +80,7 @@ export default function Home() {
   }
   function restoreFavorite(favorite: Favorite) {
     ++classificationSeq.current; setClassifying(false); setClassificationStatus('');
+    setJournalResults([]);setJournalRun(n=>n+1);
     const p = favorite.payload;
     if(p.journalSources)changeJournalSources(p.journalSources);
     setChosenAuthors(p.authors); setProfessorNames(p.professorNames); setFrom(p.from); setTo(p.to);
@@ -135,6 +137,7 @@ export default function Home() {
   }
   function pickAuthor(a: Author) {
     if (loading) return;
+    setJournalResults(prev=>prev.filter(r=>r.author.id!==a.id));
     const removing = chosenAuthors.some(v => v.id === a.id);
     setChosenAuthors(prev => removing ? prev.filter(v => v.id !== a.id) : [...prev, a]);
     if (removing) {
@@ -161,6 +164,7 @@ export default function Home() {
     const typeCandidates: Paper[] = [];
     const seq = ++worksSeq.current; setLoading(true); setPaperError(''); setNotice('');
     const targets = more ? chosenAuthors.filter(a => !authorStats[a.id] || (authorStats[a.id].cursor && authorStats[a.id].loaded < authorStats[a.id].total)) : chosenAuthors;
+    if(!more){setJournalResults([]);setJournalRun(n=>n+1);}
     const errors: string[] = []; let successes = 0;
     for (const a of targets) {
       setWorkingAuthor(a.display_name);
@@ -184,6 +188,12 @@ export default function Home() {
         if (e instanceof ClientApiError && [429, 401, 403].includes(e.status)) { errors.push('남은 저자의 요청을 중단했습니다. 기존 조회 결과와 편집 내용은 유지됩니다.'); break; }
       }
     }
+    // Journal discovery is independent of OpenAlex success and never adds name-only matches to exports.
+    if(!more)await discoverJournalCandidates(chosenAuthors,journalSources,range,includeUnknownMonths,{
+      isCurrent:()=>seq===worksSeq.current,
+      onStatus:text=>setWorkingAuthor('등록 저널 검색 · '+text),
+      onResult:result=>setJournalResults(prev=>[...prev,result]),
+    });
     if (seq === worksSeq.current) { setLoading(false); setWorkingAuthor(''); setLoaded(successes > 0); setPaperError(errors.join(' / ')); if (typeCandidates.length) void classifyPapers(typeCandidates); }
   }
   function openEdit(p: Paper) { ++editSeq.current; setEditing({ ...p, values: { ...p.values } }); setEditError(''); setEnriching(false); }
@@ -217,11 +227,11 @@ export default function Home() {
       {searchError && <p className="error" role="alert">{searchError}</p>}
       <div className="author-heading"><h2>저자 후보</h2><span>{searched ? count(authorTotal) + '명' : '소속을 확인해 주세요'}</span></div>
       {searching && !authors.length ? <div className="skeleton-stack"><Skeleton className="h-28 w-full"/><Skeleton className="h-28 w-full"/></div> : authors.length ? <div className="author-list">{authors.map(a => <label htmlFor={'author-' + shortId(a.id)} className={'author-card ' + (chosenAuthors.some(v => v.id === a.id) ? 'active' : '')} key={a.id}><div className="author-card-title"><strong>{a.display_name}</strong><Checkbox id={'author-' + shortId(a.id)} checked={chosenAuthors.some(v => v.id === a.id)} onCheckedChange={() => pickAuthor(a)} disabled={loading} aria-label={a.display_name + ' 저자 선택'}/></div><p>{a.last_known_institutions?.map(i => i.display_name).join(' · ') || '소속 정보 없음'}</p><span>{count(a.works_count ?? 0)}개 연구문헌 · {shortId(a.id)}</span>{a.orcid && <small>ORCID {shortId(a.orcid)}</small>}</label>)}{authors.length < authorTotal && authorPage < 500 && <Button variant="outline" className="w-full" onClick={() => search(authorPage + 1)} disabled={searching}>저자 후보 더 보기</Button>}</div> : <Empty className="author-empty"><EmptyHeader><EmptyMedia variant="icon"><UserRound/></EmptyMedia><EmptyTitle>{searched ? '검색된 저자가 없습니다' : '저자를 검색해 시작하세요'}</EmptyTitle><EmptyDescription>{searched ? '다른 영문 표기나 ORCID로 검색해 보세요.' : '같은 이름의 연구자를 소속과 식별자로 구분합니다.'}</EmptyDescription></EmptyHeader></Empty>}
-      <div className="sidebar-note"><Info size={16}/><span>기본 저자 검색원은 OpenAlex입니다. 누락된 논문은 ‘저널 추가 검색’에서 찾아 보완할 수 있습니다. 조회 건수는 저자의 전체 논문 수를 보장하지 않습니다.</span></div>
+      <div className="sidebar-note"><Info size={16}/><span>논문 불러오기는 OpenAlex와 등록한 저널을 함께 검색합니다. 저널 후보는 ‘저널 후보 확인’에서 저자·소속 확인 후 대장에 추가하세요. 조회 건수는 저자의 전체 논문 수를 보장하지 않습니다.</span></div>
     </aside><main className="main-panel">
       <div className="page-heading"><div><div className="step-label">02 / PUBLICATION RECORDS</div><h2>연구실적 정리</h2><p>여러 저자의 논문을 모아, 참여교수별 실적 양식으로 정리하세요.</p></div><div className="export-actions"><LayoutSettings layout={layout} onChange={setLayout} sample={visiblePapers[0]} onMessage={setNotice}/><Button variant="outline" disabled={!selectedPapers.length || exporting || loading || classifying} onClick={download}><Download size={17}/>CSV</Button><Button className="export-button" disabled={!selectedPapers.length || exporting || loading || classifying} onClick={() => void downloadExcel()}>{exporting ? <Loader2 size={17} className="animate-spin"/> : <Download size={17}/>}Excel 다운로드{selectedPapers.length > 0 && <span className="export-count">{count(selectedPapers.length)}</span>}</Button></div></div>
       <section className="query-bar" aria-label="논문 조회 조건"><div className="professor-field author-count-summary"><label>선택한 저자</label><strong><UserRound size={18}/>{chosenAuthors.length}명 <span>여러 명 선택 가능</span></strong></div><PublicationRangeControls value={{ from, to, fromMonth, toMonth }} onChange={range => { setFrom(range.from); setTo(range.to); setFromMonth(range.fromMonth); setToMonth(range.toMonth); }} disabled={loading}/><Button disabled={!chosenAuthors.length || loading} onClick={() => loadPapers()}>{loading ? <Loader2 size={17} className="animate-spin"/> : <Search size={17}/>}선택 저자 논문 불러오기</Button></section>
-      <div className="publication-options"><label><Checkbox checked={excludeArxiv} onCheckedChange={v => setExcludeArxiv(v === true)}/>arXiv 제외</label><label title="연도는 범위에 걸치지만 월을 확인할 수 없는 자료를 함께 표시합니다. 전체 연도가 범위 안이면 항상 포함합니다."><Checkbox checked={includeUnknownMonths} onCheckedChange={v => setIncludeUnknownMonths(v === true)}/>기간 경계의 월 미상 포함</label><label><Checkbox checked={mergeLatest} onCheckedChange={v => setMergeLatest(v === true)}/>같은 제목·같은 유형 최신 1편</label><div className="kind-filter"><label htmlFor="kind-filter">학술유형</label><Select value={publicationKind} onValueChange={v => setPublicationKind(v as PublicationKind | 'all')}><SelectTrigger id="kind-filter"><SelectValue/></SelectTrigger><SelectContent><SelectItem value="all">전체 유형</SelectItem>{Object.entries(kindLabels).map(([k, label]) => <SelectItem key={k} value={k}>{label}</SelectItem>)}</SelectContent></Select></div><JournalSearch authors={chosenAuthors} professorNames={professorNames} sources={journalSources} onSources={changeJournalSources} range={{from,to,fromMonth,toMonth}} includeUnknownMonths={includeUnknownMonths} onAdd={addJournalPapers} disabled={loading||classifying}/><AuthorFavorites payload={{ journalSources, authors: chosenAuthors, professorNames: Object.fromEntries(chosenAuthors.map(a => [a.id, professorNames[a.id] || a.display_name])), from, to, fromMonth, toMonth, includeUnknownMonths, excludeArxiv, mergeLatest, publicationKind }} onRestore={restoreFavorite} disabled={loading}/></div>
+      <div className="publication-options"><label><Checkbox checked={excludeArxiv} onCheckedChange={v => setExcludeArxiv(v === true)}/>arXiv 제외</label><label title="연도는 범위에 걸치지만 월을 확인할 수 없는 자료를 함께 표시합니다. 전체 연도가 범위 안이면 항상 포함합니다."><Checkbox checked={includeUnknownMonths} onCheckedChange={v => setIncludeUnknownMonths(v === true)}/>기간 경계의 월 미상 포함</label><label><Checkbox checked={mergeLatest} onCheckedChange={v => setMergeLatest(v === true)}/>같은 제목·같은 유형 최신 1편</label><div className="kind-filter"><label htmlFor="kind-filter">학술유형</label><Select value={publicationKind} onValueChange={v => setPublicationKind(v as PublicationKind | 'all')}><SelectTrigger id="kind-filter"><SelectValue/></SelectTrigger><SelectContent><SelectItem value="all">전체 유형</SelectItem>{Object.entries(kindLabels).map(([k, label]) => <SelectItem key={k} value={k}>{label}</SelectItem>)}</SelectContent></Select></div><JournalSearch key={journalRun} automaticResults={journalResults} existingPapers={papers} authors={chosenAuthors} professorNames={professorNames} sources={journalSources} onSources={changeJournalSources} range={{from,to,fromMonth,toMonth}} includeUnknownMonths={includeUnknownMonths} onAdd={addJournalPapers} disabled={loading||classifying}/><AuthorFavorites payload={{ journalSources, authors: chosenAuthors, professorNames: Object.fromEntries(chosenAuthors.map(a => [a.id, professorNames[a.id] || a.display_name])), from, to, fromMonth, toMonth, includeUnknownMonths, excludeArxiv, mergeLatest, publicationKind }} onRestore={restoreFavorite} disabled={loading}/></div>
       <p className="filter-description">arXiv 제외는 주 출처가 arXiv인 문헌에 적용합니다. 다른 곳에 정식 게재된 문헌은 유지합니다. 동일 제목은 참여교수·학술유형별로 최신 1편을 표시합니다. 학술대회판과 저널판은 각각 유지하며, 기간·유형 필터를 먼저 적용합니다.</p>
       <p className="filter-description">시작·종료 월을 포함해 조회합니다. 전체 월은 해당 연도 전체입니다. 월 미상 자료는 그 연도가 범위와 겹칠 때 포함할 수 있습니다. 조건 변경 후 논문 불러오기를 누르세요.{loaded && <strong> 적용된 범위: {publicationRangeLabel(applied)}</strong>}</p>
       {chosenAuthors.length > 0 && <section className="chosen-authors" aria-label="선택한 저자와 참여교수 표기명">{chosenAuthors.map(a => <div key={a.id} className="chosen-author"><div className="chosen-author-info"><strong>{a.display_name}</strong><span>{shortId(a.id)} · {authorStats[a.id] ? count(authorStats[a.id].loaded) + ' / ' + count(authorStats[a.id].total) + '편 조회' + (papers.some(p=>p.authorId===a.id&&p.supplementalSource)?' · 출판사 보완 '+papers.filter(p=>p.authorId===a.id&&p.supplementalSource).length+'편':'') : '조회 대기'}</span><div><a href={safeUrl(a.id)} target="_blank" rel="noopener noreferrer">저자 정보 ↗</a><a href={'https://scholar.google.com/scholar?q=' + encodeURIComponent('author:"' + a.display_name + '"')} target="_blank" rel="noopener noreferrer">Google Scholar ↗</a></div></div><div className="chosen-author-name"><label htmlFor={'name-' + shortId(a.id)}>참여교수 표기명</label><Input id={'name-' + shortId(a.id)} value={professorNames[a.id] ?? a.display_name} onChange={e => renameProfessor(a, e.target.value)} disabled={loading}/></div><Button variant="ghost" size="sm" onClick={() => pickAuthor(a)} disabled={loading} aria-label={a.display_name + ' 선택 해제'}>해제</Button></div>)}</section>}

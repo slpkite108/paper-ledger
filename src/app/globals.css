@@ -185,3 +185,5 @@
 
 .query-bar { flex-wrap:wrap; } .query-bar .period-field { flex:0 1 205px; min-width:185px; } .period-inputs { display:flex; gap:6px; } .period-inputs input { min-width:0; flex:1 1 104px; } .period-inputs [data-slot="select-trigger"] { flex:0 0 84px; min-height:40px; } .filter-description strong { font-weight:600; color:#234264; }
 @media(max-width:760px) { .query-bar .period-field { flex:1 1 190px; } .query-bar .professor-field { flex-basis:100%; } }
+
+.journal-discovery-status { order:1; flex-basis:100%; color:#31577d; font-size:13px; padding:6px 0; }
