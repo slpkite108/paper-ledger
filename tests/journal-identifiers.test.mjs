@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import {build} from 'vite';
 import {resolve} from 'node:path';
 import {pathToFileURL} from 'node:url';
+import ExcelJS from 'exceljs';
 await build({configFile:false,logLevel:'silent',build:{outDir:'.build/journal-identifiers-test',emptyOutDir:false,target:'esnext',lib:{entry:resolve('tests/journal-identifiers-entry.ts'),formats:['es'],fileName:()=>'app.mjs'},rolldownOptions:{external:['exceljs']}}});
 const a=await import(pathToFileURL(resolve('.build/journal-identifiers-test/app.mjs')).href);
 const author={id:'https://openalex.org/A1',display_name:'Researcher'};
@@ -20,12 +21,12 @@ test('Crossref explicit types upgrade an already filled ISSN without losing eith
   for(const m of [metadata,{...metadata,ISSN:[eISSN,pISSN],'issn-type':[...metadata['issn-type']].reverse()}]){
     const p=a.applyCrossref(raw(),a.crossrefData(m));
     assert.equal(a.sourceValue(p,'electronicIssn'),eISSN);assert.equal(a.sourceValue(p,'printIssn'),pISSN);assert.equal(a.sourceValue(p,'linkingIssn'),pISSN);
-    assert.equal(p.values.issn,eISSN+'; '+pISSN);assert.equal(a.preferredIssn(p),eISSN);assert.deepEqual(a.paperIdentifiers(p).untyped,[]);
+    assert.equal(p.values.issn,pISSN);assert.equal(a.preferredIssn(p),eISSN);assert.deepEqual(a.paperIdentifiers(p).untyped,[]);
     assert.match(a.issnSummary(p),/온라인 eISSN.*인쇄 pISSN/);
   }
 });
 test('missing ISSN array, partial types and conflicts preserve uncertainty',()=>{
-  const typed=a.crossrefData({...metadata,ISSN:undefined});assert.equal(typed.issn,eISSN+'; '+pISSN);
+  const typed=a.crossrefData({...metadata,ISSN:undefined});assert.equal(typed.issn,pISSN);
   const partial=a.applyCrossref(raw(),a.crossrefData({...metadata,'issn-type':[{type:'print',value:pISSN}]}));
   assert.deepEqual(a.paperIdentifiers(partial).untyped,[eISSN]);assert.equal(a.sourceValue(partial,'electronicIssn'),'');assert.equal(a.preferredIssn(partial),pISSN);
   const conflict=a.crossrefIdentifiers({ISSN:[pISSN],'issn-type':[{type:'print',value:pISSN},{type:'electronic',value:pISSN}]});
@@ -57,4 +58,26 @@ test('Excel pasted headers, presets and CSV expose independent identifiers',()=>
 test('journal search candidates retain Crossref medium metadata through conversion',()=>{
   const c=a.crossrefCandidate({...metadata,title:['Paper'],author:[{given:'First',family:'Researcher'}]});
   const p=a.candidateToPaper(c,author,'Researcher');assert.equal(a.sourceValue(p,'electronicIssn'),eISSN);assert.equal(a.sourceValue(p,'printIssn'),pISSN);
+});
+
+test('default ISSN prefers ISSN-L and falls back to the original first identifier, never inferred media order',()=>{
+  for(const linking of [pISSN,eISSN,undefined]){
+    const p=a.toPaper({id:'https://openalex.org/W2',type:'journal-article',primary_location:{source:{type:'journal',issn:[eISSN,pISSN],issn_l:linking}}},author,'Researcher');
+    const next=a.applyCrossref(p,a.crossrefData(metadata));
+    assert.equal(next.values.issn,linking||eISSN);assert.equal(a.sourceValue(next,'issn'),linking||eISSN);
+    assert.deepEqual(new Set(a.allIdentifiers(a.paperIdentifiers(next))),new Set([pISSN,eISSN]));
+    assert.equal(a.sourceValue(next,'linkingIssn'),linking||'');
+  }
+  const empty=a.toPaper({id:'https://openalex.org/W3'},author,'Researcher');
+  const next=a.applyCrossref(empty,a.crossrefData(metadata));assert.equal(next.values.issn,pISSN);assert.equal(a.sourceValue(next,'linkingIssn'),'');
+});
+
+test('default CSV and Excel export the same single ISSN-L and preserve manual overrides',async()=>{
+  const p=enriched(),layout=a.defaultLayout();
+  const expected=pISSN,header=layout.columns.findIndex(c=>c.source==='issn');
+  assert.equal(a.layoutCsv([p],layout).split('\r\n')[1].split(',')[header],'"'+expected+'"');
+  assert.equal(a.makeCsv([p]).split('\r\n')[1].split(',')[header],'"'+expected+'"');
+  const reopened=new ExcelJS.Workbook();await reopened.xlsx.load(await a.ledgerXlsx([p],layout));
+  assert.equal(reopened.worksheets[0].getRow(2).getCell(header+1).value,expected);
+  const manual=a.setManualIssn(p,eISSN);assert.equal(a.sourceValue(a.applyCrossref(manual,a.crossrefData(metadata)),'issn'),eISSN);
 });
