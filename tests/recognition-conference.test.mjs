@@ -76,7 +76,7 @@ test('reported HCIS paper is supplemented only for a verified author identity, n
   assert.equal(p.values.title,app.hcisSupplement.title);assert.equal(p.values.professor,'신병석');
   assert.equal(p.values.firstAuthor,'Eun-Seok Lee');assert.equal(p.values.coauthors,'Byeong-Seok Shin');assert.equal(p.values.authorCount,'2');
   assert.equal(p.publicationKind,'journal');assert.equal(p.role,'교신저자');assert.equal(p.values.issn,'2192-1962');assert.equal(p.values.volume,'15');
-  assert.equal(p.publicationDate,'2025-01-30');assert.equal(p.values.published,'2025-01');assert.equal(p.publicationDates.selected,'publisher-issue');
+  assert.equal(p.publicationDate,'2025-01-30');assert.equal(p.values.published,'2025-01');assert.equal(p.publicationDates.selected,'publisher-metadata');
   assert.ok(!p.publicationDates.candidates.some(c=>c.source==='openalex'));assert.equal(p.supplementalSource,app.hcisSupplement.url);assert.equal(p.verified,false);
   assert.equal(auto(p).values.category,'SCIE');assert.match(auto(p).evidence.scie.url,/2192-1962/);
   assert.deepEqual(app.supplementalPapers({...author,id:'A999'},'Same name',{from:'',to:''}),[]);

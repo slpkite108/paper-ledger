@@ -38,8 +38,8 @@ test('empty or invalid print date falls through to online; print and online rema
   const p2=app.applyCrossref(p,metadata({'published-print':parts(2025,2),'published-online':parts(2024,11,15)}));
   assert.equal(p2.values.published,'2025-02');assert.equal(p2.publicationDates.candidates.find(c=>c.source==='crossref-online').date,'2024-11-15');
 });
-test('known-month online date may supplement print year; actual January first is not discarded',()=>{
-  assert.equal(metadata({'published-print':parts(2025),'published-online':parts(2025,5,30)}).published,'2025-05');
+test('issue year retains its precision even when an online month is known; actual January first is not discarded',()=>{
+  assert.equal(metadata({'published-print':parts(2025),'published-online':parts(2025,5,30)}).published,'2025');
   assert.equal(app.applyCrossref(paper(),metadata({'published-print':parts(2025,1,1)})).values.published,'2025-01');
 });
 test('DOI registration/update/event dates are not publication dates',()=>{
@@ -94,7 +94,7 @@ test('the two currently unknown months have verified publisher fallbacks',()=>{
     const p=app.toPaper({...work,doi},author,'Researcher');assert.equal(p.values.published,date);
   }
 });
-test('automatic publisher lookup sends only DOI and applies its date after Crossref year-only',async()=>{
+test('automatic publisher lookup sends only DOI and preserves verified issue evidence over generic metadata',async()=>{
   const saved=globalThis.fetch;const doi='10.32604/cmc.2026.080992';
   try {
     let calls=0;
@@ -102,7 +102,7 @@ test('automatic publisher lookup sends only DOI and applies its date after Cross
     assert.equal(await app.getPublisherDate('10.9999/unsupported'),null);assert.equal(calls,0);
     const candidate=await app.getPublisherDate(doi);
     const p=app.applyPublisherDate(app.applyCrossref(app.toPaper({...work,doi,publication_year:2026},author,'Researcher'),metadata({'published-print':parts(2026)})),candidate);
-    assert.equal(p.values.published,'2026-06');assert.equal(p.publicationDates.selected,'publisher-metadata');assert.equal(p.publicationDates.publisherChecked,true);
+    assert.equal(p.values.published,'2026-06');assert.equal(p.publicationDates.selected,'publisher-issue');assert.equal(p.publicationDates.publisherChecked,true);
     assert.equal(app.applyCrossref(p,metadata({'published-print':parts(2026)})).values.published,'2026-06');
     assert.equal(app.applyPublisherDate(app.setManualPublicationDate(p,'2026-07'),candidate).values.published,'2026-07');
   }finally{globalThis.fetch=saved;}
