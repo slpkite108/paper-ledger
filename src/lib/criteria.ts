@@ -18,6 +18,7 @@ export const builtinMjl:Reference={id:'scie-mjl-2026',name:'SCIE Â· Clarivate ê°
   {venue:'Journal of Biomedical Informatics',issn:'1532-0464;1532-0480',alias:''},
   {venue:'Journal of Mathematical Analysis and Applications',issn:'0022-247X;1096-0813',alias:''},
   {venue:'Biomedical Signal Processing and Control',issn:'1746-8094;1746-8108',alias:''},
+  {venue:'Human-centric Computing and Information Sciences',issn:'2192-1962',alias:'Human Centric Computing and Information Sciences'},
 ].map(r=>({...r,category:'SCIE',value:'',impactFactor:''}))};
 export const builtinReferences:Reference[]=[builtinBk,builtinIeee,
   publisherReference('scie-cmc-2026','Computers, Materials & Continua','1546-2218;1546-2226','https://www.techscience.com/cmc/info/Indexed','Computers, Materials & Continua (Print)'),
