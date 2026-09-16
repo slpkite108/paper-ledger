@@ -1,6 +1,6 @@
 import { isStandalone } from './client-api';
 import { favoritesSchema, favoriteSchema, type Favorite } from './favorites';
-import { googleUser, readGoogleFavorites, createGoogleFavorite, deleteGoogleFavorite } from './google-store';
+import { googleUser, readGoogleFavorites, createGoogleFavorite, deleteGoogleFavorite, restoreGoogleSession, ensureGoogleStorageReady } from './google-store';
 export type AccountInfo = { user: { displayName: string; email: string } | null; hasSavedKey: boolean; storageReady: boolean; keyStorageReady: boolean };
 export async function accountRequest<T>(path: string, method = 'GET', body?: unknown): Promise<T> {
   const response = await fetch(path, { method, cache: 'no-store', headers: body ? { 'Content-Type': 'application/json' } : undefined, body: body ? JSON.stringify(body) : undefined });
@@ -11,12 +11,14 @@ export async function accountRequest<T>(path: string, method = 'GET', body?: unk
 const localKey = 'paper-ledger-author-favorites-v1';
 export async function readFavorites(): Promise<Favorite[]> {
   if (!isStandalone()) return (await accountRequest<{ favorites: Favorite[] }>('/api/favorites')).favorites;
+  await restoreGoogleSession(); ensureGoogleStorageReady();
   if (googleUser()) return readGoogleFavorites();
   try { return favoritesSchema.parse(JSON.parse(localStorage.getItem(localKey) || '[]')); }
   catch { throw new Error('이 브라우저의 즐겨찾기를 읽을 수 없습니다. 브라우저 저장 허용 여부를 확인하세요.'); }
 }
 export async function createFavorite(name: string, payload: Favorite['payload']): Promise<Favorite> {
   if (!isStandalone()) return (await accountRequest<{ favorite: Favorite }>('/api/favorites', 'POST', { name, payload })).favorite;
+  await restoreGoogleSession(); ensureGoogleStorageReady();
   if (googleUser()) return createGoogleFavorite(name, payload);
   const prior = await readFavorites();
   if (prior.length >= 50) throw new Error('즐겨찾기는 50개까지 저장할 수 있습니다.');
@@ -27,6 +29,7 @@ export async function createFavorite(name: string, payload: Favorite['payload'])
 }
 export async function deleteFavorite(id: string) {
   if (!isStandalone()) { await accountRequest('/api/favorites?id=' + encodeURIComponent(id), 'DELETE'); return; }
+  await restoreGoogleSession(); ensureGoogleStorageReady();
   if (googleUser()) { await deleteGoogleFavorite(id); return; }
   const prior = await readFavorites();
   try { localStorage.setItem(localKey, JSON.stringify(prior.filter(f => f.id !== id))); }
