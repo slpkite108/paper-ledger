@@ -1,4 +1,5 @@
 import type { Paper, Work } from './papers';
+import { publicationInRange, type PublicationRange } from './publication-range';
 export const kindLabels = { journal: '저널', conference: '학술대회', preprint: '프리프린트', unknown: '미확인' } as const;
 export type PublicationKind = keyof typeof kindLabels;
 export type KindInfo = { publicationKind: PublicationKind; kindSource: string };
@@ -40,7 +41,7 @@ export function latestByTitle(papers: Paper[]): Paper[] {
   const ids = new Set([...groups.values()].map(p => p.id));
   return papers.filter(p => ids.has(p.id));
 }
-export function visiblePublications(papers: Paper[], options: { excludeArxiv: boolean; mergeLatest: boolean; publicationKind: PublicationKind | 'all' }) {
-  const filtered = papers.filter(p => (!options.excludeArxiv || !p.arxiv) && (options.publicationKind === 'all' || p.publicationKind === options.publicationKind));
+export function visiblePublications(papers: Paper[], options: { excludeArxiv: boolean; mergeLatest: boolean; publicationKind: PublicationKind | 'all'; range?: PublicationRange; includeUnknownMonths?: boolean }) {
+  const filtered = papers.filter(p => (!options.excludeArxiv || !p.arxiv) && (options.publicationKind === 'all' || p.publicationKind === options.publicationKind) && (!options.range || publicationInRange(p.values.published, options.range, options.includeUnknownMonths ?? true)));
   return options.mergeLatest ? latestByTitle(filtered) : filtered;
 }

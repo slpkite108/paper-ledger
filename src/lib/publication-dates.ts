@@ -3,6 +3,7 @@ import verifiedDates from './verified-publication-dates.json';
 
 export const dateLabels = {
   'publisher-issue': '출판사 권호 발행일',
+  'publisher-metadata': '출판사 자동 확인',
   'publisher-citation': '가져온 인용정보 출판일',
   'crossref-print': 'Crossref 인쇄 발행일',
   'crossref-online': 'Crossref 온라인 공개일',
@@ -12,7 +13,7 @@ export const dateLabels = {
 } as const;
 export type DateSource = keyof typeof dateLabels;
 export type DateCandidate = { source: DateSource; date: string; url: string; checkedOn?: string; note?: string };
-export type PublicationDates = { candidates: DateCandidate[]; selected?: DateSource; manual?: boolean; crossrefChecked?: boolean };
+export type PublicationDates = { candidates: DateCandidate[]; selected?: DateSource; manual?: boolean; crossrefChecked?: boolean; publisherChecked?: boolean };
 export type DateParts = { 'date-parts'?: number[][] };
 export type CrossrefDates = Partial<Record<'published-print' | 'published-online' | 'published' | 'issued', DateParts>>;
 
@@ -46,6 +47,8 @@ export function crossrefDateCandidates(m: CrossrefDates, doi: string): DateCandi
   });
 }
 export function preferredDate(info: PublicationDates): DateCandidate | undefined {
+  const livePublisher = info.candidates.find(c => c.source === 'publisher-metadata');
+  if (livePublisher) return livePublisher;
   const publisher = info.candidates.find(c => c.source === 'publisher-issue');
   if (publisher) return publisher;
   const crossref = info.candidates.filter(c => c.source.startsWith('crossref-'));
