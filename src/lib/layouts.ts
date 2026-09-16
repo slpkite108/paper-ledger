@@ -2,7 +2,7 @@ import { z } from 'zod';
 import { fields, csvCell, type Paper } from './papers';
 import { kindLabels } from './publications';
 import { criteriaSchema, defaultCriteria } from './criteria';
-import { dateSummary } from './publication-dates';
+import { dateFromParts, dateSummary } from './publication-dates';
 
 export const sources = [...fields.map(f => ({ key: f.key as string, label: f.label as string })),
   { key: 'publicationKind', label: '학술유형 (저널/Conference)' }, { key: 'doi', label: 'DOI' },
@@ -67,11 +67,35 @@ export function displayValue(value: string, format: Column['format']) {
   return format === 'number' ? String(n) : format === 'decimal' ? n.toFixed(2) : format === 'percent' ? n + '%' : value;
 }
 const collator = new Intl.Collator('ko', { numeric: true, sensitivity: 'base' });
+export function isDateSort(layout: Layout, key: string): boolean {
+  const column = layout.columns.find(c => 'column:' + c.id === key);
+  return key === 'published' || column?.source === 'published' || column?.format === 'year' || column?.format === 'month';
+}
+function chronologicalParts(value: string): number[] | null {
+  if (!/^\d{4}(?:-\d{1,2}){0,2}$/.test(value)) return null;
+  const parts = value.split('-').map(Number);
+  return dateFromParts({ 'date-parts': [parts] }) ? parts : null;
+}
+function compareChronologically(a: string, b: string, direction: SortRule['direction']): number {
+  const left = chronologicalParts(a), right = chronologicalParts(b);
+  if (!left || !right) return left ? -1 : right ? 1 : 0;
+  for (let i = 0; i < 3; i++) {
+    // Unknown precision follows known dates within the same year/month in either direction.
+    if (left[i] === undefined || right[i] === undefined) return left[i] === right[i] ? 0 : left[i] === undefined ? 1 : -1;
+    if (left[i] !== right[i]) return (left[i] - right[i]) * (direction === 'asc' ? 1 : -1);
+  }
+  return 0;
+}
 export function sortPapers(papers: Paper[], layout: Layout): Paper[] {
   return [...papers].sort((a, b) => { for (const rule of layout.sort) {
     const c = rule.key.startsWith('column:') ? layout.columns.find(c => 'column:' + c.id === rule.key) : undefined;
     const av = (c ? columnValue(a, c) : sourceValue(a, rule.key)).trim(); const bv = (c ? columnValue(b, c) : sourceValue(b, rule.key)).trim();
     if (!av || !bv) { if (av !== bv) return av ? -1 : 1; continue; } // Unknown is last in either direction.
+    if (isDateSort(layout, rule.key)) {
+      const compared = compareChronologically(av, bv, rule.direction);
+      if (compared) return compared;
+      continue;
+    }
     const numeric = c ? ['number', 'decimal', 'percent'].includes(c.format) : ['authorCount', 'assistants', 'funders', 'impactFactor', 'contribution', 'h5'].includes(rule.key);
     const an = numericValue(av); const bn = numericValue(bv);
     const compared = numeric && an !== null && bn !== null ? an - bn : collator.compare(av, bv);
