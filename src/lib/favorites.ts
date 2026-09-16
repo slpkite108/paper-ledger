@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { publicationRangeError } from './publication-range';
+import { journalSourcesSchema } from './journal-search';
 
 const year = z.string().refine(v => !v || (/^\d{4}$/.test(v) && +v >= 1000 && +v <= 2100));
 export const favoritePayloadSchema = z.object({
@@ -11,6 +12,7 @@ export const favoritePayloadSchema = z.object({
     last_known_institutions: z.array(z.object({ display_name: z.string().max(500) })).max(50).nullable().optional(),
   })).min(1).max(100).refine(a => new Set(a.map(v => v.id)).size === a.length),
   professorNames: z.record(z.string().max(300)),
+  journalSources: journalSourcesSchema.optional(),
   from: year,
   to: year,
   fromMonth: z.string().regex(/^(?:0[1-9]|1[0-2])?$/).default(''),

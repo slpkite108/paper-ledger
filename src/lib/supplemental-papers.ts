@@ -29,6 +29,6 @@ export function mergePaperSources(previous:Paper[],incoming:Paper[]):Paper[] {
   const byId=new Map(previous.map(p=>[p.id,p]));for(const p of incoming)if(!byId.has(p.id))byId.set(p.id,p);
   const all=[...byId.values()];
   const key=(p:Paper)=>shortId(p.authorId)+'\0'+p.publicationKind+'\0'+normalizedDoi(p.doi);
-  const supplemented=new Set(all.filter(p=>p.supplementalSource&&p.doi).map(key)),seen=new Set<string>();
+  const supplemented=new Set(all.filter(p=>(p.supplementalSource||p.journalSource)&&p.doi).map(key)),seen=new Set<string>();
   return all.filter(p=>{const k=key(p);if(!supplemented.has(k))return true;if(seen.has(k))return false;seen.add(k);return true;});
 }
