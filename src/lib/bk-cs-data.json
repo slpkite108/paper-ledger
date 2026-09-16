@@ -1,0 +1,1130 @@
+[
+  {
+    "code": "BKCSA001",
+    "alias": "AAAI",
+    "venue": "AAAI Conference on Artificial Intelligence",
+    "impactFactor": "4"
+  },
+  {
+    "code": "BKCSA002",
+    "alias": "CCS",
+    "venue": "ACM Conference on Computer and Communications Security",
+    "impactFactor": "4"
+  },
+  {
+    "code": "BKCSA003",
+    "alias": "CHI",
+    "venue": "ACM Conference on Human Factors in Computing Systems",
+    "impactFactor": "4"
+  },
+  {
+    "code": "BKCSA004",
+    "alias": "MobiCom",
+    "venue": "ACM International Conference on Mobile Computing and Networking",
+    "impactFactor": "4"
+  },
+  {
+    "code": "BKCSA005",
+    "alias": "MM",
+    "venue": "ACM Multimedia Conference",
+    "impactFactor": "4"
+  },
+  {
+    "code": "BKCSA006",
+    "alias": "SIGCOMM",
+    "venue": "ACM SIGCOMM Conference",
+    "impactFactor": "4"
+  },
+  {
+    "code": "BKCSA007",
+    "alias": "SIGIR",
+    "venue": "ACM SIGIR Conference on Information Retrieval",
+    "impactFactor": "4"
+  },
+  {
+    "code": "BKCSA008",
+    "alias": "KDD",
+    "venue": "ACM SIGKDD Conference on Knowledge Discovery and Data Mining",
+    "impactFactor": "4"
+  },
+  {
+    "code": "BKCSA009",
+    "alias": "FSE",
+    "venue": "ACM SIGSOFT Symposium on the Foundations of Software Engineering",
+    "impactFactor": "4"
+  },
+  {
+    "code": "BKCSA010",
+    "alias": "SOSP",
+    "venue": "ACM Symposium on Operating Systems Principles",
+    "impactFactor": "4"
+  },
+  {
+    "code": "BKCSA011",
+    "alias": "STOC",
+    "venue": "ACM Symposium on Theory of Computing",
+    "impactFactor": "4"
+  },
+  {
+    "code": "BKCSA012",
+    "alias": "ACL",
+    "venue": "Annual Meeting of the Association for Computational Linguistics",
+    "impactFactor": "4"
+  },
+  {
+    "code": "BKCSA013",
+    "alias": "ASPLOS",
+    "venue": "Architectural Support for Programming Languages and Operating Systems",
+    "impactFactor": "4"
+  },
+  {
+    "code": "BKCSA014",
+    "alias": "CVPR",
+    "venue": "Conference on Computer Vision and Pattern Recognition",
+    "impactFactor": "4"
+  },
+  {
+    "code": "BKCSA015",
+    "alias": "NIPS",
+    "venue": "Conference on Neural Information Processing Systems",
+    "impactFactor": "4"
+  },
+  {
+    "code": "BKCSA016",
+    "alias": "OOPSLA",
+    "venue": "Conference on Object-Oriented Programming, System, Languages, and Applications",
+    "impactFactor": "4"
+  },
+  {
+    "code": "BKCSA017",
+    "alias": "INFOCOM",
+    "venue": "IEEE Conference on Computer Communications",
+    "impactFactor": "4"
+  },
+  {
+    "code": "BKCSA018",
+    "alias": "HPCA",
+    "venue": "IEEE International Symposium on High-Performance Computer Architecture",
+    "impactFactor": "4"
+  },
+  {
+    "code": "BKCSA019",
+    "alias": "RTSS",
+    "venue": "IEEE Real-Time Systems Symposium",
+    "impactFactor": "4"
+  },
+  {
+    "code": "BKCSA020",
+    "alias": "FOCS",
+    "venue": "IEEE Symposium on Foundations of Computer Science",
+    "impactFactor": "4"
+  },
+  {
+    "code": "BKCSA021",
+    "alias": "S&P",
+    "venue": "IEEE Symposium on Security and Privacy",
+    "impactFactor": "4"
+  },
+  {
+    "code": "BKCSA022",
+    "alias": "VIS",
+    "venue": "IEEE Visualization",
+    "impactFactor": "4"
+  },
+  {
+    "code": "BKCSA023",
+    "alias": "MICRO",
+    "venue": "IEEE/ACM International Symposium on Microarchitecture",
+    "impactFactor": "4"
+  },
+  {
+    "code": "BKCSA024",
+    "alias": "SIGGRAPH",
+    "venue": "International Conference on Computer Graphics and Interactive Techniques",
+    "impactFactor": "4"
+  },
+  {
+    "code": "BKCSA025",
+    "alias": "ICCV",
+    "venue": "International Conference on Computer Vision",
+    "impactFactor": "4"
+  },
+  {
+    "code": "BKCSA026",
+    "alias": "CAV",
+    "venue": "International Conference on Computer-Aided Verification",
+    "impactFactor": "4"
+  },
+  {
+    "code": "BKCSA027",
+    "alias": "ICML",
+    "venue": "International Conference on Machine Learning",
+    "impactFactor": "4"
+  },
+  {
+    "code": "BKCSA028",
+    "alias": "SIGMOD",
+    "venue": "International Conference on Management of Data",
+    "impactFactor": "4"
+  },
+  {
+    "code": "BKCSA029",
+    "alias": "ICSE",
+    "venue": "International Conference on Software Engineering",
+    "impactFactor": "4"
+  },
+  {
+    "code": "BKCSA030",
+    "alias": "EUROCRYPT",
+    "venue": "International Conference on the Theory and Applications of Cryptographic Techniques",
+    "impactFactor": "4"
+  },
+  {
+    "code": "BKCSA031",
+    "alias": "VLDB/PVLDB",
+    "venue": "International Conference on Very Large Databases",
+    "impactFactor": "4"
+  },
+  {
+    "code": "BKCSA032",
+    "alias": "CRYPTO",
+    "venue": "International Cryptology Conference",
+    "impactFactor": "4"
+  },
+  {
+    "code": "BKCSA033",
+    "alias": "IJCAI",
+    "venue": "International Joint Conference on Artificial Intelligence",
+    "impactFactor": "4"
+  },
+  {
+    "code": "BKCSA034",
+    "alias": "ISCA",
+    "venue": "International Symposium on Computer Architecture",
+    "impactFactor": "4"
+  },
+  {
+    "code": "BKCSA035",
+    "alias": "WWW",
+    "venue": "International World Wide Web Conference",
+    "impactFactor": "4"
+  },
+  {
+    "code": "BKCSA036",
+    "alias": "PLDI",
+    "venue": "SIGPLAN Conference on Programming Language Design and Implementation",
+    "impactFactor": "4"
+  },
+  {
+    "code": "BKCSA037",
+    "alias": "POPL",
+    "venue": "Symposium on Principles of Programming Languages",
+    "impactFactor": "4"
+  },
+  {
+    "code": "BKCSA038",
+    "alias": "NSDI",
+    "venue": "USENIX Symposium on Networked Systems Design and Implementation",
+    "impactFactor": "4"
+  },
+  {
+    "code": "BKCSA039",
+    "alias": "OSDI",
+    "venue": "USENIX Symposium on Operating Systems Design and Implementation",
+    "impactFactor": "4"
+  },
+  {
+    "code": "BKCSA040",
+    "alias": "CSCW",
+    "venue": "ACM Conference on Computer-Supported Cooperative Work",
+    "impactFactor": "3"
+  },
+  {
+    "code": "BKCSA041",
+    "alias": "SenSys",
+    "venue": "ACM Conference on Embedded Networked Sensor Systems",
+    "impactFactor": "3"
+  },
+  {
+    "code": "BKCSA042",
+    "alias": "CIKM",
+    "venue": "ACM Conference on Information and Knowledge Management",
+    "impactFactor": "3"
+  },
+  {
+    "code": "BKCSA043",
+    "alias": "MobiSys",
+    "venue": "ACM International Conference on Mobile Systems, Application and Services",
+    "impactFactor": "3"
+  },
+  {
+    "code": "BKCSA044",
+    "alias": "WSDM",
+    "venue": "ACM International Conference on Web Search and Data Mining",
+    "impactFactor": "3"
+  },
+  {
+    "code": "BKCSA045",
+    "alias": "UbiComp",
+    "venue": "ACM International Joint Conference on Pervasive and Ubiquitous Computing",
+    "impactFactor": "3"
+  },
+  {
+    "code": "BKCSA046",
+    "alias": "MobiHoc",
+    "venue": "ACM International Symposium on Mobile Ad Hoc Networking and Computing",
+    "impactFactor": "3"
+  },
+  {
+    "code": "BKCSA047",
+    "alias": "SIGMETRICS",
+    "venue": "ACM SIGMETRICS International Conference on Measurement and Modeling of Computer Systems",
+    "impactFactor": "3"
+  },
+  {
+    "code": "BKCSA048",
+    "alias": "PPoPP",
+    "venue": "ACM SIGPLAN Symposium on Principles and Practice of Parallel Programming",
+    "impactFactor": "3"
+  },
+  {
+    "code": "BKCSA049",
+    "alias": "SPAA",
+    "venue": "ACM Symposium on Parallelism in Algorithms and Architectures",
+    "impactFactor": "3"
+  },
+  {
+    "code": "BKCSA050",
+    "alias": "PODS",
+    "venue": "ACM Symposium on Principles of Database Systems",
+    "impactFactor": "3"
+  },
+  {
+    "code": "BKCSA051",
+    "alias": "PODC",
+    "venue": "ACM Symposium on Principles of Distributed Computing",
+    "impactFactor": "3"
+  },
+  {
+    "code": "BKCSA052",
+    "alias": "IPSN",
+    "venue": "ACM/IEEE Information Processing in Sensor Networks",
+    "impactFactor": "3"
+  },
+  {
+    "code": "BKCSA053",
+    "alias": "SC",
+    "venue": "ACM/IEEE International Conference for High Performance Computing, Networking, Storage, and Analysis",
+    "impactFactor": "3"
+  },
+  {
+    "code": "BKCSA054",
+    "alias": "LICS",
+    "venue": "ACM/IEEE Symposium on Logic in Computer Science",
+    "impactFactor": "3"
+  },
+  {
+    "code": "BKCSA055",
+    "alias": "SODA",
+    "venue": "ACM-SIAM Symposium on Discrete Algorithms",
+    "impactFactor": "3"
+  },
+  {
+    "code": "BKCSA056",
+    "alias": "COLT",
+    "venue": "Annual Conference on Computational Learning Theory",
+    "impactFactor": "3"
+  },
+  {
+    "code": "BKCSA057",
+    "alias": "UAI",
+    "venue": "Conference on Uncertainty in Artificial Intelligence",
+    "impactFactor": "3"
+  },
+  {
+    "code": "BKCSA058",
+    "alias": "DAC",
+    "venue": "Design Automation Conference",
+    "impactFactor": "3"
+  },
+  {
+    "code": "BKCSA059",
+    "alias": "EMNLP",
+    "venue": "Empirical Methods in Natural Language Processing",
+    "impactFactor": "3"
+  },
+  {
+    "code": "BKCSA060",
+    "alias": "ICDE",
+    "venue": "IEEE International Conference on Data Engineering",
+    "impactFactor": "3"
+  },
+  {
+    "code": "BKCSA061",
+    "alias": "ICDM",
+    "venue": "IEEE International Conference on Data Mining",
+    "impactFactor": "3"
+  },
+  {
+    "code": "BKCSA062",
+    "alias": "ICDCS",
+    "venue": "IEEE International Conference on Distributed Computing Systems",
+    "impactFactor": "3"
+  },
+  {
+    "code": "BKCSA063",
+    "alias": "PerCom",
+    "venue": "IEEE International Conference on Pervasive Computing and Communications",
+    "impactFactor": "3"
+  },
+  {
+    "code": "BKCSA064",
+    "alias": "ASE",
+    "venue": "IEEE/ACM International Conference on Automated Software Engineering",
+    "impactFactor": "3"
+  },
+  {
+    "code": "BKCSA065",
+    "alias": "ICCAD",
+    "venue": "IEEE/ACM International Conference on Computer-Aided Design",
+    "impactFactor": "3"
+  },
+  {
+    "code": "BKCSA066",
+    "alias": "CoNEXT",
+    "venue": "International Conference on emerging Networking EXperiments and Technologies",
+    "impactFactor": "3"
+  },
+  {
+    "code": "BKCSA067",
+    "alias": "PACT",
+    "venue": "International Conference on Parallel Architectures and Compilation Techniques",
+    "impactFactor": "3"
+  },
+  {
+    "code": "BKCSA068",
+    "alias": "KR",
+    "venue": "International Conference on Principles of Knowledge Representation and Reasoning",
+    "impactFactor": "3"
+  },
+  {
+    "code": "BKCSA069",
+    "alias": "ATC",
+    "venue": "USENIX Annual Technical Conference",
+    "impactFactor": "3"
+  },
+  {
+    "code": "BKCSA070",
+    "alias": "FAST",
+    "venue": "USENIX Conference on File and Storage Technologies",
+    "impactFactor": "3"
+  },
+  {
+    "code": "BKCSA071",
+    "alias": "Security",
+    "venue": "USENIX Security Symposium",
+    "impactFactor": "3"
+  },
+  {
+    "code": "BKCSA072",
+    "alias": "SoCG",
+    "venue": "(ACM) Annual Symposium on Computational Geometry",
+    "impactFactor": "2"
+  },
+  {
+    "code": "BKCSA073",
+    "alias": "CCC",
+    "venue": "(IEEE Conference on) Computational Complexity Conference",
+    "impactFactor": "2"
+  },
+  {
+    "code": "BKCSA074",
+    "alias": "ACSAC",
+    "venue": "ACM Annual Computer Security Applications Conference",
+    "impactFactor": "2"
+  },
+  {
+    "code": "BKCSA075",
+    "alias": "EMSOFT",
+    "venue": "ACM Conference on Embedded Software",
+    "impactFactor": "2"
+  },
+  {
+    "code": "BKCSA076",
+    "alias": "IUI",
+    "venue": "ACM International Conference on Intelligent User Interfaces",
+    "impactFactor": "2"
+  },
+  {
+    "code": "BKCSA077",
+    "alias": "ICS",
+    "venue": "ACM International Conference on Supercomputing",
+    "impactFactor": "2"
+  },
+  {
+    "code": "BKCSA078",
+    "alias": "ISSTA",
+    "venue": "ACM International Symposium on Software Testing and Analysis",
+    "impactFactor": "2"
+  },
+  {
+    "code": "BKCSA079",
+    "alias": "IMC",
+    "venue": "ACM Internet Measurement Conference",
+    "impactFactor": "2"
+  },
+  {
+    "code": "BKCSA080",
+    "alias": "LCTES",
+    "venue": "ACM SIGPLAN/SIGBED Conference on Languages, Compilers and Tools for Embedded Systems",
+    "impactFactor": "2"
+  },
+  {
+    "code": "BKCSA081",
+    "alias": "UIST",
+    "venue": "ACM Symposium on User Interface Software and Technology",
+    "impactFactor": "2"
+  },
+  {
+    "code": "BKCSA082",
+    "alias": "MODELS",
+    "venue": "ACM/IEEE International Conference on Model Driven Engineering Languages and Systems",
+    "impactFactor": "2"
+  },
+  {
+    "code": "BKCSA083",
+    "alias": "MIDDLEWARE",
+    "venue": "ACM/IFIP/USENIX International Middleware Conference",
+    "impactFactor": "2"
+  },
+  {
+    "code": "BKCSA084",
+    "alias": "CogSci",
+    "venue": "Annual Meeting of the Cognitive Science Society",
+    "impactFactor": "2"
+  },
+  {
+    "code": "BKCSA085",
+    "alias": "NAACL/HLT",
+    "venue": "Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies",
+    "impactFactor": "2"
+  },
+  {
+    "code": "BKCSA086",
+    "alias": "CVPR",
+    "venue": "(Spotlight) Conference on Computer Vision and Pattern Recognition (Spotlight)",
+    "impactFactor": "2"
+  },
+  {
+    "code": "BKCSA087",
+    "alias": "NIPS",
+    "venue": "(Spotlight) Conference on Neural Information Processing Systems (Spotlight)",
+    "impactFactor": "2"
+  },
+  {
+    "code": "BKCSA088",
+    "alias": "DATE",
+    "venue": "Design Automation and Test in Europe Conference",
+    "impactFactor": "2"
+  },
+  {
+    "code": "BKCSA089",
+    "alias": "Eurographics",
+    "venue": "Eurographics",
+    "impactFactor": "2"
+  },
+  {
+    "code": "BKCSA090",
+    "alias": "EACL",
+    "venue": "European Association for Computational Linguistics",
+    "impactFactor": "2"
+  },
+  {
+    "code": "BKCSA091",
+    "alias": "EuroSys",
+    "venue": "European Conference on Computer Systems",
+    "impactFactor": "2"
+  },
+  {
+    "code": "BKCSA092",
+    "alias": "ECCV",
+    "venue": "European Conference on Computer Vision",
+    "impactFactor": "2"
+  },
+  {
+    "code": "BKCSA093",
+    "alias": "ECOOP",
+    "venue": "European Conference on Object Oriented Programming",
+    "impactFactor": "2"
+  },
+  {
+    "code": "BKCSA094",
+    "alias": "ESA",
+    "venue": "European Symposium on Algorithms",
+    "impactFactor": "2"
+  },
+  {
+    "code": "BKCSA095",
+    "alias": "ESOP",
+    "venue": "European Symposium on Programming",
+    "impactFactor": "2"
+  },
+  {
+    "code": "BKCSA096",
+    "alias": "ESORICS",
+    "venue": "European Symposium on Research in Computer Security",
+    "impactFactor": "2"
+  },
+  {
+    "code": "BKCSA097",
+    "alias": "ICNP",
+    "venue": "IEEE International Conference on Network Protocols",
+    "impactFactor": "2"
+  },
+  {
+    "code": "BKCSA098",
+    "alias": "ICSME(ICSM)",
+    "venue": "IEEE International Conference on Software Maintenance and Evolution",
+    "impactFactor": "2"
+  },
+  {
+    "code": "BKCSA099",
+    "alias": "ICWS",
+    "venue": "IEEE International Conference on Web Services",
+    "impactFactor": "2"
+  },
+  {
+    "code": "BKCSA100",
+    "alias": "IPDPS",
+    "venue": "IEEE International Parallel and Distributed Processing Symposium",
+    "impactFactor": "2"
+  },
+  {
+    "code": "BKCSA101",
+    "alias": "RE",
+    "venue": "IEEE International Requirements Engineering Conference",
+    "impactFactor": "2"
+  },
+  {
+    "code": "BKCSA102",
+    "alias": "HPDC",
+    "venue": "IEEE International Symposium on High Performance Distributed Computing",
+    "impactFactor": "2"
+  },
+  {
+    "code": "BKCSA103",
+    "alias": "RTAS",
+    "venue": "IEEE Real-Time and Embedded Technology and Applications Symposium",
+    "impactFactor": "2"
+  },
+  {
+    "code": "BKCSA104",
+    "alias": "MASCOTS",
+    "venue": "IEEE Symposium Model Analysis and Simulation of Computer and Telecommunications Systems",
+    "impactFactor": "2"
+  },
+  {
+    "code": "BKCSA105",
+    "alias": "VR",
+    "venue": "IEEE Virtual Reality Conference",
+    "impactFactor": "2"
+  },
+  {
+    "code": "BKCSA106",
+    "alias": "DSN",
+    "venue": "IEEE/IFIP International Conference on Dependable Systems and Networks",
+    "impactFactor": "2"
+  },
+  {
+    "code": "BKCSA107",
+    "alias": "PERFORMANCE",
+    "venue": "IFIP WG 7.3 International Symposium on Computer Performance, Modeling, Measurements and Evaluation",
+    "impactFactor": "2"
+  },
+  {
+    "code": "BKCSA108",
+    "alias": "ICALP",
+    "venue": "International Colloquium on Automata, Languages and Programming",
+    "impactFactor": "2"
+  },
+  {
+    "code": "BKCSA109",
+    "alias": "AAMAS",
+    "venue": "International Conference on Autonomous Agents and Multi-agent Systems",
+    "impactFactor": "2"
+  },
+  {
+    "code": "BKCSA110",
+    "alias": "CC",
+    "venue": "International Conference on Compiler Construction",
+    "impactFactor": "2"
+  },
+  {
+    "code": "BKCSA111",
+    "alias": "CASES",
+    "venue": "International Conference on Compilers, Architecture, and Synthesis for Embedded Systems",
+    "impactFactor": "2"
+  },
+  {
+    "code": "BKCSA112",
+    "alias": "COLING",
+    "venue": "International Conference on Computational Linguistics",
+    "impactFactor": "2"
+  },
+  {
+    "code": "BKCSA113",
+    "alias": "ICCV(Spotlight)",
+    "venue": "International Conference on Computer Vision (Spotlight)",
+    "impactFactor": "2"
+  },
+  {
+    "code": "BKCSA114",
+    "alias": "EDBT",
+    "venue": "International Conference on Extending Database Technology",
+    "impactFactor": "2"
+  },
+  {
+    "code": "BKCSA115",
+    "alias": "ICFP",
+    "venue": "International Conference on Functional Programming",
+    "impactFactor": "2"
+  },
+  {
+    "code": "BKCSA116",
+    "alias": "CODES",
+    "venue": "International Conference on Hardware/Software Codesign and System Synthesis",
+    "impactFactor": "2"
+  },
+  {
+    "code": "BKCSA117",
+    "alias": "ICPP",
+    "venue": "International Conference on Parallel Processing",
+    "impactFactor": "2"
+  },
+  {
+    "code": "BKCSA118",
+    "alias": "ASIACRYPT",
+    "venue": "International Conference on the Theory and Application of Cryptology and Information Security",
+    "impactFactor": "2"
+  },
+  {
+    "code": "BKCSA119",
+    "alias": "TACAS",
+    "venue": "International Conference on Tools and Algorithms for Construction and Analysis of Systems",
+    "impactFactor": "2"
+  },
+  {
+    "code": "BKCSA120",
+    "alias": "ISWC",
+    "venue": "International Semantic Web Conference",
+    "impactFactor": "2"
+  },
+  {
+    "code": "BKCSA121",
+    "alias": "CGO",
+    "venue": "International Symposium on Code Generation and Optimization",
+    "impactFactor": "2"
+  },
+  {
+    "code": "BKCSA122",
+    "alias": "DISC",
+    "venue": "International Symposium on Distributed Computing",
+    "impactFactor": "2"
+  },
+  {
+    "code": "BKCSA123",
+    "alias": "RAID",
+    "venue": "International Symposium on Recent Advances in Intrusion Detection",
+    "impactFactor": "2"
+  },
+  {
+    "code": "BKCSA124",
+    "alias": "NDSS",
+    "venue": "Network and Distributed System Security Symposium",
+    "impactFactor": "2"
+  },
+  {
+    "code": "BKCSA125",
+    "alias": "PG",
+    "venue": "Pacific Conference on Computer Graphics and Applications",
+    "impactFactor": "2"
+  },
+  {
+    "code": "BKCSA126",
+    "alias": "RSS",
+    "venue": "Robotics: Science and Systems Conference",
+    "impactFactor": "2"
+  },
+  {
+    "code": "BKCSA127",
+    "alias": "SDM",
+    "venue": "SIAM International Conference on Data Mining",
+    "impactFactor": "2"
+  },
+  {
+    "code": "BKCSA128",
+    "alias": "RecSys",
+    "venue": "ACM Conference on Recommender Systems",
+    "impactFactor": "1"
+  },
+  {
+    "code": "BKCSA129",
+    "alias": "ICMR",
+    "venue": "ACM International Conference on Multimedia Retrieval (Former ACM International Conference on Image and Video Retrieval)",
+    "impactFactor": "1"
+  },
+  {
+    "code": "BKCSA130",
+    "alias": "NOSSDAV",
+    "venue": "ACM Network and Operating System Support for Digital Audio and Video",
+    "impactFactor": "1"
+  },
+  {
+    "code": "BKCSA131",
+    "alias": "SAC",
+    "venue": "ACM SIGAPP Symposium on Applied Computing",
+    "impactFactor": "1"
+  },
+  {
+    "code": "BKCSA132",
+    "alias": "i3DG",
+    "venue": "ACM SIGGRAPH Symposium on Interactive 3D Graphics and Games",
+    "impactFactor": "1"
+  },
+  {
+    "code": "BKCSA133",
+    "alias": "VEE",
+    "venue": "ACM SIGPLAN/SIGOPS International Conference on Virtual Execution Environments",
+    "impactFactor": "1"
+  },
+  {
+    "code": "BKCSA134",
+    "alias": "SOCC",
+    "venue": "ACM Symposium on Cloud Computing",
+    "impactFactor": "1"
+  },
+  {
+    "code": "BKCSA135",
+    "alias": "ASIACCS",
+    "venue": "ACM Symposium on Information, Computer and Communications Security",
+    "impactFactor": "1"
+  },
+  {
+    "code": "BKCSA136",
+    "alias": "VRST",
+    "venue": "ACM Symposium on Virtual Reality Software and Technology",
+    "impactFactor": "1"
+  },
+  {
+    "code": "BKCSA137",
+    "alias": "ANCS",
+    "venue": "ACM/IEEE Symposium on Architectures for Networking and Communications Systems",
+    "impactFactor": "1"
+  },
+  {
+    "code": "BKCSA138",
+    "alias": "ACCV",
+    "venue": "Asian Conference on Computer Vision",
+    "impactFactor": "1"
+  },
+  {
+    "code": "BKCSA139",
+    "alias": "CSEET",
+    "venue": "Conference on Software Engineering Education and Training",
+    "impactFactor": "1"
+  },
+  {
+    "code": "BKCSA140",
+    "alias": "SGP",
+    "venue": "Eurographics symposium on Geometry Processing",
+    "impactFactor": "1"
+  },
+  {
+    "code": "BKCSA141",
+    "alias": "ECRTS",
+    "venue": "Euromicro Conference on Real-Time Systems",
+    "impactFactor": "1"
+  },
+  {
+    "code": "BKCSA142",
+    "alias": "ECAI",
+    "venue": "European Conference on Artificial Intelligence",
+    "impactFactor": "1"
+  },
+  {
+    "code": "BKCSA143",
+    "alias": "ECCV(Spotlight)",
+    "venue": "European Conference on Computer Vision (Spotlight)",
+    "impactFactor": "1"
+  },
+  {
+    "code": "BKCSA144",
+    "alias": "FC",
+    "venue": "Financial Cryptography and Data Security",
+    "impactFactor": "1"
+  },
+  {
+    "code": "BKCSA145",
+    "alias": "GECCO",
+    "venue": "Genetic and Evolutionary Computation Conference",
+    "impactFactor": "1"
+  },
+  {
+    "code": "BKCSA146",
+    "alias": "CSF",
+    "venue": "IEEE Computer Security Foundation Symposium",
+    "impactFactor": "1"
+  },
+  {
+    "code": "BKCSA147",
+    "alias": "BIBM",
+    "venue": "IEEE Conference on Bioinformatics and Biomedicine",
+    "impactFactor": "1"
+  },
+  {
+    "code": "BKCSA148",
+    "alias": "InfoVis",
+    "venue": "IEEE Conference on Information Visualization",
+    "impactFactor": "1"
+  },
+  {
+    "code": "BKCSA149",
+    "alias": "AVSS",
+    "venue": "IEEE International Conference on Advanced Video and Signal-Based Surveillance",
+    "impactFactor": "1"
+  },
+  {
+    "code": "BKCSA150",
+    "alias": "CLOUD",
+    "venue": "IEEE International Conference on Cloud Computing",
+    "impactFactor": "1"
+  },
+  {
+    "code": "BKCSA151",
+    "alias": "CLUSTER",
+    "venue": "IEEE International Conference on Cluster Computing",
+    "impactFactor": "1"
+  },
+  {
+    "code": "BKCSA152",
+    "alias": "ICCD",
+    "venue": "IEEE International Conference on Computer Design",
+    "impactFactor": "1"
+  },
+  {
+    "code": "BKCSA153",
+    "alias": "HiPC",
+    "venue": "IEEE International Conference on High Performance Computing, Data, and Analytics",
+    "impactFactor": "1"
+  },
+  {
+    "code": "BKCSA154",
+    "alias": "MSST",
+    "venue": "IEEE International Conference on Massive Storage Systems and Technology",
+    "impactFactor": "1"
+  },
+  {
+    "code": "BKCSA155",
+    "alias": "MASS",
+    "venue": "IEEE International Conference on Mobile Adhoc and Sensor Systems",
+    "impactFactor": "1"
+  },
+  {
+    "code": "BKCSA156",
+    "alias": "ICPR",
+    "venue": "IEEE International Conference on Pattern Recognition",
+    "impactFactor": "1"
+  },
+  {
+    "code": "BKCSA157",
+    "alias": "ICRA",
+    "venue": "IEEE International Conference on Robotics and Automation",
+    "impactFactor": "1"
+  },
+  {
+    "code": "BKCSA158",
+    "alias": "SECON",
+    "venue": "IEEE International Conference on Sensing, Communication, and Networking",
+    "impactFactor": "1"
+  },
+  {
+    "code": "BKCSA159",
+    "alias": "ICST",
+    "venue": "IEEE International Conference on Software Testing, Verification and Validation",
+    "impactFactor": "1"
+  },
+  {
+    "code": "BKCSA160",
+    "alias": "ISLPED",
+    "venue": "IEEE International Symposium on Low-Power Electronics and Design",
+    "impactFactor": "1"
+  },
+  {
+    "code": "BKCSA161",
+    "alias": "ISMAR",
+    "venue": "IEEE International Symposium on Mixed and Augmented Reality",
+    "impactFactor": "1"
+  },
+  {
+    "code": "BKCSA162",
+    "alias": "ISPASS",
+    "venue": "IEEE International Symposium on Performance Analysis of Systems and Software",
+    "impactFactor": "1"
+  },
+  {
+    "code": "BKCSA163",
+    "alias": "ISSRE",
+    "venue": "IEEE International Symposium on Software Reliability Engineering",
+    "impactFactor": "1"
+  },
+  {
+    "code": "BKCSA164",
+    "alias": "IISWC",
+    "venue": "IEEE International Symposium on Workload Characterization",
+    "impactFactor": "1"
+  },
+  {
+    "code": "BKCSA165",
+    "alias": "SRDS",
+    "venue": "IEEE Symposium on Reliable Distributed Systems",
+    "impactFactor": "1"
+  },
+  {
+    "code": "BKCSA166",
+    "alias": "CCGrid",
+    "venue": "IEEE/ACM International Symposium on Cluster, Cloud, and Grid Computing",
+    "impactFactor": "1"
+  },
+  {
+    "code": "BKCSA167",
+    "alias": "NOMS",
+    "venue": "IEEE/IFIP Network Operations and Management Symposium",
+    "impactFactor": "1"
+  },
+  {
+    "code": "BKCSA168",
+    "alias": "SEC(IFIP-SEC)",
+    "venue": "IFIP International Information Security and Privacy Conference",
+    "impactFactor": "1"
+  },
+  {
+    "code": "BKCSA169",
+    "alias": "ISMB",
+    "venue": "Intelligent Systems for Molecular Biology",
+    "impactFactor": "1"
+  },
+  {
+    "code": "BKCSA170",
+    "alias": "FASE",
+    "venue": "International Conf. on Fundamental Approaches to Software Engineering",
+    "impactFactor": "1"
+  },
+  {
+    "code": "BKCSA171",
+    "alias": "ICSOC",
+    "venue": "International Conf. on Service Oriented Computing",
+    "impactFactor": "1"
+  },
+  {
+    "code": "BKCSA172",
+    "alias": "AISTATS",
+    "venue": "International Conference on Artificial Intelligence and Statistics",
+    "impactFactor": "1"
+  },
+  {
+    "code": "BKCSA173",
+    "alias": "ICAPS",
+    "venue": "International Conference on Automated Planning and Scheduling",
+    "impactFactor": "1"
+  },
+  {
+    "code": "BKCSA174",
+    "alias": "CONCUR",
+    "venue": "International Conference on Concurrency Theory",
+    "impactFactor": "1"
+  },
+  {
+    "code": "BKCSA175",
+    "alias": "DASFAA",
+    "venue": "International Conference on Database Systems for Advanced Applications",
+    "impactFactor": "1"
+  },
+  {
+    "code": "BKCSA176",
+    "alias": "HiPEAC",
+    "venue": "International Conference on High Performance and Embedded Architectures and Compilers",
+    "impactFactor": "1"
+  },
+  {
+    "code": "BKCSA177",
+    "alias": "ITS",
+    "venue": "International Conference on Intelligent Tutoring Systems",
+    "impactFactor": "1"
+  },
+  {
+    "code": "BKCSA178",
+    "alias": "ICLP",
+    "venue": "International Conference on Logic Programming",
+    "impactFactor": "1"
+  },
+  {
+    "code": "BKCSA179",
+    "alias": "MICCAI",
+    "venue": "International Conference on Medical Image Computing and Computer Assisted Interventions",
+    "impactFactor": "1"
+  },
+  {
+    "code": "BKCSA180",
+    "alias": "Europar",
+    "venue": "International European Conference on Parallel and Distributed Computing",
+    "impactFactor": "1"
+  },
+  {
+    "code": "BKCSA181",
+    "alias": "IJCAR",
+    "venue": "International Joint Conference on Automated Reasoning",
+    "impactFactor": "1"
+  },
+  {
+    "code": "BKCSA182",
+    "alias": "SAS",
+    "venue": "International Static Analysis Symposium",
+    "impactFactor": "1"
+  },
+  {
+    "code": "BKCSA183",
+    "alias": "ISAAC",
+    "venue": "International Symposium on Algorithms and Computation",
+    "impactFactor": "1"
+  },
+  {
+    "code": "BKCSA184",
+    "alias": "STACS",
+    "venue": "International Symposium on Theoretical Aspects of Computer Science",
+    "impactFactor": "1"
+  },
+  {
+    "code": "BKCSA185",
+    "alias": "PAKDD",
+    "venue": "Pacific-Asia Conference on Knowledge Discovery and Data Mining",
+    "impactFactor": "1"
+  },
+  {
+    "code": "BKCSA186",
+    "alias": "RECOMB",
+    "venue": "Research in Computational Molecular Biology",
+    "impactFactor": "1"
+  },
+  {
+    "code": "BKCSA187",
+    "alias": "SOUPS",
+    "venue": "Symposium On Usable Privacy and Security",
+    "impactFactor": "1"
+  },
+  {
+    "code": "BKCSA188",
+    "alias": "TCC",
+    "venue": "Theory of Cryptography Conference",
+    "impactFactor": "1"
+  }
+]
