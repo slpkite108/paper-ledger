@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { primaryIssn, paperIdentifiers, preferredIssn, issnSummary } from './journal-identifiers';
+import { withIssnPreference, primaryIssn, paperIdentifiers, preferredIssn, issnSummary } from './journal-identifiers';
 import { fields, csvCell, type Paper } from './papers';
 import { kindLabels } from './publications';
 import { criteriaSchema, defaultCriteria } from './criteria';
@@ -18,7 +18,7 @@ export const formats = { text: '텍스트', number: '숫자', decimal: '소수 �
 const idSchema = z.string().min(1).max(100).regex(/^[a-zA-Z0-9_-]+$/);
 export const columnSchema = z.object({ id: idSchema, label: z.string().trim().min(1).max(150), source: z.string().refine(v => sources.some(s => s.key === v)), constant: z.string().max(2000).default(''), width: z.number().int().min(8).max(100), align: z.enum(['left', 'center', 'right']), format: z.enum(['text', 'number', 'decimal', 'percent', 'year', 'month']) });
 export const sortSchema = z.object({ key: z.string().min(1).max(120), direction: z.enum(['asc', 'desc']) });
-export const layoutSchema = z.object({ version: z.literal(1), id: idSchema, name: z.string().trim().min(1).max(80), columns: z.array(columnSchema).min(1).max(100), criteria: criteriaSchema, dateBasis: z.enum(['issue','online']).default('issue'),
+export const layoutSchema = z.object({ version: z.literal(1), id: idSchema, name: z.string().trim().min(1).max(80), columns: z.array(columnSchema).min(1).max(100), criteria: criteriaSchema, dateBasis: z.enum(['issue','online']).default('issue'), preferIssnL: z.boolean().default(false),
   style: z.object({ headerColor: z.string().regex(/^#[0-9a-f]{6}$/i), fontSize: z.number().int().min(9).max(20), striped: z.boolean(), wrap: z.boolean() }), sort: z.array(sortSchema).max(3) })
   .refine(v => new Set(v.columns.map(c => c.id)).size === v.columns.length, '열 식별자가 중복됩니다.')
   .refine(v => v.sort.every(s => sources.some(f => !['manual', 'constant', 'rowNumber'].includes(f.key) && f.key === s.key) || v.columns.some(c => c.source !== 'rowNumber' && 'column:' + c.id === s.key)), '정렬 기준을 확인하세요.');
@@ -26,7 +26,7 @@ export type Layout = z.infer<typeof layoutSchema>;
 export type Column = z.infer<typeof columnSchema>;
 export type SortRule = z.infer<typeof sortSchema>;
 export const defaultSort: SortRule[] = [{ key: 'published', direction: 'desc' }, { key: 'professor', direction: 'asc' }];
-export function defaultLayout(): Layout { return { version: 1, id: 'default-17', dateBasis: 'issue', name: '기본 연구실적 17항목', criteria: structuredClone(defaultCriteria), columns: fields.map(f => ({ id: f.key, label: f.label, source: f.key, constant: '', width: ['title', 'coauthors', 'venue', 'link'].includes(f.key) ? 45 : 20, align: 'left', format: ['authorCount', 'assistants', 'funders'].includes(f.key) ? 'number' : 'text' })), style: { headerColor: '#234264', fontSize: 11, striped: true, wrap: true }, sort: defaultSort }; }
+export function defaultLayout(): Layout { return { version: 1, id: 'default-17', dateBasis: 'issue', preferIssnL: false, name: '기본 연구실적 17항목', criteria: structuredClone(defaultCriteria), columns: fields.map(f => ({ id: f.key, label: f.label, source: f.key, constant: '', width: ['title', 'coauthors', 'venue', 'link'].includes(f.key) ? 45 : 20, align: 'left', format: ['authorCount', 'assistants', 'funders'].includes(f.key) ? 'number' : 'text' })), style: { headerColor: '#234264', fontSize: 11, striped: true, wrap: true }, sort: defaultSort }; }
 export function newColumn(label = '새 항목'): Column { return { id: crypto.randomUUID(), label, source: matchHeader(label), constant: '', width: 24, align: 'left', format: 'text' }; }
 function normalize(s: string) { return s.normalize('NFKC').toLowerCase().replace(/<br\s*\/?\s*>/gi, '').replace(/[\s_()·/\-]/g, ''); }
 const aliases: Record<string, string[]> = { electronicIssn: ['eISSN','e-ISSN','electronic ISSN','online ISSN','온라인 ISSN'], printIssn: ['pISSN','p-ISSN','print ISSN','인쇄 ISSN'], linkingIssn: ['ISSN-L'], title: ['제목', '논문제목', 'title', 'paper title'], professor: ['교수', '참여 교수', '연구자'], firstAuthor: ['제1저자', '주저자', 'first author'], coauthors: ['공저자', '공동저자', 'coauthors'], venue: ['학술지명', '학술대회명', '학회명', 'journal', 'conference', 'venue'], published: ['발행년월', '출판일', '출판연도', '발행연도', 'publication date', 'year'], authorCount: ['저자 수', 'authors count'], pages: ['페이지', 'pages'], volume: ['권', 'volume'], link: ['url', '링크', '인터넷 link 주소'], impactFactor: ['if', 'impact factor', '인정 if'], category: ['구분', '인정구분'], contribution: ['기여율(%)'], scie: ['scie', 'scie 여부'], bk: ['bk', 'bk인정'], h5: ['h5', 'h5-index'] };
@@ -100,7 +100,7 @@ function compareChronologically(a: string, b: string, direction: SortRule['direc
   return 0;
 }
 export function sortPapers(papers: Paper[], layout: Layout): Paper[] {
-  return [...papers].sort((a, b) => { for (const rule of layout.sort) {
+  return papers.map(p=>withIssnPreference(p,layout.preferIssnL)).sort((a, b) => { for (const rule of layout.sort) {
     const c = rule.key.startsWith('column:') ? layout.columns.find(c => 'column:' + c.id === rule.key) : undefined;
     const av = (c ? columnValue(a, c) : sourceValue(a, rule.key)).trim(); const bv = (c ? columnValue(b, c) : sourceValue(b, rule.key)).trim();
     if (!av || !bv) { if (av !== bv) return av ? -1 : 1; continue; } // Unknown is last in either direction.
@@ -115,7 +115,7 @@ export function sortPapers(papers: Paper[], layout: Layout): Paper[] {
     if (compared) return rule.direction === 'asc' ? compared : -compared;
   } return 0; });
 }
-export function layoutCsv(papers: Paper[], layout: Layout) { return '\uFEFF' + [layout.columns.map(c => csvCell(c.label)).join(','), ...papers.map((p,i) => layout.columns.map(c => csvCell(displayValue(columnValue(p,c,i),c.format))).join(','))].join('\r\n'); }
+export function layoutCsv(papers: Paper[], layout: Layout) { return '\uFEFF' + [layout.columns.map(c => csvCell(c.label)).join(','), ...papers.map(p=>withIssnPreference(p,layout.preferIssnL)).map((p,i) => layout.columns.map(c => csvCell(displayValue(columnValue(p,c,i),c.format))).join(','))].join('\r\n'); }
 const storageKey = 'paper-ledger-layouts-v1';
 export function readLocalLayouts(): Layout[] { return z.array(layoutSchema).max(50).parse(JSON.parse(localStorage.getItem(storageKey) || '[]')); }
 export function saveLocalLayout(value: Layout) { const layout = layoutSchema.parse(value); const all = readLocalLayouts().filter(l => l.id !== layout.id); if (all.length >= 50) throw new Error('프리셋은 50개까지 저장할 수 있습니다.'); localStorage.setItem(storageKey, JSON.stringify([layout, ...all])); }

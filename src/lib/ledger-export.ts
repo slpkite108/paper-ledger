@@ -1,4 +1,5 @@
 import ExcelJS from 'exceljs';
+import { withIssnPreference } from './journal-identifiers';
 import { columnValue, displayValue, numericValue, type Layout } from './layouts';
 import type { Paper } from './papers';
 
@@ -11,7 +12,7 @@ export async function ledgerXlsx(papers: Paper[], layout: Layout) {
   const sheet = workbook.addWorksheet('연구실적', { views: [{ state: 'frozen', ySplit: 1 }], pageSetup: { orientation: 'landscape', fitToPage: true, fitToWidth: 1, fitToHeight: 0 } });
   sheet.columns = layout.columns.map(c => ({ header: c.label, key: c.id, width: c.width }));
   sheet.autoFilter = { from: { row: 1, column: 1 }, to: { row: papers.length + 1, column: layout.columns.length } };
-  papers.forEach((p, i) => { const row = sheet.addRow(layout.columns.map(c => { const raw = columnValue(p,c,i); const n = numericValue(raw); return n !== null && ['number','decimal','percent'].includes(c.format) ? c.format === 'percent' ? n/100 : n : displayValue(raw,c.format); }));
+  papers.map(p=>withIssnPreference(p,layout.preferIssnL)).forEach((p, i) => { const row = sheet.addRow(layout.columns.map(c => { const raw = columnValue(p,c,i); const n = numericValue(raw); return n !== null && ['number','decimal','percent'].includes(c.format) ? c.format === 'percent' ? n/100 : n : displayValue(raw,c.format); }));
     row.eachCell({ includeEmpty: true }, (cell,j) => { const c = layout.columns[j-1];
       cell.font = { name: '맑은 고딕', size: layout.style.fontSize, color: { argb: 'FF19283C' } };
       cell.alignment = { horizontal: c.align, vertical: 'top', wrapText: layout.style.wrap };

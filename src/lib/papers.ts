@@ -26,7 +26,7 @@ export type FieldKey = typeof fields[number]['key'];
 export type Author = { id: string; display_name: string; works_count?: number; orcid?: string | null; last_known_institutions?: { display_name: string }[] | null };
 type Authorship = { author?: { id?: string; display_name?: string }; author_position?: string; is_corresponding?: boolean };
 export type Work = { id: string; doi?: string | null; title?: string | null; publication_date?: string; publication_year?: number; type?: string; authorships?: Authorship[]; is_authors_truncated?: boolean; biblio?: { first_page?: string | null; last_page?: string | null; volume?: string | null }; primary_location?: { landing_page_url?: string | null; source?: { id?: string; type?: string; display_name?: string; issn?: string[] | null; issn_l?: string | null } | null } | null };
-export type Paper = KindInfo & { journalIdentifiers?: JournalIdentifiers; issnManual?: boolean; journalSource?: 'hcis' | 'crossref'; supplementalSource?: string; conference?: ConferenceInfo; venueManual?: boolean; id: string; authorId: string; doi: string; type: string; source: string; publicationDate: string; publicationDates?: PublicationDates; arxiv: boolean; warnings: string[]; role: string; verified: boolean; values: Record<FieldKey, string>; customValues?: Record<string, string>; evidence?: RecognitionEvidence; recognitionCategoryManual?: boolean; recognitionManual?: (keyof RecognitionEvidence)[]; automaticRecognition?: { category?: string; evidence: Partial<RecognitionEvidence> } };
+export type Paper = KindInfo & { originalFirstIssn?: string; preferIssnL?: boolean; journalIdentifiers?: JournalIdentifiers; issnManual?: boolean; journalSource?: 'hcis' | 'crossref'; supplementalSource?: string; conference?: ConferenceInfo; venueManual?: boolean; id: string; authorId: string; doi: string; type: string; source: string; publicationDate: string; publicationDates?: PublicationDates; arxiv: boolean; warnings: string[]; role: string; verified: boolean; values: Record<FieldKey, string>; customValues?: Record<string, string>; evidence?: RecognitionEvidence; recognitionCategoryManual?: boolean; recognitionManual?: (keyof RecognitionEvidence)[]; automaticRecognition?: { category?: string; evidence: Partial<RecognitionEvidence> } };
 export function safeUrl(value: string | null | undefined): string {
   if (!value) return '';
   try { const url = new URL(value); return ['https:', 'http:'].includes(url.protocol) ? url.href : ''; } catch { return ''; }
@@ -50,9 +50,9 @@ export function toPaper(work: Work, author: Author, professor: string): Paper {
     authorCount: authors.length && !work.is_authors_truncated ? String(authors.length) : '',
     venue: source?.display_name ?? '',
     link: safeUrl(work.doi) || safeUrl(work.primary_location?.landing_page_url) || safeUrl(work.id),
-    issn: issnList(source?.issn_l)[0] || issnList(source?.issn)[0] || '',
+    issn: issnList(source?.issn)[0] || issnList(source?.issn_l)[0] || '',
   });
-  return applyPublicationDates({ journalIdentifiers: mergeIdentifiers({untyped:issnList(source?.issn),linking:issnList(source?.issn_l),urls:source?.id?[source.id]:[]}), id: shortId(author.id) + ':' + shortId(work.id), authorId: author.id, doi: work.doi ?? '', type: work.type ?? '', source: work.id, values, verified: false, publicationDate: '', arxiv: isArxiv(work), ...openAlexKind(work),
+  return applyPublicationDates({ originalFirstIssn:values.issn, journalIdentifiers: mergeIdentifiers({untyped:issnList(source?.issn),linking:issnList(source?.issn_l),urls:source?.id?[source.id]:[]}), id: shortId(author.id) + ':' + shortId(work.id), authorId: author.id, doi: work.doi ?? '', type: work.type ?? '', source: work.id, values, verified: false, publicationDate: '', arxiv: isArxiv(work), ...openAlexKind(work),
     role: [self?.author_position === 'first' ? '제1저자' : '', self?.is_corresponding ? '교신저자' : ''].filter(Boolean).join(' · ') || '제1·교신저자 정보 미확인',
     warnings: [work.is_authors_truncated ? '저자 목록이 일부 생략되어 있습니다. 전체 저자와 저자수를 원문에서 확인하세요.' : '', !first ? '제1저자 순서 정보가 없습니다. 원문 확인이 필요합니다.' : ''].filter(Boolean) }, initialPublicationDates(work));
 }

@@ -28,9 +28,17 @@ export function paperIdentifiers(p: Paper): JournalIdentifiers {
 }
 export function applyIdentifiers(p: Paper, incoming: JournalIdentifiers, incomingFirst = ''): Paper {
   const journalIdentifiers = mergeIdentifiers(p.journalIdentifiers,{untyped:issnList(p.values.issn)},incoming);
-  return {...p,journalIdentifiers,values:{...p.values,issn:p.issnManual ? p.values.issn : journalIdentifiers.linking[0] || primaryIssn(p) || issnList(incomingFirst)[0] || allIdentifiers(journalIdentifiers)[0] || ''}};
+  const originalFirstIssn=p.originalFirstIssn || issnList(p.values.issn)[0] || issnList(incomingFirst)[0] || allIdentifiers(journalIdentifiers)[0] || '';
+  return withIssnPreference({...p,journalIdentifiers,originalFirstIssn},p.preferIssnL || false);
 }
-export function primaryIssn(p: Paper): string { return (!p.issnManual && p.journalIdentifiers?.linking[0]) || issnList(p.values.issn)[0] || ''; }
+export function primaryIssn(p: Paper): string {
+  if(p.issnManual)return issnList(p.values.issn)[0] || '';
+  return (p.preferIssnL && p.journalIdentifiers?.linking[0]) || p.originalFirstIssn || issnList(p.values.issn)[0] || '';
+}
+export function withIssnPreference(p: Paper, preferIssnL: boolean): Paper {
+  const next={...p,preferIssnL,originalFirstIssn:p.originalFirstIssn || issnList(p.values.issn)[0] || ''};
+  return {...next,values:{...p.values,issn:p.issnManual?p.values.issn:primaryIssn(next)}};
+}
 export function setManualIssn(p: Paper, value: string): Paper { return {...p,issnManual:true,values:{...p.values,issn:value}}; }
 export function preferredIssn(p: Paper): string {
   const ids = paperIdentifiers(p);
