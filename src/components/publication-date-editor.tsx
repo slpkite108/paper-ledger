@@ -16,9 +16,10 @@ export function PublicationDateEditor({ paper, onChange }: { paper: Paper; onCha
   async function fetchDate() { const current = ++seq.current; setBusy(true); setCandidate(null); setError(''); try { const result = await fetchCitationDate(url, paper.doi); if (current === seq.current) setCandidate(result); } catch (e) { if (current === seq.current) setError((e as Error).message); } finally { if (current === seq.current) setBusy(false); } }
   return <section className="publication-date-editor" aria-label="출판일 근거">
     <h3>출판일 근거 · {dateSummary(paper)}</h3>
-    <p>Tech Science Press(10.32604 DOI)는 논문을 불러올 때 출판사 페이지의 날짜를 자동 확인합니다. 출판사 자동 조회 → 원문 확인 기록 → 월이 등록된 Crossref 인쇄일·온라인일·출판일·발행일 순으로 적용하며, 월이 없으면 추정하지 않습니다.</p>
+    <p>학술대회 논문은 개최 시작일을 기준으로 출판년월·정렬·기간 필터를 적용합니다. Crossref의 행사 정보와 출판사가 등록한 학술대회 정보를 자동으로 읽습니다. 개최일이 없으면 미확인으로 남기며, 논문집 발행일로 대신 채우지 않습니다. 저널은 출판사 확인일 → Crossref 인쇄·온라인·출판·발행일을 사용합니다.</p>
+    {paper.conference&&<p><strong>{paper.conference.name}{paper.conference.acronym&&' ('+paper.conference.acronym+')'}</strong><br/>개최기간: {paper.conference.start||'미확인'}{paper.conference.end&&' ~ '+paper.conference.end}<br/>논문집: {paper.conference.proceedings||'미확인'}</p>}
     <ul>{info?.candidates.map(c => <li key={c.source}>
-      <span><strong>{c.date}</strong> · {dateLabels[c.source]}{c.date.length === 4 && ' (월 미상)'}{c.checkedOn && <small>확인일 {c.checkedOn} · {c.note}</small>}</span>
+      <span><strong>{c.date}</strong> · {dateLabels[c.source]}{c.date.length === 4 && ' (월 미상)'}{(c.checkedOn||c.note) && <small>{c.checkedOn&&'확인일 '+c.checkedOn+' · '}{c.note}</small>}</span>
       {safeUrl(c.url) && <a href={safeUrl(c.url)} target="_blank" rel="noopener noreferrer">출처 ↗</a>}
       <Button variant="outline" size="sm" onClick={() => onChange(choosePublicationDate(paper, c))}>이 날짜 적용</Button>
     </li>)}</ul>
