@@ -15,7 +15,7 @@
 - 같은 탭에서 새로고침 후 Google 연결 복원, 상단의 계정·연결 상태 표시
 - SCIE·CS우수학술대회·h5 기준표 자동 대조와 출처 기록 (학회 권장 목록은 BK 판정 제외)
 
-학술대회는 Crossref 행사·ConferenceInfo의 개최 시작일을 기준으로 표시·정렬합니다. SCIE 내장 범위는 IEEE 167종·출판사 확인 3종·Clarivate 개별 확인 4종이며, h5는 확인한 기준표를 추가해야 합니다. 자세한 범위는 [사용 안내](documentation/USER_GUIDE.md)에 있습니다.
+학술대회는 Crossref 행사·ConferenceInfo의 개최 시작일을 기준으로 표시·정렬합니다. SCIE 내장 범위는 IEEE 167종·출판사 확인 3종·Clarivate 개별 확인 5종이며, h5는 확인한 기준표를 추가해야 합니다. 자세한 범위는 [사용 안내](documentation/USER_GUIDE.md)에 있습니다.
 
 ## 로컬 실행
 
