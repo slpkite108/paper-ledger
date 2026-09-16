@@ -187,3 +187,8 @@
 @media(max-width:760px) { .query-bar .period-field { flex:1 1 190px; } .query-bar .professor-field { flex-basis:100%; } }
 
 .journal-discovery-status { order:1; flex-basis:100%; color:#31577d; font-size:13px; padding:6px 0; }
+
+.date-basis-options { border:1px solid #dce4ef; border-radius:8px; padding:14px 16px; margin:14px 0; background:#f3f6fb; font-size:13px; color:#42566f; }
+.date-basis-options>label { font-weight:600; margin-right:12px; color:#1e3550; }
+.date-basis-options>select { padding:7px 10px; border:1px solid #cbd5e1; border-radius:6px; background:white; font:inherit; color:#1e3550; }
+.date-basis-options>p { margin:8px 0 0; line-height:1.65; }
