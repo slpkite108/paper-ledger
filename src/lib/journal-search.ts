@@ -2,7 +2,7 @@ import { z } from 'zod';
 import { upstream } from './upstream';
 import { toPaper, shortId, safeUrl, type Author, type Paper } from './papers';
 import { applyCrossref, crossrefData, type CrossrefMessage } from './crossref-data';
-import { applyPublicationDates, normalizedDoi, type DateCandidate } from './publication-dates';
+import { applyPublicationDates, normalizedDoi, withDateBasis, type DateBasis, type DateCandidate } from './publication-dates';
 import { normalizedTitle } from './publications';
 import { publicationInRange, type PublicationRange } from './publication-range';
 
@@ -16,14 +16,17 @@ export type JournalCandidate={id:string;title:string;authors:{name:string;orcid?
 export type JournalPage={works:JournalCandidate[];next:string|null;sourceUrl:string};
 export type JournalResult={source:JournalSource;author:Author;query:string;range:PublicationRange;includeUnknownMonths:boolean;rows:JournalCandidate[];excluded:JournalCandidate[];next:string|null;url:string;error?:string};
 export const journalResultKey=(r:Pick<JournalResult,'source'|'author'>)=>shortId(r.author.id)+':'+r.source.issn;
+export function rebaseJournalResult(r:JournalResult,basis:DateBasis):JournalResult {
+  return {...journalResult(r.source,r.author,r.query,r.range,r.includeUnknownMonths,{works:[...r.rows,...r.excluded],next:r.next,sourceUrl:r.url},basis),error:r.error};
+}
 export const journalCandidateKey=(r:Pick<JournalResult,'source'|'author'>,c:JournalCandidate)=>journalResultKey(r)+':'+c.id;
-export function journalResult(source:JournalSource,author:Author,query:string,range:PublicationRange,includeUnknownMonths:boolean,page:JournalPage):JournalResult {
+export function journalResult(source:JournalSource,author:Author,query:string,range:PublicationRange,includeUnknownMonths:boolean,page:JournalPage,dateBasis:DateBasis='issue'):JournalResult {
   const rows:JournalCandidate[]=[],excluded:JournalCandidate[]=[];
-  for(const c of page.works)(publicationInRange(candidateToPaper(c,author,author.display_name).values.published,range,includeUnknownMonths)?rows:excluded).push(c);
+  for(const c of page.works)(publicationInRange(withDateBasis(candidateToPaper(c,author,author.display_name),dateBasis).values.published,range,includeUnknownMonths)?rows:excluded).push(c);
   return {source,author,query,range:{...range},includeUnknownMonths,rows,excluded,next:page.next,url:page.sourceUrl};
 }
 /** One first page per enabled journal and author; candidates require review before export. */
-export async function discoverJournalCandidates(authors:Author[],sources:JournalSource[],range:PublicationRange,includeUnknownMonths:boolean,options:{onResult?:(r:JournalResult)=>void;onStatus?:(text:string)=>void;isCurrent?:()=>boolean}={},search:typeof searchJournal=searchJournal) {
+export async function discoverJournalCandidates(authors:Author[],sources:JournalSource[],range:PublicationRange,includeUnknownMonths:boolean,options:{dateBasis?:DateBasis;onResult?:(r:JournalResult)=>void;onStatus?:(text:string)=>void;isCurrent?:()=>boolean}={},search:typeof searchJournal=searchJournal) {
   const results:JournalResult[]=[],cache=new Map<string,Promise<JournalPage>>();
   const blocked=new Set<JournalSource['provider']>();
   for(const author of authors)for(const source of sources.filter(s=>s.enabled)) {
@@ -36,7 +39,7 @@ export async function discoverJournalCandidates(authors:Author[],sources:Journal
         if(blocked.has(source.provider))throw new Error('이 검색원의 요청 제한으로 나머지 조회를 중단했습니다. 잠시 후 다시 검색하세요.');
         cache.set(key,search(source,query,range));
       }
-      result=journalResult(source,author,query,range,includeUnknownMonths,await cache.get(key)!);
+      result=journalResult(source,author,query,range,includeUnknownMonths,await cache.get(key)!,options.dateBasis);
     }catch(e){
       if((e as {status?:number}).status===429)blocked.add(source.provider);
       result={...journalResult(source,author,query,range,includeUnknownMonths,{works:[],next:null,sourceUrl:''}),error:(e as Error).message};
@@ -88,7 +91,7 @@ export function candidateToPaper(c:JournalCandidate,author:Author,professor:stri
   let paper=toPaper({id:c.url,title:c.title,doi:doi?'https://doi.org/'+doi:null,type:'journal-article',primary_location:{landing_page_url:c.url,source:{type:'journal',display_name:c.venue,issn:c.issn}},biblio:{volume:c.volume},authorships:c.authors.map((a,i)=>({author:{display_name:a.name},author_position:i===0?'first':'middle'}))},author,professor);
   paper={...paper,id,source:c.url,journalSource:c.provider,kindSource:c.provider==='hcis'?'HCIS 저널 검색':'Crossref 저널 검색',warnings:['저널 저자 검색에서 선택한 후보입니다. 동명이인·저자 순서·소속을 원문에서 확인하세요.',...(c.warning?[c.warning]:[])]};
   if(c.metadata)paper=applyCrossref(paper,crossrefData(c.metadata),true);
-  else {const candidates:DateCandidate[]=c.date?[{source:'publisher-issue',date:c.date,url:c.url,checkedOn:c.checkedOn,note:'HCIS 저널 검색 결과의 Published on'}]:[];paper=applyPublicationDates(paper,{candidates,publisherChecked:true});}
+  else {const candidates:DateCandidate[]=c.date?[{source:'publisher-metadata',dateKind:'unspecified',date:c.date,url:c.url,checkedOn:c.checkedOn,note:'HCIS 저널 검색 결과의 Published on'}]:[];paper=applyPublicationDates(paper,{candidates,publisherChecked:true});}
   return paper;
 }
 export function sameJournalPaper(a:Paper,b:Paper) {

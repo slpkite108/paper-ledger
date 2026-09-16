@@ -2,11 +2,12 @@ import { z } from 'zod';
 import { fields, csvCell, type Paper } from './papers';
 import { kindLabels } from './publications';
 import { criteriaSchema, defaultCriteria } from './criteria';
-import { dateFromParts, dateSummary } from './publication-dates';
+import { dateFromParts, dateSummary, dateForBasis, dateBasisLabels } from './publication-dates';
 
 export const sources = [...fields.map(f => ({ key: f.key as string, label: f.label as string })),
   { key: 'publicationKind', label: '학술유형 (저널/Conference)' }, { key: 'doi', label: 'DOI' },
   { key: 'publicationDateSource', label: '출판일·개최일 근거' },
+  { key: 'issueDate', label: '권·호 발행일 (원본)' }, { key: 'onlineDate', label: '온라인 게재일 (원본)' }, { key: 'publicationDateBasis', label: '출판일 적용 기준' },
   { key: 'conferenceName', label: '학술대회 명칭' }, { key: 'conferenceDates', label: '학술대회 개최기간' }, { key: 'proceedings', label: '학술대회 논문집명' },
   { key: 'verified', label: '확인 상태' }, { key: 'scie', label: 'SCIE 확인 결과' }, { key: 'bk', label: 'BK 확인 결과' },
   { key: 'cs', label: 'CS 우수학술대회 확인 결과' }, { key: 'h5', label: '학술지·학술대회 h5-index' }, { key: 'evidence', label: '인정 근거·기준연도' },
@@ -15,7 +16,7 @@ export const formats = { text: '텍스트', number: '숫자', decimal: '소수 �
 const idSchema = z.string().min(1).max(100).regex(/^[a-zA-Z0-9_-]+$/);
 export const columnSchema = z.object({ id: idSchema, label: z.string().trim().min(1).max(150), source: z.string().refine(v => sources.some(s => s.key === v)), constant: z.string().max(2000).default(''), width: z.number().int().min(8).max(100), align: z.enum(['left', 'center', 'right']), format: z.enum(['text', 'number', 'decimal', 'percent', 'year', 'month']) });
 export const sortSchema = z.object({ key: z.string().min(1).max(120), direction: z.enum(['asc', 'desc']) });
-export const layoutSchema = z.object({ version: z.literal(1), id: idSchema, name: z.string().trim().min(1).max(80), columns: z.array(columnSchema).min(1).max(100), criteria: criteriaSchema,
+export const layoutSchema = z.object({ version: z.literal(1), id: idSchema, name: z.string().trim().min(1).max(80), columns: z.array(columnSchema).min(1).max(100), criteria: criteriaSchema, dateBasis: z.enum(['issue','online']).default('issue'),
   style: z.object({ headerColor: z.string().regex(/^#[0-9a-f]{6}$/i), fontSize: z.number().int().min(9).max(20), striped: z.boolean(), wrap: z.boolean() }), sort: z.array(sortSchema).max(3) })
   .refine(v => new Set(v.columns.map(c => c.id)).size === v.columns.length, '열 식별자가 중복됩니다.')
   .refine(v => v.sort.every(s => sources.some(f => !['manual', 'constant', 'rowNumber'].includes(f.key) && f.key === s.key) || v.columns.some(c => c.source !== 'rowNumber' && 'column:' + c.id === s.key)), '정렬 기준을 확인하세요.');
@@ -23,7 +24,7 @@ export type Layout = z.infer<typeof layoutSchema>;
 export type Column = z.infer<typeof columnSchema>;
 export type SortRule = z.infer<typeof sortSchema>;
 export const defaultSort: SortRule[] = [{ key: 'published', direction: 'desc' }, { key: 'professor', direction: 'asc' }];
-export function defaultLayout(): Layout { return { version: 1, id: 'default-17', name: '기본 연구실적 17항목', criteria: structuredClone(defaultCriteria), columns: fields.map(f => ({ id: f.key, label: f.label, source: f.key, constant: '', width: ['title', 'coauthors', 'venue', 'link'].includes(f.key) ? 45 : 20, align: 'left', format: ['authorCount', 'assistants', 'funders'].includes(f.key) ? 'number' : 'text' })), style: { headerColor: '#234264', fontSize: 11, striped: true, wrap: true }, sort: defaultSort }; }
+export function defaultLayout(): Layout { return { version: 1, id: 'default-17', dateBasis: 'issue', name: '기본 연구실적 17항목', criteria: structuredClone(defaultCriteria), columns: fields.map(f => ({ id: f.key, label: f.label, source: f.key, constant: '', width: ['title', 'coauthors', 'venue', 'link'].includes(f.key) ? 45 : 20, align: 'left', format: ['authorCount', 'assistants', 'funders'].includes(f.key) ? 'number' : 'text' })), style: { headerColor: '#234264', fontSize: 11, striped: true, wrap: true }, sort: defaultSort }; }
 export function newColumn(label = '새 항목'): Column { return { id: crypto.randomUUID(), label, source: matchHeader(label), constant: '', width: 24, align: 'left', format: 'text' }; }
 function normalize(s: string) { return s.normalize('NFKC').toLowerCase().replace(/<br\s*\/?\s*>/gi, '').replace(/[\s_()·/\-]/g, ''); }
 const aliases: Record<string, string[]> = { title: ['제목', '논문제목', 'title', 'paper title'], professor: ['교수', '참여 교수', '연구자'], firstAuthor: ['제1저자', '주저자', 'first author'], coauthors: ['공저자', '공동저자', 'coauthors'], venue: ['학술지명', '학술대회명', '학회명', 'journal', 'conference', 'venue'], published: ['발행년월', '출판일', '출판연도', '발행연도', 'publication date', 'year'], authorCount: ['저자 수', 'authors count'], pages: ['페이지', 'pages'], volume: ['권', 'volume'], link: ['url', '링크', '인터넷 link 주소'], impactFactor: ['if', 'impact factor', '인정 if'], category: ['구분', '인정구분'], contribution: ['기여율(%)'], scie: ['scie', 'scie 여부'], bk: ['bk', 'bk인정'], h5: ['h5', 'h5-index'] };
@@ -49,6 +50,8 @@ export function headersFromTsv(text: string, orientation: 'row' | 'column') {
 }
 export function sourceValue(p: Paper, source: string): string {
   if (source in p.values) return p.values[source as keyof Paper['values']];
+  if (source === 'issueDate' || source === 'onlineDate') return dateForBasis(p.publicationDates,source==='issueDate'?'issue':'online')?.date||'';
+  if (source === 'publicationDateBasis') return p.publicationKind==='conference'?'학술대회 개최일':p.publicationKind==='journal'?dateBasisLabels[p.publicationDates?.basis||'issue']+' · '+dateSummary(p):'저널 외 문헌';
   if (source === 'publicationKind') return kindLabels[p.publicationKind];
   if (source === 'verified') return p.verified ? '확인 완료' : '검토 필요';
   if (source === 'doi') return p.doi;
@@ -73,7 +76,7 @@ export function displayValue(value: string, format: Column['format']) {
 const collator = new Intl.Collator('ko', { numeric: true, sensitivity: 'base' });
 export function isDateSort(layout: Layout, key: string): boolean {
   const column = layout.columns.find(c => 'column:' + c.id === key);
-  return key === 'published' || column?.source === 'published' || column?.format === 'year' || column?.format === 'month';
+  return ['published','issueDate','onlineDate'].includes(key) || ['published','issueDate','onlineDate'].includes(column?.source||'') || column?.format === 'year' || column?.format === 'month';
 }
 function chronologicalParts(value: string): number[] | null {
   if (!/^\d{4}(?:-\d{1,2}){0,2}$/.test(value)) return null;

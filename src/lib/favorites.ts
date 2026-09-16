@@ -13,6 +13,7 @@ export const favoritePayloadSchema = z.object({
   })).min(1).max(100).refine(a => new Set(a.map(v => v.id)).size === a.length),
   professorNames: z.record(z.string().max(300)),
   journalSources: journalSourcesSchema.optional(),
+  dateBasis: z.enum(['issue','online']).default('issue'),
   from: year,
   to: year,
   fromMonth: z.string().regex(/^(?:0[1-9]|1[0-2])?$/).default(''),
