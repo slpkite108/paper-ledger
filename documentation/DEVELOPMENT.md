@@ -55,3 +55,6 @@ GitHub Pages는 정적 호스팅이므로 CORS를 허용하지 않는 출판사 
 conference-data.ts는 Crossref event 및 ConferenceInfo assertion에서 명칭·시작일·종료일을 읽습니다. 일반 book-chapter를 무조건 학술대회로 분류하지 않습니다. 학술대회의 자동 기준일은 개최 시작일뿐이며, 출판 날짜 후보는 편집창에서 별도 유지합니다. 실제 CSA 2024 논문의 공개 Crossref 필드 발췌는 tests/conference-crossref-fixture.json에 있습니다.
 
 동일 제목 최신 병합 키는 저자+정규화 제목+학술유형입니다. 저널·학술대회·프리프린트·미확인은 서로 병합하지 않습니다. 동일 제목 학술대회 표시도 저자별로 구성하고 실제 버전 관계를 추론하지 않습니다. tests/recognition-conference.test.mjs는 공식 데이터 개수/스키마, SCIE 오판 방지, BK와 학회 권장 목록 분리, h5 49/50 경계, 수동값 보존, 자료 교체, 자동 내보내기, 실제 CSA 개최일, 기간 제외 및 유형별 중복 보존을 검증합니다.
+
+
+SCIE coverage update (2026-09-16): criteria.ts includes four MJL-confirmed journals, with ISSN/eISSN and ISSN-specific official evidence links. Existing complete source defaults migrate once via sourceRevision; restricted choices remain unchanged. Reference matching uses a WeakMap index of normalized names/ISSNs for 30,000-row tables. reference-import.ts reads UTF-8 CSV/Excel TSV, prioritizes explicit SCIE index values over SCIE-only mode, rejects JIF-only inference, and deduplicates identical rows. Preset JSON imports allow 10MB. No subscription data is bundled or published. Missing coverage remains unknown; explicit negative evidence is never inferred from absence.

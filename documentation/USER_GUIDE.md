@@ -26,13 +26,17 @@
 
 **인정 구분 자동 입력**은 기본 켜짐입니다. 선택 저자를 조회하거나 DOI 출판정보가 보완되면 사용 중인 기준표와 대조하고 구분·근거·기준연도를 함께 기록합니다. 화면, 현재 정렬된 CSV와 Excel에 같은 결과가 들어갑니다. 자동 일치는 직접 검토 완료를 뜻하지 않습니다. 기존 직접 입력한 구분과 근거는 유지합니다. 자동 설정과 자료 선택은 양식·프리셋에 저장됩니다.
 
-- SCIE 자동 범위: [IEEE 2026년 8월 공식 Title List](https://open.ieee.org/wp-content/uploads/IEEE-Title-List-August-2026.xlsx)의 Index가 SCIE인 167종, [CMC](https://www.techscience.com/cmc/info/Indexed), [CMES](https://www.techscience.com/CMES/info/Indexed), [Applied Intelligence](https://link.springer.com/journal/10489)의 공식 출판사 색인 안내 3종입니다. 현재 수록 상태의 확인 자료이며 과거 출판연도별 수록을 보증하지 않습니다. IF만 있는 ESCI 자료는 포함하지 않습니다.
+- SCIE 자동 범위: [IEEE 2026년 8월 공식 Title List](https://open.ieee.org/wp-content/uploads/IEEE-Title-List-August-2026.xlsx)의 Index가 SCIE인 167종, [CMC](https://www.techscience.com/cmc/info/Indexed), [CMES](https://www.techscience.com/CMES/info/Indexed), [Applied Intelligence](https://link.springer.com/journal/10489)의 공식 출판사 색인 안내 3종과 Clarivate MJL에서 2026-09-16에 개별 확인한 4종(Scientific Reports, Journal of Biomedical Informatics, Journal of Mathematical Analysis and Applications, Biomedical Signal Processing and Control)입니다. 총 174종의 일부 목록이며 전 분야 전체 SCIE 목록이 아닙니다. 현재 수록 상태의 확인 자료이며 과거 출판연도별 수록을 보증하지 않습니다. IF만 있는 ESCI 자료는 포함하지 않습니다.
 - CS 자동 범위: 위 BK 목록 188개입니다. 구분에는 **CS우수학술대회**, BK 근거에는 목록명·공식 첨부 출처·코드를 남깁니다. 한국정보과학회 권장 목록은 자동 판정·BK 근거로 사용하지 않습니다. BIBM의 현 명칭은 [공식 CFP](https://www.ieeebibm.org/BIBM2025/image/BIBM2025-call-for-papers.pdf)로 확인한 별칭을 추가했습니다. 학회 권장 목록에서 BK 인정 여부를 가져온 것이 아닙니다.
 - h5 자동 범위: 사용자가 확인하여 추가한 Metrics 기준표입니다. **학술대회**이고 h5가 50 이상일 때만 **h5-index 50 이상 학술대회**를 입력합니다. 저자 h-index나 저널 h5를 이 구분에 사용하지 않습니다. Google Metrics 실시간 전체 수집은 연결되어 있지 않고 내장 h5 수치를 추측해서 넣지 않습니다.
 
 SCIE는 저널의 ISSN 우선, 그 외는 정규화한 전체 명칭·명시된 별칭이 일치할 때 대조합니다. ISSN이 서로 다르면 제목이 같아도 적용하지 않습니다. 알려진 약칭 괄호만 제거하므로 본 학회 이름을 포함한 워크숍·Findings·포스터를 본 학회로 합치지 않습니다. 여러 후보가 나오거나 자료가 없으면 미확인입니다. 제출 기관의 실제 발표 트랙·논문 요건은 별도로 확인하세요. 수동 검토·반영도 계속 사용할 수 있습니다.
 
-다른 자료는 Excel에서 **학술지명 / ISSN / 약칭 / 구분 / 값 / 인정 IF** 머리글과 행을 복사하여 추가합니다. 이름·기준연도·공식 출처 URL이 필요합니다. 구분은 SCIE, BK인정, CS우수학술대회, h5-index, 참고 중 하나이며 h5 값은 정수입니다. 최대 10개 기준표, 각 5,000행입니다. 자료 최신판 및 적용 범위는 사용자가 확인합니다.
+다른 자료는 Excel에서 **학술지명 / ISSN / 약칭 / 구분 / 값 / 인정 IF** 머리글과 행을 복사하여 추가합니다. 이름·기준연도·공식 출처 URL이 필요합니다. 구분은 SCIE, BK인정, CS우수학술대회, h5-index, 참고 중 하나이며 h5 값은 정수입니다. 최대 10개 기준표, 각 30,000행입니다. CSV/TSV 파일(UTF-8, 10MB 이하)도 가져올 수 있습니다. Journal Title / ISSN / eISSN / Web of Science Index 머리글을 인식합니다. Index 열이 있으면 SCIE 또는 Science Citation Index Expanded를 명시한 행만 가져오고 ESCI·SSCI·빈 값은 제외합니다. 색인 열이 없는 공식 SCIE 전용 파일은 **SCIE 전용 목록**을 선택하세요. IF는 SCIE 판정에 사용하지 않습니다. 똑같은 행은 한 번만 저장합니다. 자료 최신판 및 적용 범위는 사용자가 확인합니다.
+
+기준표에서 찾지 못한 저널은 **SCIE 근거 미확인 · 기준표 확인 필요**로 표시하며, 사용자가 근거와 함께 비해당으로 확인한 경우와 구분합니다. 각 저널 행의 **SCIE 공식 확인** 링크에서 ISSN으로 MJL을 조회할 수 있습니다. 전체 색인 목록 다운로드는 현재 Web of Science 구독자를 대상으로 합니다([공식 다운로드](https://mjl.clarivate.com/collection-list-downloads), 2026-09-16 확인). 파일을 가져오면 해당 프리셋에서 자동 대조하며 공개 저장소로 전송하지 않습니다. 앱은 공식 전체 목록을 실시간 수집하지 않습니다.
+
+기존 프리셋이 모든 내장 자료를 사용하고 있었다면 새 Clarivate 확인 목록을 한 번 추가합니다. 일부 자료만 선택한 프리셋과 자동 대조를 끈 설정은 유지합니다. 수동 선택 드롭다운은 검색 결과 100개까지 표시하며, 자동 대조는 기준표 전체를 대상으로 합니다.
 
 논문 편집에서도 SCIE/BK 결과와 h5 값·기준연도·출처·메모를 기록할 수 있습니다. 양식에서 ‘SCIE 확인 결과’, ‘BK 확인 결과’, ‘학술지·학술대회 h5-index’, ‘인정 근거·기준연도’를 연결하면 내보내기에 포함됩니다.
 
