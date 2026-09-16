@@ -26,9 +26,16 @@ npm test는 새 페이지 모듈과 같은 세션 저장소를 사용해 새로�
 ## 기능별 위치
 
 - 검색·서지정보: client-api.ts, upstream.ts, papers.ts, crossref-data.ts
+- 출판일 우선순위·정밀도: publication-dates.ts, publication-date-editor.tsx
+- Cite 날짜 추출: citation-date.ts (HTML을 실행하거나 외부 프록시로 전송하지 않음)
+- 출판사에서 직접 검증한 DOI별 날짜: verified-publication-dates.json (원문 URL·확인일·발행일 근거 필수)
 - 중복·유형 필터: publications.ts
 - 사용자 양식·다중 정렬·Excel: layouts.ts, ledger-export.ts
 - Google 저장: google-store.ts
 - 인정 기준: criteria.ts, recognition.ts, bk-cs-data.json
 
 인정 자료를 갱신할 때 출처·자료판·조사일과 자동 대조 범위를 사용 안내에 같이 기록하세요. 발표 트랙 또는 기관 기준이 다르면 최종 인정 결과가 달라질 수 있습니다.
+
+출판일 검증은 tests/publication-date.test.mjs에서 실제 오류 논문의 공개 메타데이터 fixture, 연도만 있는 날짜, 인쇄/온라인 날짜 차이, 잘못된 날짜, 사용자 지정값 보존, 정렬·CSV, DOI가 일치하는 인용정보와 CORS 실패 안내를 확인합니다. fixture는 2026-09-16 조회한 공개 서지정보의 발췌이며 원문 전체를 포함하지 않습니다. 출판사 수동 확인 목록은 DOI 완전 일치로만 적용합니다. 목록에 없는 논문의 월을 임의로 채우지 마세요.
+
+GitHub Pages는 정적 호스팅이므로 CORS를 허용하지 않는 출판사를 브라우저에서 자동 수집할 수 없습니다. 출처 URL 직접 조회는 공개 요청(credentials omit)이며 실패 시 파일/붙여넣기 경로를 제공합니다. 무조건적인 외부 프록시나 CORS 우회 서비스는 사용하지 않습니다. 서지 보완은 DOI별 2개 동시 요청과 기존 upstream 캐시/요청 제한 처리를 사용합니다.
