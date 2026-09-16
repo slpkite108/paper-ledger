@@ -1,0 +1,1338 @@
+[
+  {
+    "venue": "IEEE Access",
+    "issn": "2169-3536",
+    "alias": "ACCESS",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Journal of Selected Topics in Applied Earth Observations and Remote Sensing",
+    "issn": "1939-1404; 2151-1535",
+    "alias": "J-STARS",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Journal of the Electron Devices Society",
+    "issn": "2168-6734",
+    "alias": "JEDS",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Journal of Translational Engineering in Health and Medicine",
+    "issn": "2168-2372",
+    "alias": "JTEHM",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Photonics Journal",
+    "issn": "1943-0655; 1943-0647",
+    "alias": "JPHOT",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Transactions on Neural Systems and Rehabilitation Engineering",
+    "issn": "1534-4320; 1558-0210",
+    "alias": "T-NSRE",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "Computer",
+    "issn": "0018-9162; 1558-0814",
+    "alias": "M-C",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "Computing in Science & Engineering",
+    "issn": "1521-9615; 1558-366X",
+    "alias": "CiSE",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Annals of the History of Computing",
+    "issn": "1058-6180; 1934-1547",
+    "alias": "M-AHC",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Antennas and Propagation Magazine",
+    "issn": "1045-9243; 1558-4143",
+    "alias": "M-AP",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Antennas and Wireless Propagation Letters",
+    "issn": "1536-1225; 1548-5757",
+    "alias": "L-AWP",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Canadian Journal of Electrical and Computer Engineering",
+    "issn": "2694-1783",
+    "alias": "J-CJECE",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Communications Letters",
+    "issn": "1089-7798; 1558-2558",
+    "alias": "L-COMM",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Communications Magazine",
+    "issn": "0163-6804; 1558-1896",
+    "alias": "M-COMM",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Communications Surveys and Tutorials",
+    "issn": "1553-877X",
+    "alias": "COMST",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Computer Architecture Letters",
+    "issn": "1556-6056; 1556-6064",
+    "alias": "L-CA",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Computer Graphics and Applications",
+    "issn": "0272-1716; 1558-1756",
+    "alias": "M-CG&A",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Electrical Insulation Magazine",
+    "issn": "0883-7554; 1558-4402",
+    "alias": "M-EI",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Electron Device Letters",
+    "issn": "0741-3106; 1558-0563",
+    "alias": "L-ED",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Embedded Systems Letters",
+    "issn": "1943-0663; 1943-0671",
+    "alias": "L-ES",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Geoscience and Remote Sensing Letters",
+    "issn": "1545-598X; 1558-0571",
+    "alias": "L-GRS",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Geoscience and Remote Sensing Magazine",
+    "issn": "2473-2397; 2168-6831",
+    "alias": "M-GRS",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Industry Applications Magazine",
+    "issn": "1077-2618; 1558-0598",
+    "alias": "M-IA",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Instrumentation & Measurement Magazine",
+    "issn": "1094-6969; 1941-0123",
+    "alias": "M-IM",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Intelligent Systems",
+    "issn": "1541-1672; 1941-1294",
+    "alias": "M-IS",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Internet Computing",
+    "issn": "1089-7801; 1941-0131",
+    "alias": "M-IC",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Internet of Things Journal",
+    "issn": "2327-4662",
+    "alias": "J-IOT",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Journal of Biomedical and Health Informatics",
+    "issn": "2168-2194; 2168-2208",
+    "alias": "J-BHI",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Journal of Emerging and Selected Topics in Power Electronics",
+    "issn": "2168-6777; 2168-6785",
+    "alias": "J-ESTPE",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Journal of Oceanic Engineering",
+    "issn": "0364-9059; 1558-1691",
+    "alias": "J-OE",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Journal of Photovoltaics",
+    "issn": "2156-3381; 2156-3403",
+    "alias": "J-PHOTOV",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Journal of Quantum Electronics",
+    "issn": "0018-9197; 1558-1713",
+    "alias": "J-QE",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Journal of Selected Topics in Quantum Electronics",
+    "issn": "1077-260X; 1558-4542",
+    "alias": "J-STQE",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Journal of Selected Topics in Signal Processing",
+    "issn": "1932-4553; 1941-0484",
+    "alias": "J-STSP",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Journal of Solid-State Circuits",
+    "issn": "0018-9200; 1558-173X",
+    "alias": "J-SSC",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Journal on Emerging and Selected Topics in Circuits and Systems",
+    "issn": "2156-3357; 2156-3365",
+    "alias": "JETCAS",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Journal on Selected Areas in Communications",
+    "issn": "0733-8716; 1558-0008",
+    "alias": "J-SAC",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Journal on Wireless Power Technologies  NEW for 2026",
+    "issn": "3066-5736",
+    "alias": "J-WPT",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Magnetics Letters",
+    "issn": "1949-307X; 1949-3088",
+    "alias": "L-MAG",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Micro",
+    "issn": "0272-1732; 1937-4143",
+    "alias": "M-MICRO",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Microwave and Wireless Technology Letters",
+    "issn": "2771-957X; 2771-9588",
+    "alias": "L-MWT",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE MultiMedia",
+    "issn": "1070-986X; 1941-0166",
+    "alias": "M-MULTI",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Network",
+    "issn": "0890-8044; 1558-156X",
+    "alias": "M-NET",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Pervasive Computing",
+    "issn": "1536-1268; 1558-2590",
+    "alias": "M-PVC",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Photonics Technology Letters",
+    "issn": "1041-1135; 1941-0174",
+    "alias": "L-PT",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Reviews in Biomedical Engineering",
+    "issn": "1937-3333; 1941-1189",
+    "alias": "R-BME",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Robotics & Automation Magazine",
+    "issn": "1070-9932; 1558-223X",
+    "alias": "M-RA",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Robotics and Automation Letters",
+    "issn": "2377-3766",
+    "alias": "L-RA",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Security & Privacy",
+    "issn": "1540-7993; 1558-4046",
+    "alias": "M-S&P",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Sensors Journal",
+    "issn": "1530-437X; 1558-1748",
+    "alias": "J-SEN",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Signal Processing Letters",
+    "issn": "1070-9908; 1558-2361",
+    "alias": "L-SP",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Software",
+    "issn": "0740-7459; 1937-4194",
+    "alias": "M-SOFT",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Spectrum",
+    "issn": "0018-9235; 1939-9340",
+    "alias": "SPEC",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Systems Journal",
+    "issn": "1932-8184; 1937-9234",
+    "alias": "J-SYS",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Transactions on Aerospace and Electronic Systems",
+    "issn": "0018-9251; 1557-9603",
+    "alias": "T-AES",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Transactions on Affective Computing",
+    "issn": "1949-3045",
+    "alias": "T-AFFC",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Transactions on Antennas and Propagation",
+    "issn": "0018-926X; 1558-2221",
+    "alias": "T-AP",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Transactions on Applied Superconductivity",
+    "issn": "1051-8223; 1558-2515",
+    "alias": "T-ASC",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Transactions on Audio, Speech, and Language Processing†",
+    "issn": "2998-4173",
+    "alias": "T-ASLPRO",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Transactions on Automatic Control",
+    "issn": "0018-9286; 1558-2523",
+    "alias": "T-AC",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Transactions on Automation Science and Engineering",
+    "issn": "1545-5955; 1558-3783",
+    "alias": "T-ASE",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Transactions on Big Data",
+    "issn": "2332-7790",
+    "alias": "T-BD",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Transactions on Biomedical Circuits and Systems",
+    "issn": "1932-4545; 1940-9990",
+    "alias": "T-BCAS",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Transactions on Biomedical Engineering",
+    "issn": "0018-9294; 1558-2531",
+    "alias": "T-BME",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Transactions on Broadcasting",
+    "issn": "0018-9316; 1557-9611",
+    "alias": "T-BC",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Transactions on Circuits and Systems for Video Technology",
+    "issn": "1051-8215; 1558-2205",
+    "alias": "T-CSVT",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Transactions on Circuits and Systems--I: Regular Papers",
+    "issn": "1549-8328; 1558-0806",
+    "alias": "T-CAS1",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Transactions on Circuits and Systems--II: Express Briefs",
+    "issn": "1549-7747; 1558-3791",
+    "alias": "T-CAS2",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Transactions on Cloud Computing",
+    "issn": "2168-7161",
+    "alias": "T-CC",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Transactions on Cognitive and Developmental Systems",
+    "issn": "2379-8920; 2379-8939",
+    "alias": "T-CDS",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Transactions on Cognitive Communications and Networking",
+    "issn": "2332-7731",
+    "alias": "T-CCN",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Transactions on Communications",
+    "issn": "0090-6778; 1558-0857",
+    "alias": "T-COMM",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Transactions on Components, Packaging and Manufacturing Technology",
+    "issn": "2156-3950; 2156-3985",
+    "alias": "T-CPMT",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Transactions on Computational Biology and Bioinformatics‡",
+    "issn": "2998-4165",
+    "alias": "T-CBBIO",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Transactions on Computational Imaging",
+    "issn": "2573-0436; 2333-9403",
+    "alias": "T-CI",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Transactions on Computational Social Systems",
+    "issn": "2329-924X",
+    "alias": "T-CSS",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Transactions on Computer-Aided Design of Integrated Circuits and Systems",
+    "issn": "0278-0070; 1937-4151",
+    "alias": "T-CAD",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Transactions on Computers",
+    "issn": "0018-9340; 1557-9956",
+    "alias": "T-C",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Transactions on Consumer Electronics",
+    "issn": "0098-3063; 1558-4127",
+    "alias": "T-CE",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Transactions on Control of Network Systems",
+    "issn": "2325-5870; 2372-2533",
+    "alias": "T-CNS",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Transactions on Control Systems Technology",
+    "issn": "1063-6536; 1558-0865",
+    "alias": "T-CST",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Transactions on Cybernetics",
+    "issn": "2168-2267; 2168-2275",
+    "alias": "T-CYB",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Transactions on Dependable and Secure Computing",
+    "issn": "1545-5971; 1941-0018",
+    "alias": "T-DSC",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Transactions on Device and Materials Reliability",
+    "issn": "1530-4388; 1558-2574",
+    "alias": "T-DMR",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Transactions on Dielectrics and Electrical Insulation",
+    "issn": "1070-9878; 1558-4135",
+    "alias": "T-DEI",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Transactions on Education",
+    "issn": "0018-9359; 1557-9638",
+    "alias": "T-E",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Transactions on Electromagnetic Compatibility",
+    "issn": "0018-9375; 1558-187X",
+    "alias": "T-EMC",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Transactions on Electron Devices",
+    "issn": "0018-9383; 1557-9646",
+    "alias": "T-ED",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Transactions on Emerging Topics in Computational Intelligence",
+    "issn": "2471-285X",
+    "alias": "T-ETCI",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Transactions on Emerging Topics in Computing",
+    "issn": "2168-6750",
+    "alias": "T-ETC",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Transactions on Energy Conversion",
+    "issn": "0885-8969; 1558-0059",
+    "alias": "T-EC",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Transactions on Evolutionary Computation",
+    "issn": "1089-778X; 1941-0026",
+    "alias": "T-EVC",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Transactions on Fuzzy Systems",
+    "issn": "1063-6706; 1941-0034",
+    "alias": "T-FUZZ",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Transactions on Games",
+    "issn": "2475-1502; 2475-1510",
+    "alias": "T-G",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Transactions on Geoscience and Remote Sensing",
+    "issn": "0196-2892; 1558-0644",
+    "alias": "T-GRS",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Transactions on Green Communications and Networking",
+    "issn": "2473-2400",
+    "alias": "T-GCN",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Transactions on Haptics",
+    "issn": "1939-1412; 2329-4051",
+    "alias": "T-H",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Transactions on Human-Machine Systems",
+    "issn": "2168-2291; 2168-2305",
+    "alias": "T-HMS",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Transactions on Image Processing",
+    "issn": "1057-7149; 1941-0042",
+    "alias": "T-IP",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Transactions on Industrial Electronics",
+    "issn": "0278-0046; 1557-9948",
+    "alias": "T-IE",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Transactions on Industrial Informatics",
+    "issn": "1551-3203; 1941-0050",
+    "alias": "T-IINF",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Transactions on Industry Applications",
+    "issn": "0093-9994; 1939-9367",
+    "alias": "T-IA",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Transactions on Information Forensics and Security",
+    "issn": "1556-6013; 1556-6021",
+    "alias": "T-IFS",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Transactions on Information Theory",
+    "issn": "0018-9448; 1557-9654",
+    "alias": "T-IT",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Transactions on Instrumentation and Measurement",
+    "issn": "0018-9456; 1557-9662",
+    "alias": "T-IM",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Transactions on Intelligent Transportation Systems",
+    "issn": "1524-9050; 1558-0016",
+    "alias": "T-ITS",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Transactions on Knowledge and Data Engineering",
+    "issn": "1041-4347; 1558-2191",
+    "alias": "T-KDE",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Transactions on Learning Technologies",
+    "issn": "1939-1382",
+    "alias": "T-LT",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Transactions on Magnetics",
+    "issn": "0018-9464; 1941-0069",
+    "alias": "T-MAG",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Transactions on Medical Imaging",
+    "issn": "0278-0062; 1558-254X",
+    "alias": "T-MI",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Transactions on Microwave Theory and Techniques",
+    "issn": "0018-9480; 1557-9670",
+    "alias": "T-MTT",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Transactions on Mobile Computing",
+    "issn": "1536-1233; 1558-0660",
+    "alias": "T-MC",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Transactions on Multimedia",
+    "issn": "1520-9210; 1941-0077",
+    "alias": "T-MM",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Transactions on NanoBioscience",
+    "issn": "1536-1241; 1558-2639",
+    "alias": "T-NB",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Transactions on Nanotechnology",
+    "issn": "1536-125X; 1941-0085",
+    "alias": "T-NANO",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Transactions on Network and Service Management",
+    "issn": "1932-4537",
+    "alias": "T-NSM",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Transactions on Network Science and Engineering",
+    "issn": "2327-4697",
+    "alias": "T-NSE",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Transactions on Networking§",
+    "issn": "2998-4157",
+    "alias": "T-ON",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Transactions on Neural Networks and Learning Systems",
+    "issn": "2162-237X; 2162-2388",
+    "alias": "T-NNLS",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Transactions on Nuclear Science",
+    "issn": "0018-9499; 1558-1578",
+    "alias": "T-NS",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Transactions on Parallel and Distributed Systems",
+    "issn": "1045-9219; 1558-2183",
+    "alias": "T-PDS",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Transactions on Pattern Analysis and Machine Intelligence",
+    "issn": "0162-8828; 1939-3539",
+    "alias": "T-PAMI",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Transactions on Plasma Science",
+    "issn": "0093-3813; 1939-9375",
+    "alias": "T-PS",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Transactions on Power Delivery",
+    "issn": "0885-8977; 1937-4208",
+    "alias": "T-PWRD",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Transactions on Power Electronics",
+    "issn": "0885-8993; 1941-0107",
+    "alias": "T-PEL",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Transactions on Power Systems",
+    "issn": "0885-8950; 1558-0679",
+    "alias": "T-PWRS",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Transactions on Reliability",
+    "issn": "0018-9529; 1558-1721",
+    "alias": "T-R",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Transactions on Robotics",
+    "issn": "1552-3098; 1941-0468",
+    "alias": "T-RO",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Transactions on Semiconductor Manufacturing",
+    "issn": "0894-6507; 1558-2345",
+    "alias": "T-SCM",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Transactions on Services Computing",
+    "issn": "1939-1374",
+    "alias": "T-SC",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Transactions on Signal and Information Processing over Networks",
+    "issn": "2373-776X",
+    "alias": "T-SIPN",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Transactions on Signal Processing",
+    "issn": "1053-587X; 1941-0476",
+    "alias": "T-SP",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Transactions on Smart Grid",
+    "issn": "1949-3053; 1949-3061",
+    "alias": "T-SG",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Transactions on Software Engineering",
+    "issn": "0098-5589; 1939-3520",
+    "alias": "T-SE",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Transactions on Sustainable Computing",
+    "issn": "2377-3782",
+    "alias": "T-SUSC",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Transactions on Sustainable Energy",
+    "issn": "1949-3029; 1949-3037",
+    "alias": "T-STE",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Transactions on Systems, Man, and Cybernetics: Systems",
+    "issn": "2168-2216; 2168-2232",
+    "alias": "T-SMC",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Transactions on Terahertz Science and Technology",
+    "issn": "2156-342X; 2156-3446",
+    "alias": "T-THZ",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Transactions on Transportation Electrification",
+    "issn": "2332-7782",
+    "alias": "T-TE",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Transactions on Ultrasonics‖",
+    "issn": "3066-9464",
+    "alias": "T-USON",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Transactions on Vehicular Technology",
+    "issn": "0018-9545; 1939-9359",
+    "alias": "T-VT",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Transactions on Very Large Scale Integration (VLSI) Systems",
+    "issn": "1063-8210; 1557-9999",
+    "alias": "T-VLSI",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Transactions on Visualization and Computer Graphics",
+    "issn": "1077-2626; 1941-0506",
+    "alias": "T-VCG",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Transactions on Wireless Communications",
+    "issn": "1536-1276; 1558-2248",
+    "alias": "T-WC",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Vehicular Technology Magazine",
+    "issn": "1556-6072; 1556-6080",
+    "alias": "M-VT",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Wireless Communications",
+    "issn": "1536-1284; 1558-0687",
+    "alias": "M-WC",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Wireless Communications Letters",
+    "issn": "2162-2337; 2162-2345",
+    "alias": "L-WC",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE-CAA Journal of Automatica Sinica",
+    "issn": "2329-9266; 2329-9274",
+    "alias": "J-AS",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE/ASME Transactions on Mechatronics",
+    "issn": "1083-4435; 1941-014X",
+    "alias": "T-MECH",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IT Professional",
+    "issn": "1520-9202; 1941-045X",
+    "alias": "M-ITPRO",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "Journal of Lightwave Technology",
+    "issn": "0733-8724; 1558-2213",
+    "alias": "J-LT",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "Journal of Microelectromechanical Systems",
+    "issn": "1057-7157; 1941-0158",
+    "alias": "J-MEMS",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "Proceedings of the IEEE",
+    "issn": "0018-9219; 1558-2256",
+    "alias": "PROC",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Aerospace and Electronic Systems Magazine",
+    "issn": "0885-8985; 1557-959X",
+    "alias": "M-AES",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Circuits and Systems Magazine",
+    "issn": "1531-636X; 1558-0830",
+    "alias": "M-CAS",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Computational Intelligence Magazine",
+    "issn": "1556-603X; 1556-6048",
+    "alias": "M-CI",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Consumer Electronics Magazine",
+    "issn": "2162-2248; 2162-2256",
+    "alias": "M-CE",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Control Systems",
+    "issn": "1066-033X; 1941-000X",
+    "alias": "M-CS",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Design & Test",
+    "issn": "2168-2356; 2168-2364",
+    "alias": "M-D&T",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Industrial Electronics Magazine",
+    "issn": "1932-4529; 1941-0115",
+    "alias": "M-IE",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Intelligent Transportation Systems Magazine",
+    "issn": "1939-1390; 1941-1197",
+    "alias": "M-ITS",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Latin America Transactions",
+    "issn": "1548-0992",
+    "alias": "TLA",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Microwave Magazine",
+    "issn": "1527-3342; 1557-9581",
+    "alias": "M-MW",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Power and Energy Magazine",
+    "issn": "1540-7977; 1558-4216",
+    "alias": "M-P&E",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Pulse",
+    "issn": "2154-2287; 2154-2317",
+    "alias": "M-PULSE",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Signal Processing Magazine",
+    "issn": "1053-5888; 1558-0792",
+    "alias": "M-SP",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  },
+  {
+    "venue": "IEEE Technology and Society Magazine",
+    "issn": "0278-0097; 1937-416X",
+    "alias": "M-T&S",
+    "category": "SCIE",
+    "value": "",
+    "impactFactor": ""
+  }
+]

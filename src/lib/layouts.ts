@@ -6,9 +6,10 @@ import { dateFromParts, dateSummary } from './publication-dates';
 
 export const sources = [...fields.map(f => ({ key: f.key as string, label: f.label as string })),
   { key: 'publicationKind', label: '학술유형 (저널/Conference)' }, { key: 'doi', label: 'DOI' },
-  { key: 'publicationDateSource', label: '출판일 근거' },
+  { key: 'publicationDateSource', label: '출판일·개최일 근거' },
+  { key: 'conferenceName', label: '학술대회 명칭' }, { key: 'conferenceDates', label: '학술대회 개최기간' }, { key: 'proceedings', label: '학술대회 논문집명' },
   { key: 'verified', label: '확인 상태' }, { key: 'scie', label: 'SCIE 확인 결과' }, { key: 'bk', label: 'BK 확인 결과' },
-  { key: 'h5', label: '학술지·학술대회 h5-index' }, { key: 'evidence', label: '인정 근거·기준연도' },
+  { key: 'cs', label: 'CS 우수학술대회 확인 결과' }, { key: 'h5', label: '학술지·학술대회 h5-index' }, { key: 'evidence', label: '인정 근거·기준연도' },
   { key: 'rowNumber', label: '행 번호' }, { key: 'constant', label: '고정값 (모든 행 공통)' }, { key: 'manual', label: '사용자 항목 (논문별 입력)' }];
 export const formats = { text: '텍스트', number: '숫자', decimal: '소수 둘째 자리', percent: '백분율 (25 → 25%)', year: '연도', month: '연-월' } as const;
 const idSchema = z.string().min(1).max(100).regex(/^[a-zA-Z0-9_-]+$/);
@@ -51,8 +52,11 @@ export function sourceValue(p: Paper, source: string): string {
   if (source === 'publicationKind') return kindLabels[p.publicationKind];
   if (source === 'verified') return p.verified ? '확인 완료' : '검토 필요';
   if (source === 'doi') return p.doi;
+  if (source === 'conferenceName') return p.conference?.name || '';
+  if (source === 'conferenceDates') return p.conference ? [p.conference.start,p.conference.end].filter(Boolean).join(' ~ ') : '';
+  if (source === 'proceedings') return p.conference?.proceedings || '';
   if (source === 'publicationDateSource') return (dateSummary(p) + ' ' + (p.publicationDates?.candidates.find(c => c.source === p.publicationDates?.selected)?.url || '')).trim();
-  if (source === 'scie' || source === 'bk') return ({ yes: '해당', no: '비해당', unknown: '미확인' })[p.evidence?.[source]?.status || 'unknown'];
+  if (source === 'scie' || source === 'bk' || source === 'cs') return ({ yes: '해당', no: '비해당', unknown: '미확인' })[(source === 'cs' && p.evidence?.bk.status === 'yes' ? 'yes' : p.evidence?.[source]?.status) || 'unknown'];
   if (source === 'h5') return p.evidence?.h5.value || '';
   if (source === 'evidence') return p.evidence ? Object.entries(p.evidence).filter(([,e]) => e.year || e.url || e.note).map(([k,e]) => `${k.toUpperCase()}: ${e.year} ${e.url} ${e.note}`.trim()).join('\n') : '';
   return '';

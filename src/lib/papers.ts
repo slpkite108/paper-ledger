@@ -1,5 +1,6 @@
 import { openAlexKind, isArxiv, type KindInfo } from './publications';
 import type { RecognitionEvidence } from './recognition';
+import type { ConferenceInfo } from './conference-data';
 import { applyPublicationDates, initialPublicationDates, type PublicationDates } from './publication-dates';
 export const fields = [
   { key: 'professor', label: '참여교수', manual: false },
@@ -24,7 +25,7 @@ export type FieldKey = typeof fields[number]['key'];
 export type Author = { id: string; display_name: string; works_count?: number; orcid?: string | null; last_known_institutions?: { display_name: string }[] | null };
 type Authorship = { author?: { id?: string; display_name?: string }; author_position?: string; is_corresponding?: boolean };
 export type Work = { id: string; doi?: string | null; title?: string | null; publication_date?: string; publication_year?: number; type?: string; authorships?: Authorship[]; is_authors_truncated?: boolean; biblio?: { first_page?: string | null; last_page?: string | null; volume?: string | null }; primary_location?: { landing_page_url?: string | null; source?: { id?: string; type?: string; display_name?: string; issn?: string[] | null; issn_l?: string | null } | null } | null };
-export type Paper = KindInfo & { id: string; authorId: string; doi: string; type: string; source: string; publicationDate: string; publicationDates?: PublicationDates; arxiv: boolean; warnings: string[]; role: string; verified: boolean; values: Record<FieldKey, string>; customValues?: Record<string, string>; evidence?: RecognitionEvidence };
+export type Paper = KindInfo & { conference?: ConferenceInfo; venueManual?: boolean; id: string; authorId: string; doi: string; type: string; source: string; publicationDate: string; publicationDates?: PublicationDates; arxiv: boolean; warnings: string[]; role: string; verified: boolean; values: Record<FieldKey, string>; customValues?: Record<string, string>; evidence?: RecognitionEvidence; recognitionCategoryManual?: boolean; recognitionManual?: (keyof RecognitionEvidence)[]; automaticRecognition?: { category?: string; evidence: Partial<RecognitionEvidence> } };
 export function safeUrl(value: string | null | undefined): string {
   if (!value) return '';
   try { const url = new URL(value); return ['https:', 'http:'].includes(url.protocol) ? url.href : ''; } catch { return ''; }

@@ -2,6 +2,7 @@ import type { Paper, Work } from './papers';
 import verifiedDates from './verified-publication-dates.json';
 
 export const dateLabels = {
+  'conference-event': '학술대회 개최일',
   'publisher-issue': '출판사 권호 발행일',
   'publisher-metadata': '출판사 자동 확인',
   'publisher-citation': '가져온 인용정보 출판일',
@@ -46,7 +47,8 @@ export function crossrefDateCandidates(m: CrossrefDates, doi: string): DateCandi
     return date ? [{ source, date, url: 'https://api.crossref.org/works/' + encodeURIComponent(normalizedDoi(doi)) }] : [];
   });
 }
-export function preferredDate(info: PublicationDates): DateCandidate | undefined {
+export function preferredDate(info: PublicationDates, kind?: string): DateCandidate | undefined {
+  if(kind==='conference')return info.candidates.find(c=>c.source==='conference-event');
   const livePublisher = info.candidates.find(c => c.source === 'publisher-metadata');
   if (livePublisher) return livePublisher;
   const publisher = info.candidates.find(c => c.source === 'publisher-issue');
@@ -58,7 +60,7 @@ export function preferredDate(info: PublicationDates): DateCandidate | undefined
 }
 export function applyPublicationDates(paper: Paper, info: PublicationDates): Paper {
   if (info.manual) return { ...paper, publicationDates: info };
-  const selected = preferredDate(info);
+  const selected = preferredDate(info,paper.publicationKind);
   const date = selected?.date || '';
   return { ...paper, verified: paper.verified && paper.values.published === date.slice(0, 7), publicationDates: { ...info, selected: selected?.source }, publicationDate: date, values: { ...paper.values, published: date.slice(0, 7) } };
 }
@@ -72,7 +74,7 @@ export function dateSummary(paper: Paper) {
   const info = paper.publicationDates;
   if (info?.manual) return info.selected ? dateLabels[info.selected] + ' · 직접 지정' : '직접 지정';
   const selected = info?.candidates.find(c => c.source === info.selected);
-  if (!selected) return '날짜 미확인';
+  if (!selected) return paper.publicationKind==='conference'?'개최일 미확인':'날짜 미확인';
   const label = dateLabels[selected.source];
   if (selected.date.length === 4) return label + ' · 월 미상';
   if (selected.source === 'openalex') return label + ' · 원문 확인 필요';
