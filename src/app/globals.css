@@ -2,6 +2,16 @@
 @import "tw-animate-css";
 @import "../vendor/shadcn-tailwind-4.13.0.css";
 .research-page[hidden] { display:none; }
+.author-identity-review { margin:20px 0 0; padding:16px 18px; border:1px solid #e6ce9d; border-radius:8px; background:#fffcf5; font-size:13px; color:#73551d; }
+.author-identity-review summary { cursor:pointer; font-weight:700; }
+.author-identity-review>p { margin:8px 0 0; }
+.author-identity-review section { padding:14px 0; border-top:1px solid #ebdebf; margin-top:14px; overflow-wrap:anywhere; }
+.author-identity-review section>small { display:block; margin-top:4px; }
+.author-identity-review a,.author-identity-details a { color:#245ad5; }
+.author-identity-details { font-size:13px; color:#546b87; padding:12px; margin:10px 0; border-radius:6px; background:#f3f6fb; overflow-wrap:anywhere; }
+.author-identity-details p { margin:3px 0; line-height:1.8; }
+.author-identity-details.review,.author-identity-details.excluded { background:#fff5df; color:#755921; }
+.author-review-link { display:block; font-size:12px; color:#8c641c; text-align:left; padding:4px 0; text-decoration:underline; }
 .research-navigation { display:flex; align-items:center; gap:6px; }
 .research-navigation a { display:inline-flex; align-items:center; gap:6px; padding:12px 18px; color:#61748c; font-size:14px; font-weight:600; border-bottom:3px solid transparent; }
 .research-navigation a:hover { color:#245ad5; background:#f2f6fd; }
