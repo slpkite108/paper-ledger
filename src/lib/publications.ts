@@ -42,9 +42,9 @@ export function latestByTitle(papers: Paper[]): Paper[] {
   return papers.filter(p => ids.has(p.id));
 }
 export function conferenceCounterparts(papers:Paper[]):Set<string> {
-  return new Set(papers.filter(p=>p.publicationKind==='conference' && normalizedTitle(p.values.title)).map(p=>p.authorId+'\u0000'+normalizedTitle(p.values.title)));
+  return new Set(papers.filter(p=>p.authorIdentity?.status!=='excluded' && p.publicationKind==='conference' && normalizedTitle(p.values.title)).map(p=>p.authorId+'\u0000'+normalizedTitle(p.values.title)));
 }
 export function visiblePublications(papers: Paper[], options: { excludeArxiv: boolean; mergeLatest: boolean; publicationKind: PublicationKind | 'all'; range?: PublicationRange; includeUnknownMonths?: boolean }) {
-  const filtered = papers.filter(p => (!options.excludeArxiv || !p.arxiv) && (options.publicationKind === 'all' || p.publicationKind === options.publicationKind) && (!options.range || publicationInRange(p.values.published, options.range, options.includeUnknownMonths ?? true)));
+  const filtered = papers.filter(p => p.authorIdentity?.status !== 'excluded' && (!options.excludeArxiv || !p.arxiv) && (options.publicationKind === 'all' || p.publicationKind === options.publicationKind) && (!options.range || publicationInRange(p.values.published, options.range, options.includeUnknownMonths ?? true)));
   return options.mergeLatest ? latestByTitle(filtered) : filtered;
 }
